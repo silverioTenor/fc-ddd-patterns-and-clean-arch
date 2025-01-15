@@ -9,6 +9,6 @@ const address = new Address('Street', 123, 'City', 'State', 'Country', '12345678
 customer.changeAddress(address);
 customer.activate();
 
-const item1 = new OrderItem(uuid(), 'Item 1', 1, 100);
-const item2 = new OrderItem(uuid(), 'Item 2', 2, 200);
+const item1 = new OrderItem(uuid(), uuid(), 'Item 1', 1, 100);
+const item2 = new OrderItem(uuid(), uuid(), 'Item 2', 2, 200);
 const order = new Order(uuid(), customer.id, [item1, item2]);

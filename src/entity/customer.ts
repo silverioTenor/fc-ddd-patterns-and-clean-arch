@@ -1,4 +1,6 @@
+import validate from 'uuid-validate';
 import Address from './address';
+import 'dotenv/config';
 
 export default class Customer {
    public readonly id: string;
@@ -13,7 +15,7 @@ export default class Customer {
    }
 
    validade() {
-      if (this.id.length === 0) {
+      if (this.id.length === 0 || validate.version(this.id) !== Number(process.env.UUID_VERSION)) {
          throw new Error('ID is required!');
       } else if (this.name.length === 0) {
          throw new Error('Name is required!');
@@ -26,17 +28,26 @@ export default class Customer {
       }
 
       this.name = name;
+      this.validade();
    }
 
    changeAddress(address: Address) {
-      if (address.street.length === 0) {
+      if (address?.street.length === 0) {
          throw new Error('Address is required!');
       }
 
       this.address = address;
    }
 
+   isActive() {
+      return this.active;
+   }
+
    activate() {
+      if (this.address === null || this.address === undefined) {
+         throw new Error('Address is mandatory to activate a customer!');
+      }
+
       this.active = true;
    }
 
