@@ -11,9 +11,9 @@ describe('Product unit tests', () => {
       const product = new Product(id, name, price);
       // Assert
       expect(product).toBeInstanceOf(Product);
-      expect(product['id']).toBe(id);
-      expect(product['name']).toBe(name);
-      expect(product['price']).toBe(price);
+      expect(product.id).toBe(id);
+      expect(product.name).toBe(name);
+      expect(product.price).toBe(price);
    });
 
    it('should throw an error if the ID is not a valid UUID', () => {
@@ -36,6 +36,6 @@ describe('Product unit tests', () => {
       const product = new Product(uuid(), 'Product Name', 100);
       product.changePrice(200);
 
-      expect(product['price']).toBe(200);
+      expect(product.price).toBe(200);
    });
 });

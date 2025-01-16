@@ -5,8 +5,9 @@
    "main": "src/main.ts",
    "scripts": {
       "start": "tsc",
-      "test": "npm run tsc -- --noEmit && jest",
-      "tsc": "tsc"
+      "test": "clear && npm run tsc -- --noEmit && jest",
+      "tsc": "tsc",
+      "clear": "rm -rf dist"
    },
    "devDependencies": {
       "@swc/cli": "^0.6.0",
