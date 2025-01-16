@@ -3,31 +3,43 @@ import Address from './address';
 import 'dotenv/config';
 
 export default class Customer {
-   public readonly id: string;
-   private name: string;
-   private active: boolean = false;
-   private address!: Address;
+   private _id: string;
+   private _name: string;
+   private _active: boolean = false;
+   private _address!: Address;
 
-   constructor(id: string, name: string) {
-      this.id = id;
-      this.name = name;
+   constructor(_id: string, _name: string) {
+      this._id = _id;
+      this._name = _name;
       this.validade();
    }
 
+   get id() {
+      return this._id;
+   }
+
+   get name() {
+      return this._name;
+   }
+
+   get address() {
+      return this._address;
+   }
+
    validade() {
-      if (this.id.length === 0 || validate.version(this.id) !== Number(process.env.UUID_VERSION)) {
+      if (this._id.length === 0 || validate.version(this._id) !== Number(process.env.UUID_VERSION)) {
          throw new Error('ID is required!');
-      } else if (this.name.length === 0) {
+      } else if (this._name.length === 0) {
          throw new Error('Name is required!');
       }
    }
 
-   changeName(name: string) {
-      if (this.name.length === 0) {
+   changeName(_name: string) {
+      if (this._name.length === 0) {
          throw new Error('Name is required!');
       }
 
-      this.name = name;
+      this._name = _name;
       this.validade();
    }
 
@@ -36,22 +48,22 @@ export default class Customer {
          throw new Error('Address is required!');
       }
 
-      this.address = address;
+      this._address = address;
    }
 
    isActive() {
-      return this.active;
+      return this._active;
    }
 
    activate() {
-      if (this.address === null || this.address === undefined) {
+      if (this._address === null || this._address === undefined) {
          throw new Error('Address is mandatory to activate a customer!');
       }
 
-      this.active = true;
+      this._active = true;
    }
 
    deactivate() {
-      this.active = false;
+      this._active = false;
    }
 }
