@@ -16,7 +16,7 @@ describe('Order unit tests', () => {
    });
 
    it('should throw an error when create an instance without items', () => {
-      expect(() => new Order(uuid(), uuid(), [])).toThrow('Items are required!');
+      expect(() => new Order(uuid(), uuid(), [])).toThrow('Must have at least one item!');
    });
 
    it('should throw an error when creating an instance without an ID', () => {

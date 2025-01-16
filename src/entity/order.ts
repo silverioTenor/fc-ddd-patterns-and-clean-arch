@@ -33,7 +33,7 @@ export default class Order {
       } else if (this._customerId.length === 0 || validate.version(this._customerId) !== 4) {
          throw new Error('Customer id is required!');
       } else if (this._items.length === 0) {
-         throw new Error('Items are required!');
+         throw new Error('Must have at least one item!');
       } else if (this._items.some((item) => item.quantity <= 0)) {
          throw new Error('Quantity must be greater than zero');
       }

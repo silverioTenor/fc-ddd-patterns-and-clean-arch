@@ -63,4 +63,22 @@ describe('Customer unit tests', () => {
 
       expect(customer.isActive()).toBeFalsy();
    });
+
+   it('should add points to a customer', () => {
+      const customer = new Customer(uuid(), 'Willy Wonka');
+      expect(customer.rewardPoints).toBe(0);
+
+      customer.addPoints(10);
+      expect(customer.rewardPoints).toBe(10);
+
+      customer.addPoints(10);
+      expect(customer.rewardPoints).toBe(20);
+   });
+
+   it('should throw an error when adding points with a negative value', () => {
+      const customer = new Customer(uuid(), 'Willy Wonka');
+
+      expect(() => customer.addPoints(0)).toThrow('Points must be greater than 0!');
+      expect(() => customer.addPoints(-10)).toThrow('Points must be greater than 0!');
+   });
 });
