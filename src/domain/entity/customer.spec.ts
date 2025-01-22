@@ -41,7 +41,7 @@ describe('Customer unit tests', () => {
    it('should activate a customer', () => {
       expect(() => {
          const customer = new Customer(uuid(), 'Willy Wonka');
-         const address = new Address('Street', 123, 'City', 'State', 'Country', '12345678');
+         const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
          customer.changeAddress(address);
          customer.activate();
       });
@@ -56,7 +56,7 @@ describe('Customer unit tests', () => {
 
    it('should deactivate a customer', () => {
       const customer = new Customer(uuid(), 'Willy Wonka');
-      const address = new Address('Street', 123, 'City', 'State', 'Country', '12345678');
+      const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
       customer.changeAddress(address);
       customer.activate();
       customer.deactivate();
