@@ -38,4 +38,9 @@ describe('Product unit tests', () => {
 
       expect(product.price).toBe(200);
    });
+
+   it('should return the product as a string', () => {
+      const product = new Product(uuid(), 'Product Name', 100);
+      expect(product.toString()).toBe(`${product.id} - ${product.name} - ${product.price}`);
+   });
 });

@@ -32,24 +32,31 @@ export default class Customer {
    }
 
    validade() {
-      if (this._id.length === 0 || validate.version(this._id) !== Number(process.env.UUID_VERSION)) {
+      if (
+         this._id.length === 0 ||
+         validate.version(this._id) !== Number(process.env.UUID_VERSION)
+      ) {
          throw new Error('ID is required!');
       } else if (this._name.length === 0) {
          throw new Error('Name is required!');
       }
    }
 
-   changeName(_name: string) {
-      if (this._name.length === 0) {
+   changeName(name: string) {
+      if (name.length === 0) {
          throw new Error('Name is required!');
       }
 
-      this._name = _name;
-      this.validade();
+      this._name = name;
    }
 
    changeAddress(address: Address) {
-      if (address?.street.length === 0) {
+      if (
+         address?.street.length === 0 ||
+         address?.city.length === 0 ||
+         address?.state.length === 0 ||
+         address?.country.length === 0
+      ) {
          throw new Error('Address is required!');
       }
 

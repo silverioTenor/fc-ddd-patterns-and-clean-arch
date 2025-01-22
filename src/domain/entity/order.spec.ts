@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import Order from './order';
-import OrderItem from './order_item';
+import OrderItem from './order-item';
 
 describe('Order unit tests', () => {
    it('should create an instance', () => {
@@ -72,10 +72,18 @@ describe('Order unit tests', () => {
    });
 
    it('throw an error when quantity is less than or equal to zero', () => {
+      const item1 = new OrderItem(uuid(), uuid(), 'Product 1', 2, 10);
+      const item2 = new OrderItem(uuid(), uuid(), 'Product 2', 1, 20);
+      const item3 = {
+         id: uuid(),
+         productId: uuid(),
+         productName: 'Product 3',
+         quantity: -7,
+         price: 30,
+      } as OrderItem;
+
       expect(() => {
-         const item1 = new OrderItem(uuid(), uuid(), 'Product 1', 1, 10);
-         const item2 = new OrderItem(uuid(), uuid(), 'Product 2', 0, 20);
-         new Order(uuid(), uuid(), [item1, item2]);
+         new Order(uuid(), uuid(), [item1, item2, item3]);
       }).toThrow('Quantity must be greater than zero!');
    });
 

@@ -20,34 +20,47 @@ export default class ProductRepository implements IProductRepository<Customer> {
    }
 
    async update(entity: Customer): Promise<void> {
-      const customer = await CustomerModel.findOne({ where: { id: entity.id } });
-      if (!!customer) {
-         await customer.update(
-            {
-               name: entity.name,
-               active: entity.isActive(),
-               rewardPoints: entity.rewardPoints,
-            },
-            { where: { id: entity.id } },
-         );
+      let customer;
+
+      try {
+         customer = await CustomerModel.findOne({ where: { id: entity.id }, rejectOnEmpty: true });
+      } catch (error) {
+         throw new Error('Customer not found!');
       }
+
+      await customer.update(
+         {
+            name: entity.name,
+            active: entity.isActive(),
+            rewardPoints: entity.rewardPoints,
+         },
+         { where: { id: entity.id } },
+      );
    }
 
    async updateAddress(entity: Customer): Promise<void> {
-      const customer = await CustomerModel.findOne({ where: { id: entity.id } });
-      if (!!customer) {
-         await customer.update(
-            {
-               street: entity.address.street,
-               number: entity.address.number,
-               city: entity.address.city,
-               state: entity.address.state,
-               country: entity.address.country,
-               postalCode: entity.address.postalCode,
-            },
-            { where: { id: entity.id } },
-         );
+      let customer;
+
+      try {
+         customer = await CustomerModel.findOne({
+            where: { id: entity.id },
+            rejectOnEmpty: true,
+         });
+      } catch (error) {
+         throw new Error('Customer not found!');
       }
+
+      await customer.update(
+         {
+            street: entity.address.street,
+            number: entity.address.number,
+            city: entity.address.city,
+            state: entity.address.state,
+            country: entity.address.country,
+            postalCode: entity.address.postalCode,
+         },
+         { where: { id: entity.id } },
+      );
    }
 
    async find(id: string): Promise<Customer> {
@@ -59,25 +72,21 @@ export default class ProductRepository implements IProductRepository<Customer> {
          throw new Error('Customer not found!');
       }
 
-      if (!!customerModel) {
-         const customer = new Customer(customerModel.id, customerModel.name);
-         const address = new Address(
-            customerModel.street,
-            customerModel.number,
-            customerModel.city,
-            customerModel.state,
-            customerModel.country,
-            customerModel.postalCode,
-         );
+      const customer = new Customer(customerModel.id, customerModel.name);
+      const address = new Address(
+         customerModel.street,
+         customerModel.number,
+         customerModel.city,
+         customerModel.state,
+         customerModel.country,
+         customerModel.postalCode,
+      );
 
-         customer.addPoints(customerModel.rewardPoints);
-         customer.changeAddress(address);
-         customerModel.active ? customer.activate() : customer.deactivate();
+      customer.addPoints(customerModel.rewardPoints);
+      customer.changeAddress(address);
+      customerModel.active ? customer.activate() : customer.deactivate();
 
-         return customer;
-      }
-
-      throw new Error('Customer not found!');
+      return customer;
    }
 
    async findAll(): Promise<Customer[]> {

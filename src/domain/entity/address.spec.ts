@@ -1,0 +1,57 @@
+import Address from './address';
+
+describe('Address unit tests', () => {
+   it('should create an address', () => {
+      const address = new Address('Rua A', 123, 'São Paulo', 'SP', 'Brazil', 12345678);
+
+      expect(address).toBeDefined();
+      expect(address.street).toBe('Rua A');
+      expect(address.number).toBe(123);
+      expect(address.city).toBe('São Paulo');
+      expect(address.state).toBe('SP');
+      expect(address.country).toBe('Brazil');
+      expect(address.postalCode).toBe(12345678);
+   });
+
+   it('should throw an error when street is empty', () => {
+      expect(() => {
+         new Address('', 123, 'São Paulo', 'SP', 'Brazil', 12345678);
+      }).toThrow('Street is required!');
+   });
+
+   it('should throw an error when number is 0', () => {
+      expect(() => {
+         new Address('Rua A', 0, 'São Paulo', 'SP', 'Brazil', 12345678);
+      }).toThrow('Number is required!');
+   });
+
+   it('should throw an error when city is empty', () => {
+      expect(() => {
+         new Address('Rua A', 123, '', 'SP', 'Brazil', 12345678);
+      }).toThrow('City is required!');
+   });
+
+   it('should throw an error when state is empty', () => {
+      expect(() => {
+         new Address('Rua A', 123, 'São Paulo', '', 'Brazil', 12345678);
+      }).toThrow('State is required!');
+   });
+
+   it('should throw an error when country is empty', () => {
+      expect(() => {
+         new Address('Rua A', 123, 'São Paulo', 'SP', '', 12345678);
+      }).toThrow('Country is required!');
+   });
+
+   it('should throw an error when postal code is 0', () => {
+      expect(() => {
+         new Address('Rua A', 123, 'São Paulo', 'SP', 'Brazil', 0);
+      }).toThrow('Postal code is required!');
+   });
+
+   it('should return the address as a string', () => {
+      const address = new Address('Rua A', 123, 'São Paulo', 'SP', 'Brazil', 12345678);
+
+      expect(address.toString()).toBe('Rua A, 123 - São Paulo/SP, Brazil - 12345678');
+   });
+});

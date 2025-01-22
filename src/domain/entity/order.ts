@@ -1,5 +1,5 @@
 import validate from 'uuid-validate';
-import OrderItem from './order_item';
+import OrderItem from './order-item';
 import 'dotenv/config';
 
 export default class Order {
@@ -34,8 +34,12 @@ export default class Order {
          throw new Error('Customer id is required!');
       } else if (this._items.length === 0) {
          throw new Error('Must have at least one item!');
-      } else if (this._items.some((item) => item.quantity <= 0)) {
-         throw new Error('Quantity must be greater than zero');
+      }
+
+      const isQuantityMinor = this._items.some((item) => item.quantity <= 0);
+
+      if (isQuantityMinor) {
+         throw new Error('Quantity must be greater than zero!');
       }
    }
 

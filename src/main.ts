@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import Customer from "./domain/entity/customer";
 import Address from './domain/entity/address';
-import OrderItem from './domain/entity/order_item';
+import OrderItem from './domain/entity/order-item';
 import Order from './domain/entity/order';
 
 // let customer = new Customer(uuid(), 'John');

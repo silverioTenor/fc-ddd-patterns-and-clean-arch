@@ -5,7 +5,14 @@ import Address from './address';
 
 describe('Customer unit tests', () => {
    it('should create an instance', () => {
-      expect(() => new Customer(uuid(), 'Willy Wonka')).toBeTruthy();
+      const uid = uuid();
+      const customer = new Customer(uid, 'Willy Wonka');
+      const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
+
+      customer.changeAddress(address);
+
+      expect(customer.id).toStrictEqual(uid);
+      expect(customer.address).toStrictEqual(address);
    });
 
    it('should throw an error when creating an instance without an ID', () => {
@@ -16,7 +23,7 @@ describe('Customer unit tests', () => {
       const spy = jest.spyOn(validate, 'version');
 
       expect(() => {
-         new Customer('kdaslfjdksfj', 'Willy Wonka');
+         new Customer('invalid-uuid', 'Willy Wonka');
       }).toThrow('ID is required!');
       expect(spy).toHaveBeenCalled();
    });
@@ -29,13 +36,36 @@ describe('Customer unit tests', () => {
       const customer = new Customer(uuid(), 'Willy Wonka');
       customer.changeName('Charlie Bucket');
 
-      expect(customer['name']).toBe('Charlie Bucket');
+      expect(customer.name).toBe('Charlie Bucket');
    });
 
    it('should throw an error when changing the name to an empty string', () => {
       expect(() => {
-         new Customer(uuid(), '');
+         const customer = new Customer(uuid(), 'Josh');
+         customer.changeName('');
       }).toThrow('Name is required!');
+   });
+
+   it('should change the address', () => {
+      const customer = new Customer(uuid(), 'Willy Wonka');
+      const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
+
+      expect(() => customer.changeAddress(address)).not.toThrow('Address is required!');
+      expect(customer.address).toStrictEqual(address);
+   });
+
+   it('should throw an error when changing the address to an empty address', () => {
+      const customer = new Customer(uuid(), 'Willy Wonka');
+      const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
+      const invalidAddress = {
+         ...address,
+         street: '',
+         city: '',
+         state: '',
+         country: '',
+      } as Address;
+
+      expect(() => customer.changeAddress(invalidAddress)).toThrow('Address is required!');
    });
 
    it('should activate a customer', () => {
@@ -47,11 +77,11 @@ describe('Customer unit tests', () => {
       });
    });
 
-   it('should throw an error when activate a customer without an address', () => {
-      expect(() => {
-         const customer = new Customer(uuid(), 'Willy Wonka');
-         customer.activate();
-      }).toThrow('Address is mandatory to activate a customer!');
+   it('should throw an error when trying activate a customer without an address', () => {
+      const customer = new Customer(uuid(), 'Willy Wonka');
+
+      expect(() => customer.activate()).toThrow('Address is mandatory to activate a customer!');
+      expect(customer.isActive()).toBeFalsy();
    });
 
    it('should deactivate a customer', () => {
