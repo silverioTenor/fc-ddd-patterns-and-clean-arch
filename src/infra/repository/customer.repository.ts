@@ -3,7 +3,7 @@ import Customer from '../../domain/entity/customer';
 import IProductRepository from '../../domain/repository/repository.interface';
 import CustomerModel from '../db/sequelize/model/customer.model';
 
-export default class ProductRepository implements IProductRepository<Customer> {
+export default class CustomerRepository implements IProductRepository<Customer> {
    async create(entity: Customer): Promise<void> {
       await CustomerModel.create({
          id: entity.id,
