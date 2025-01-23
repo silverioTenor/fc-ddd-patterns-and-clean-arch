@@ -19,6 +19,12 @@ describe('Order repository unit test', () => {
    let customerRepository: CustomerRepository;
    let productRepository: ProductRepository;
 
+   let customer: Customer;
+   let address: Address;
+   let product: Product;
+   let orderItem: OrderItem;
+   let order: Order;
+
    beforeEach(async () => {
       sequelize = new Sequelize({
          dialect: 'sqlite',
@@ -33,34 +39,100 @@ describe('Order repository unit test', () => {
       orderRepository = new OrderRepository();
       customerRepository = new CustomerRepository();
       productRepository = new ProductRepository();
-   });
 
-   afterEach(async () => {
-      await sequelize.close();
-   });
-
-   it('should create an order', async () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
-      const address = new Address('Rua a', 2, 'Cidade', 'Rio de Janeiro', 'Brasil', 12345678);
+      /**
+       * Create customer
+       */
+      customer = new Customer(uuid(), 'Willy Wonka');
+      address = new Address('Rua a', 2, 'Cidade', 'Rio de Janeiro', 'Brasil', 12345678);
 
       customer.changeAddress(address);
       customer.activate();
 
       await customerRepository.create(customer);
 
-      const product = new Product(uuid(), 'P1', 20);
+      /**
+       * Create product
+       */
+      product = new Product(uuid(), 'P1', 20);
       await productRepository.create(product);
 
-      const orderItem = new OrderItem(uuid(), product.id, product.name, 4, product.price);
-      const order = new Order(uuid(), customer.id, [orderItem]);
+      /**
+       * Create OrderItem
+       */
+      orderItem = new OrderItem(uuid(), product.id, product.name, 4, product.price);
+      order = new Order(uuid(), customer.id, [orderItem]);
 
       await orderRepository.create(order);
       await orderRepository.createOrderItem(orderItem, order.id);
+   });
 
-      // const foundOrder = await OrderModel.findOne({ where: { id: order.id }, include: ['items'] });
-      const foundOrder = await orderRepository.find(order.id);
+   afterEach(async () => {
+      await sequelize.close();
+   });
 
-      // expect(foundOrder?.toJSON()).toStrictEqual(order);
+   it('should create a new order', async () => {
+      let foundOrder = await orderRepository.find(order.id);
       expect(foundOrder).toStrictEqual(order);
+   });
+
+   it('should update an order', async () => {
+      let foundOrder = await orderRepository.find(order.id);
+      expect(foundOrder).toStrictEqual(order);
+
+      /**
+       * Create a new OrderItem
+       */
+      const newOrderItem = new OrderItem(uuid(), product.id, product.name, 4, 19.9);
+      await orderRepository.createOrderItem(newOrderItem, order.id);
+
+      const updateOrder = new Order(foundOrder.id, foundOrder.customerId, [
+         ...foundOrder.items,
+         newOrderItem,
+      ]);
+
+      /**
+       * Update an OrderItem
+       */
+      await orderRepository.update(updateOrder);
+      foundOrder = await orderRepository.find(order.id);
+
+      expect(foundOrder.items.length).toBe(2);
+      expect(foundOrder.items).toStrictEqual(updateOrder.items);
+   });
+
+   it('should throw error when update with invalid uuid', async () => {
+      /**
+       * Create a new OrderItem
+       */
+      const newOrderItem = new OrderItem(uuid(), product.id, product.name, 4, 19.9);
+      await orderRepository.createOrderItem(newOrderItem, order.id);
+
+      const updateOrder = {
+         ...order,
+         id: 'invalid-id',
+         items: [order.items, newOrderItem]
+      } as Order;
+
+      await expect(async () => orderRepository.update(updateOrder)).rejects.toThrow(
+         'Order not found!',
+      );
+   });
+
+   it('should throw error when try find order with invalid uuid', async () => {
+      await expect(async () => orderRepository.find('invalid-uuid')).rejects.toThrow(
+         'Order not found!',
+      );
+   });
+
+   it('should return all orders', async () => {
+      const foundOrders = await orderRepository.findAll();
+      expect(foundOrders.length).toBe(1);
+   });
+
+   it('should return an empty order list', async () => {
+      await OrderModel.truncate();
+      const foundOrders = await orderRepository.findAll();
+      expect(foundOrders.length).toBe(0);
    });
 });
