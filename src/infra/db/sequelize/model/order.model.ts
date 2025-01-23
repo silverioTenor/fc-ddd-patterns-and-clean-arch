@@ -6,9 +6,58 @@ import {
    ForeignKey,
    BelongsTo,
    HasMany,
+   Sequelize,
+   DataType,
 } from 'sequelize-typescript';
+// import { DataTypes, Model, Sequelize } from 'sequelize';
 import CustomerModel from './customer.model';
 import OrderItemModel from './order-item.model';
+
+// const sequelize = new Sequelize('sqlite::memory:');
+// sequelize.addModels([CustomerModel, OrderItemModel]);
+
+// class OrderModel extends Model {
+//    declare id: string;
+//    declare customer_id: string;
+//    declare customer: CustomerModel;
+//    declare items: OrderItemModel[];
+//    declare total: number;
+// }
+
+// sequelize.define('orders', {
+//    id: {
+//       type: DataType.UUIDV4,
+//       allowNull: false,
+//       primaryKey: true,
+//       key: 'id',
+//    },
+//    customer_id: {
+//       type: DataType.UUIDV4,
+//       allowNull: false,
+//       key: 'customer_id',
+//    },
+//    customer: {
+//       type: DataType.STRING,
+//       allowNull: false,
+//       key: 'customer',
+//    },
+//    items: {
+//       type: DataType.ARRAY,
+//       allowNull: false,
+//       key: 'items',
+//    },
+//    total: {
+//       type: DataType.INTEGER,
+//       allowNull: false,
+//       key: 'total',
+//    },
+// });
+
+// OrderModel.belongsTo(CustomerModel, { foreignKey: 'customer_id' });
+// OrderModel.hasMany(OrderItemModel, { sourceKey: 'items' });
+// OrderModel.build();
+
+// export default OrderModel;
 
 @Table({
    tableName: 'orders',
@@ -27,7 +76,8 @@ export default class OrderModel extends Model {
    declare customer: CustomerModel;
 
    @HasMany(() => OrderItemModel)
-   declare items: OrderItemModel[];
+   declare items: Awaited<OrderItemModel[]>;
+   // declare items: ReturnType<() => OrderItemModel[]>;
 
    @Column({ allowNull: false })
    declare total: number;

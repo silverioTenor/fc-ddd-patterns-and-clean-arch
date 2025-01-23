@@ -20,6 +20,17 @@ export default class OrderRepository implements IOrderRepository {
       });
    }
 
+   async createOrderItem(entity: OrderItem, orderId: string): Promise<void> {
+      await OrderItemModel.create({
+         id: entity.id,
+         product_id: entity.productId,
+         order_id: orderId,
+         product_name: entity.productName,
+         quantity: entity.quantity,
+         price: entity.price,
+      });
+   }
+
    async update(entity: Order): Promise<void> {
       let orderModel;
 

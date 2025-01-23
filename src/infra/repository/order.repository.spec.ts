@@ -55,9 +55,12 @@ describe('Order repository unit test', () => {
       const order = new Order(uuid(), customer.id, [orderItem]);
 
       await orderRepository.create(order);
+      await orderRepository.createOrderItem(orderItem, order.id);
 
+      // const foundOrder = await OrderModel.findOne({ where: { id: order.id }, include: ['items'] });
       const foundOrder = await orderRepository.find(order.id);
 
+      // expect(foundOrder?.toJSON()).toStrictEqual(order);
       expect(foundOrder).toStrictEqual(order);
    });
 });
