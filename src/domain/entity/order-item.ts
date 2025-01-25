@@ -33,12 +33,9 @@ export default class OrderItem {
    }
 
    validate() {
-      if (this._id.length === 0 || validate.version(this._id) !== Number(process.env.UUID_VERSION)) {
+      if (this._id.length === 0 || validate.version(this._id) !== 4) {
          throw new Error('ID is required!');
-      } else if (
-         this._productId.length === 0 ||
-         validate.version(this._productId) !== Number(process.env.UUID_VERSION)
-      ) {
+      } else if (this._productId.length === 0 || validate.version(this._productId) !== 4) {
          throw new Error('Product ID is required!');
       } else if (this._productName.length === 0) {
          throw new Error('Product name is required!');

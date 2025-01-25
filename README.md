@@ -1,1 +1,1 @@
-{}
+# FC DDD Patterns

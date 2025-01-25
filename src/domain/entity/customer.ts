@@ -32,10 +32,7 @@ export default class Customer {
    }
 
    validade() {
-      if (
-         this._id.length === 0 ||
-         validate.version(this._id) !== Number(process.env.UUID_VERSION)
-      ) {
+      if (this._id.length === 0 || validate.version(this._id) !== 4) {
          throw new Error('ID is required!');
       } else if (this._name.length === 0) {
          throw new Error('Name is required!');

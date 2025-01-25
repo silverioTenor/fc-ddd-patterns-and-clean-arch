@@ -28,7 +28,7 @@ export default class Order {
    }
 
    validate() {
-      if (this._id.length === 0 || validate.version(this._id) !== Number(process.env.UUID_VERSION)) {
+      if (this._id.length === 0 || validate.version(this._id) !== 4) {
          throw new Error('Id is required!');
       } else if (this._customerId.length === 0 || validate.version(this._customerId) !== 4) {
          throw new Error('Customer id is required!');
@@ -36,7 +36,7 @@ export default class Order {
          throw new Error('Must have at least one item!');
       }
 
-      const isQuantityMinor = this._items.some((item) => item.quantity <= 0);
+      const isQuantityMinor = this._items.some(item => item.quantity <= 0);
 
       if (isQuantityMinor) {
          throw new Error('Quantity must be greater than zero!');
