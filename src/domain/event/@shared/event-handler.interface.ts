@@ -1,5 +1,5 @@
 import IEvent from './event.interface';
 
 export default interface IEventHandler<T extends IEvent = IEvent> {
-   handler(event: T): void;
+   handle(event: T): void;
 }
