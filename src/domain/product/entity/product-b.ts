@@ -2,7 +2,7 @@ import validate from 'uuid-validate';
 import 'dotenv/config';
 import IProduct from './product.interface';
 
-export default class Product implements IProduct {
+export default class ProductB implements IProduct {
    constructor(
       private _id: string,
       private _name: string,
