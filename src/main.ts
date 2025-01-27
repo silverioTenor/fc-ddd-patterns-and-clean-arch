@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid';
-import Customer from "./domain/entity/customer";
-import Address from './domain/entity/address';
-import OrderItem from './domain/entity/order-item';
-import Order from './domain/entity/order';
+import Customer from "@domain/customer/entity/customer";
+import Address from '@domain/customer/value-object/address';
+import OrderItem from '@domain/checkout/entity/order-item';
+import Order from '@domain/checkout/entity/order';
 
 // let customer = new Customer(uuid(), 'John');
 // const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);

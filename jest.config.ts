@@ -4,7 +4,14 @@
  */
 
 import type { Config } from 'jest';
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from './tsconfig.json';
 
+// const { Config } = require('jest');
+// const { pathsToModuleNameMapper } = require('ts-jest');
+// const { compilerOptions } = require('./tsconfig.json');
+
+// module.exports = {
 const config: Config = {
    // All imported modules in your tests should be mocked automatically
    // automock: false,
@@ -35,10 +42,10 @@ const config: Config = {
 
    // A list of reporter names that Jest uses when writing coverage reports
    coverageReporters: [
-      'html',
+      //   'html',
       //   "json",
-      //   "text",
-      //   "lcov",
+      'text',
+      'lcov',
       //   "clover"
    ],
 
@@ -89,7 +96,7 @@ const config: Config = {
    // ],
 
    // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-   // moduleNameMapper: {},
+   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src/' }),
 
    // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
    // modulePathIgnorePatterns: [],
@@ -101,7 +108,7 @@ const config: Config = {
    // notifyMode: "failure-change",
 
    // A preset that is used as a base for Jest's configuration
-   // preset: undefined,
+   preset: 'ts-jest',
 
    // Run tests from one or more projects
    // projects: undefined,
@@ -176,7 +183,7 @@ const config: Config = {
 
    // A map from regular expressions to paths to transformers
    transform: {
-      '^.+\.(t|j)sx?$': '@swc/jest',
+      '^.+\.(t|j)sx?$': '@swc/jest'
    },
 
    // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
