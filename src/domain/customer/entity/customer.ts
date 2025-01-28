@@ -1,8 +1,9 @@
 import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
+import { ICustomer } from './customer.interface';
 
-export default class Customer {
+export default class Customer implements ICustomer {
    private _id: string;
    private _name: string;
    private _active: boolean = false;
