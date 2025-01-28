@@ -25,7 +25,7 @@ describe('Product repository unit test', () => {
 
    it('should create a product', async () => {
       const productRepository = new ProductRepository();
-      const product = new Product(uuid(), 'Product 1', 100);
+      const product = new Product('Product 1', 100);
 
       await productRepository.create(product);
       const foundProduct = await productRepository.find(product.id);
@@ -37,11 +37,12 @@ describe('Product repository unit test', () => {
 
    it('should update a product', async () => {
       const productRepository = new ProductRepository();
-      const product = new Product(uuid(), 'Product 1', 100);
+      const product = new Product('Product 1', 100);
 
       await productRepository.create(product);
 
-      const updateProduct = new Product(product.id, 'Product 2', 200);
+      const updateProduct = new Product('Product 2', 200);
+      updateProduct.recoverIdWhenComingFromStorage(product.id);
       await productRepository.update(updateProduct);
 
       const foundProduct = await productRepository.find(product.id);
@@ -53,7 +54,7 @@ describe('Product repository unit test', () => {
 
    it('should find a product', async () => {
       const productRepository = new ProductRepository();
-      const product = new Product(uuid(), 'Product 1', 100);
+      const product = new Product('Product 1', 100);
 
       await productRepository.create(product);
       const foundProduct = await productRepository.find(product.id);
@@ -65,8 +66,8 @@ describe('Product repository unit test', () => {
 
    it('should find all products', async () => {
       const productRepository = new ProductRepository();
-      const product1 = new Product(uuid(), 'Product 1', 100);
-      const product2 = new Product(uuid(), 'Product 2', 200);
+      const product1 = new Product('Product 1', 100);
+      const product2 = new Product('Product 2', 200);
 
       await productRepository.create(product1);
       await productRepository.create(product2);

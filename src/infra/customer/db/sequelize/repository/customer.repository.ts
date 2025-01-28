@@ -82,7 +82,7 @@ export default class CustomerRepository implements ICustomertRepository {
          customerModel.postalCode,
       );
 
-      customer.changeIdWhenComingFromStorage(customerModel.id);
+      customer.recoverIdWhenComingFromStorage(customerModel.id);
       customer.addPoints(customerModel.rewardPoints);
       customer.changeAddress(address);
       customerModel.active ? customer.activate() : customer.deactivate();
@@ -103,7 +103,7 @@ export default class CustomerRepository implements ICustomertRepository {
             customer.postalCode,
          );
 
-         customerInstance.changeIdWhenComingFromStorage(customer.id);
+         customerInstance.recoverIdWhenComingFromStorage(customer.id);
          customerInstance.addPoints(customer.rewardPoints);
          customerInstance.changeAddress(address);
          customer.active ? customerInstance.activate() : customerInstance.deactivate();

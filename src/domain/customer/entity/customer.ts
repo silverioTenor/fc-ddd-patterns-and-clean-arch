@@ -41,7 +41,7 @@ export default class Customer implements ICustomer {
       }
    }
 
-   changeIdWhenComingFromStorage(id: string) {
+   recoverIdWhenComingFromStorage(id: string) {
       if (id.length <= 0) {
          throw new Error('ID is required!')
       }

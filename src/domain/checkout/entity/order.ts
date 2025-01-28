@@ -1,3 +1,4 @@
+import { v4 as uuid} from 'uuid';
 import validate from 'uuid-validate';
 import OrderItem from './order-item';
 import 'dotenv/config';
@@ -7,10 +8,10 @@ export default class Order {
    private _customerId: string;
    private _items: OrderItem[];
 
-   constructor(id: string, _customerId: string, _items: OrderItem[]) {
-      this._id = id;
-      this._customerId = _customerId;
-      this._items = _items;
+   constructor(customerId: string, items: OrderItem[]) {
+      this._id = uuid();
+      this._customerId = customerId;
+      this._items = items;
 
       this.validate();
    }
@@ -41,6 +42,13 @@ export default class Order {
       if (isQuantityMinor) {
          throw new Error('Quantity must be greater than zero!');
       }
+   }
+
+   recoverIdWhenComingFromStorage(id: string) {
+      if (id.length <= 0) {
+         throw new Error('ID is required!')
+      }
+      this._id = id;
    }
 
    addItem(item: OrderItem) {

@@ -26,11 +26,23 @@ export default class ProductRepository implements IProductRepository {
 
    async find(id: string): Promise<Product> {
       const product = await ProductModel.findOne({ where: { id } });
-      return !!product ? new Product(product.id, product.name, product.price) : ({} as Product);
+      if (!!product) {
+         const newProduct = new Product(product.name, product.price);
+         newProduct.recoverIdWhenComingFromStorage(product.id);
+
+         return newProduct;
+      }
+
+      return  ({} as Product);
    }
 
    async findAll(): Promise<Product[]> {
       const products = await ProductModel.findAll();
-      return products.map(product => new Product(product.id, product.name, product.price));
+      return products.map(product => {
+         const newProduct = new Product(product.name, product.price);
+         newProduct.recoverIdWhenComingFromStorage(product.id);
+         
+         return newProduct;
+      });
    }
 }

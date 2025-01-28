@@ -72,16 +72,19 @@ export default class OrderRepository implements IOrderRepository {
       orderModel = orderModel.toJSON();
 
       const items = orderModel.items.map((item: OrderItemModel) => {
-         return new OrderItem(
-            item.id,
+         const orderItem = new OrderItem(
             item.product_id,
             item.product_name,
             item.quantity,
             item.price,
          );
+         orderItem.recoverIdWhenComingFromStorage(item.id);
+         return orderItem;
       });
 
-      const order = new Order(orderModel.id, orderModel.customer_id, items);
+      const order = new Order(orderModel.customer_id, items);
+      order.recoverIdWhenComingFromStorage(orderModel.id);
+
       return order;
    }
 
@@ -91,16 +94,20 @@ export default class OrderRepository implements IOrderRepository {
       if (orderArrayModel.length > 0) {
          const orders = orderArrayModel.map((order: OrderModel) => {
             const items = order.items.map((item: OrderItemModel) => {
-               return new OrderItem(
-                  item.id,
+               const orderItem = new OrderItem(
                   item.product_id,
                   item.product_name,
                   item.quantity,
                   item.price,
                );
+               orderItem.recoverIdWhenComingFromStorage(item.id);
+               return orderItem;
             });
 
-            return new Order(order.id, order.customer_id, items);
+            const newOrder = new Order(order.customer_id, items);
+            newOrder.recoverIdWhenComingFromStorage(order.id);
+
+            return newOrder;
          });
          return orders;
       }

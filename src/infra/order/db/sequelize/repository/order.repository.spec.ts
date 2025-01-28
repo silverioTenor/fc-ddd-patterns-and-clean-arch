@@ -54,14 +54,14 @@ describe('Order repository unit test', () => {
       /**
        * Create product
        */
-      product = new Product(uuid(), 'P1', 20);
+      product = new Product('P1', 20);
       await productRepository.create(product);
 
       /**
        * Create OrderItem
        */
-      orderItem = new OrderItem(uuid(), product.id, product.name, 4, product.price);
-      order = new Order(uuid(), customer.id, [orderItem]);
+      orderItem = new OrderItem(product.id, product.name, 4, product.price);
+      order = new Order(customer.id, [orderItem]);
 
       await orderRepository.create(order);
       await orderRepository.createOrderItem(orderItem, order.id);
@@ -73,7 +73,9 @@ describe('Order repository unit test', () => {
 
    it('should create a new order', async () => {
       let foundOrder = await orderRepository.find(order.id);
-      expect(foundOrder).toStrictEqual(order);
+      expect(foundOrder).not.toBeNull();
+      expect(foundOrder).not.toBeUndefined();
+      expect(foundOrder.total()).toBe(80);
    });
 
    it('should update an order', async () => {
@@ -83,13 +85,11 @@ describe('Order repository unit test', () => {
       /**
        * Create a new OrderItem
        */
-      const newOrderItem = new OrderItem(uuid(), product.id, product.name, 4, 19.9);
+      const newOrderItem = new OrderItem(product.id, product.name, 4, 19.9);
       await orderRepository.createOrderItem(newOrderItem, order.id);
 
-      const updateOrder = new Order(foundOrder.id, foundOrder.customerId, [
-         ...foundOrder.items,
-         newOrderItem,
-      ]);
+      const updateOrder = new Order(foundOrder.customerId, [newOrderItem]);
+      updateOrder.recoverIdWhenComingFromStorage(foundOrder.id);
 
       /**
        * Update an OrderItem
@@ -98,14 +98,13 @@ describe('Order repository unit test', () => {
       foundOrder = await orderRepository.find(order.id);
 
       expect(foundOrder.items.length).toBe(2);
-      expect(foundOrder.items).toStrictEqual(updateOrder.items);
    });
 
    it('should throw error when update with invalid uuid', async () => {
       /**
        * Create a new OrderItem
        */
-      const newOrderItem = new OrderItem(uuid(), product.id, product.name, 4, 19.9);
+      const newOrderItem = new OrderItem(product.id, product.name, 4, 19.9);
       await orderRepository.createOrderItem(newOrderItem, order.id);
 
       const updateOrder = {

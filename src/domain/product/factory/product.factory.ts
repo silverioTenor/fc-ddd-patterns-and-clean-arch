@@ -10,9 +10,9 @@ export default class ProductFactory implements IFactory<IProduct> {
 
       switch (type) {
          case 'A':
-            return new Product(uuid(), name, price);
+            return new Product(name, price);
          case 'B':
-            return new ProductB(uuid(), name, price);
+            return new ProductB(name, price);
          default:
             throw new Error('Product type not supported');
       }

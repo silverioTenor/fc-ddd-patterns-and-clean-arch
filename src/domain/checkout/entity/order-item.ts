@@ -1,14 +1,17 @@
+import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
 
 export default class OrderItem {
+   private _id: string;
+
    constructor(
-      private _id: string,
       private _productId: string,
       private _productName: string,
       private _quantity: number,
       private _price: number,
    ) {
+      this._id = uuid();
       this.validate();
    }
 
@@ -44,6 +47,13 @@ export default class OrderItem {
       } else if (this._price <= 0) {
          throw new Error('Price is required!');
       }
+   }
+
+   recoverIdWhenComingFromStorage(id: string) {
+      if (id.length <= 0) {
+         throw new Error('ID is required!')
+      }
+      this._id = id;
    }
 
    orderItemTotal() {
