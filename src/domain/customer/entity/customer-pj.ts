@@ -1,13 +1,12 @@
-import { v4 as uuid } from 'uuid';
 import Customer from './customer';
-import { ICustomerPJ } from './customer.interface';
+import { ICustomerPj } from './customer.interface';
 
-export default class CustomerPj extends Customer implements ICustomerPJ {
+export default class CustomerPj extends Customer implements ICustomerPj {
    private _tradeName: string;
    private _cnpj: number;
 
    constructor(companyName: string, tradeName: string, cnpj: number) {
-      super(uuid(), companyName);
+      super(companyName);
       this._tradeName = tradeName;
       this._cnpj = cnpj;
       this.validade();

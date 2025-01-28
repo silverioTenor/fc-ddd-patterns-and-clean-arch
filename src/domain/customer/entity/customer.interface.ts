@@ -14,7 +14,7 @@ export interface ICustomer {
    toString(): string;
 }
 
-export interface ICustomerPJ {
+export interface ICustomerPj {
    get tradeName(): string;
    get cnpj(): number;
    changeTradeName(tradeName: string): void;

@@ -72,7 +72,7 @@ export default class CustomerRepository implements ICustomertRepository {
          throw new Error('Customer not found!');
       }
 
-      const customer = new Customer(customerModel.id, customerModel.name);
+      const customer = new Customer(customerModel.name);
       const address = new Address(
          customerModel.street,
          customerModel.number,
@@ -82,6 +82,7 @@ export default class CustomerRepository implements ICustomertRepository {
          customerModel.postalCode,
       );
 
+      customer.changeIdWhenComingFromStorage(customerModel.id);
       customer.addPoints(customerModel.rewardPoints);
       customer.changeAddress(address);
       customerModel.active ? customer.activate() : customer.deactivate();
@@ -92,7 +93,7 @@ export default class CustomerRepository implements ICustomertRepository {
    async findAll(): Promise<Customer[]> {
       const customerModel = await CustomerModel.findAll();
       const customers = customerModel.map(customer => {
-         const customerInstance = new Customer(customer.id, customer.name);
+         const customerInstance = new Customer(customer.name);
          const address = new Address(
             customer.street,
             customer.number,
@@ -102,6 +103,7 @@ export default class CustomerRepository implements ICustomertRepository {
             customer.postalCode,
          );
 
+         customerInstance.changeIdWhenComingFromStorage(customer.id);
          customerInstance.addPoints(customer.rewardPoints);
          customerInstance.changeAddress(address);
          customer.active ? customerInstance.activate() : customerInstance.deactivate();

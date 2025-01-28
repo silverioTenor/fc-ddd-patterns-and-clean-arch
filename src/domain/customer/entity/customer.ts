@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
@@ -10,8 +11,8 @@ export default class Customer implements ICustomer {
    private _address!: Address;
    private _rewardPoints: number = 0;
 
-   constructor(_id: string, _name: string) {
-      this._id = _id;
+   constructor(_name: string) {
+      this._id = uuid();
       this._name = _name;
       this.validate();
    }
@@ -38,6 +39,13 @@ export default class Customer implements ICustomer {
       } else if (this._name.length === 0) {
          throw new Error('Name is required!');
       }
+   }
+
+   changeIdWhenComingFromStorage(id: string) {
+      if (id.length <= 0) {
+         throw new Error('ID is required!')
+      }
+      this._id = id;
    }
 
    changeName(name: string) {

@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize-typescript';
-import { v4 as uuid } from 'uuid';
 import CustomerModel from '../model/customer.model';
 import CustomerRepository from './customer.repository';
 import Customer from '@domain/customer/entity/customer';
@@ -26,7 +25,7 @@ describe('Customer repository unit test', () => {
 
    it('should create a customer', async () => {
       const customerRepository = new CustomerRepository();
-      const customer = new Customer(uuid(), 'Customer 1');
+      const customer = new Customer('Customer 1');
       const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer.addPoints(10);
@@ -43,7 +42,7 @@ describe('Customer repository unit test', () => {
 
    it('should update a customer', async () => {
       const customerRepository = new CustomerRepository();
-      const customer = new Customer(uuid(), 'Customer 1');
+      const customer = new Customer('Customer 1');
       const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer.addPoints(10);
@@ -64,7 +63,7 @@ describe('Customer repository unit test', () => {
 
    it('should throw an error when updating with invalid UUID', async () => {
       const customerRepository = new CustomerRepository();
-      const customer = new Customer(uuid(), 'Customer 1');
+      const customer = new Customer('Customer 1');
       const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer.addPoints(10);
@@ -82,7 +81,7 @@ describe('Customer repository unit test', () => {
 
    it('should update customer address', async () => {
       const customerRepository = new CustomerRepository();
-      const customer = new Customer(uuid(), 'Customer 1');
+      const customer = new Customer('Customer 1');
       const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer.addPoints(10);
@@ -102,7 +101,7 @@ describe('Customer repository unit test', () => {
 
    it('should throw an error when updating address with invalid UUID', async () => {
       const customerRepository = new CustomerRepository();
-      const customer = new Customer(uuid(), 'Customer 1');
+      const customer = new Customer('Customer 1');
       const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer.addPoints(10);
@@ -126,14 +125,14 @@ describe('Customer repository unit test', () => {
 
    it('should return a list of customers', async () => {
       const customerRepository = new CustomerRepository();
-      const customer1 = new Customer(uuid(), 'Customer 1');
+      const customer1 = new Customer('Customer 1');
       const address1 = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
 
       customer1.addPoints(10);
       customer1.changeAddress(address1);
       customer1.activate();
 
-      const customer2 = new Customer(uuid(), 'Customer 2');
+      const customer2 = new Customer('Customer 2');
       const address2 = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 54321);
 
       customer2.addPoints(20);
