@@ -8,7 +8,7 @@ import EventDispatcher from '../../@shared/event/event-dispatcher';
 
 describe('Customer created event unit test', () => {
    it('should create a customer and trigger a new event', () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
+      const customer = new Customer('Willy Wonka');
       const address = new Address('Street', 12, 'City', 'State', 'Country', 12345678);
 
       customer.addPoints(10);

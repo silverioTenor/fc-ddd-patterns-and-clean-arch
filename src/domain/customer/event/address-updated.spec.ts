@@ -7,7 +7,7 @@ import EventDispatcher from '../../@shared/event/event-dispatcher';
 
 describe('Address updated event unit test', () => {
    it('should trigger a new event when address changed', () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
+      const customer = new Customer('Willy Wonka');
       const address = new Address('Street', 12, 'City', 'State', 'Country', 12345678);
 
       customer.addPoints(10);

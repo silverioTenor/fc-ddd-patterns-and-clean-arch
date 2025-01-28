@@ -43,7 +43,7 @@ describe('Order repository unit test', () => {
       /**
        * Create customer
        */
-      customer = new Customer(uuid(), 'Willy Wonka');
+      customer = new Customer('Willy Wonka');
       address = new Address('Rua a', 2, 'Cidade', 'Rio de Janeiro', 'Brasil', 12345678);
 
       customer.changeAddress(address);

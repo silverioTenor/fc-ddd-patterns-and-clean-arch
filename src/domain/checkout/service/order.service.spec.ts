@@ -22,7 +22,7 @@ describe('Order service unit tests', () => {
    });
 
    it('should place an order and generate 5% points on the total amount', () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
+      const customer = new Customer('Willy Wonka');
       const item = new OrderItem(uuid(), uuid(), 'Product 1', 60, 2);
 
       const order = OrderService.placeOrder(customer, [item]);
@@ -32,7 +32,7 @@ describe('Order service unit tests', () => {
    });
 
    it('should place an order and generate 10% points on the total amount', () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
+      const customer = new Customer('Willy Wonka');
       const item2 = new OrderItem(uuid(), uuid(), 'Product 2', 10, 3);
       const order2 = OrderService.placeOrder(customer, [item2]);
 
@@ -41,7 +41,7 @@ describe('Order service unit tests', () => {
    });
 
    it('should place an order and generate 15% points on the total amount', () => {
-      const customer = new Customer(uuid(), 'Willy Wonka');
+      const customer = new Customer('Willy Wonka');
 
       const item3 = new OrderItem(uuid(), uuid(), 'Product 3', 2, 35);
       const order3 = OrderService.placeOrder(customer, [item3]);
