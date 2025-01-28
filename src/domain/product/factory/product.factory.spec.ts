@@ -2,7 +2,12 @@ import ProductFactory from "./product.factory";
 
 describe('Product factory unit tests', () => {
    it('should create a product whose type is "a"', () => {
-      const product = ProductFactory.create('a', 'Product XPTO', 18);
+      const productFactory = new ProductFactory();
+      const product = productFactory.create({
+         type: 'A',
+         name: 'Product XPTO',
+         price: 18,
+      });
 
       expect(product.id).toBeDefined();
       expect(product.constructor.name).toBe('Product');
@@ -11,7 +16,12 @@ describe('Product factory unit tests', () => {
    });
 
    it('should create a product whose type is "b"', () => {
-      const product = ProductFactory.create('b', 'Product XPTO', 18);
+      const productFactory = new ProductFactory();
+      const product = productFactory.create({
+         type: 'B',
+         name: 'Product XPTO',
+         price: 18,
+      });
 
       expect(product.id).toBeDefined();
       expect(product.constructor.name).toBe('ProductB');
@@ -21,7 +31,12 @@ describe('Product factory unit tests', () => {
 
    it('should throw an error when product type is not supported', () => {
       expect(() => {
-         const product = ProductFactory.create('invalid-type', 'Product XPTO', 18);
+         const productFactory = new ProductFactory();
+         const product = productFactory.create({
+            type: 'invalid-type',
+            name: 'Product XPTO',
+            price: 18,
+         });
       }).toThrow('Product type not supported');
    });
 });

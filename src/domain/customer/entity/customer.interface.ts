@@ -11,6 +11,7 @@ export interface ICustomer {
    activate(): void;
    deactivate(): void;
    addPoints(points: number): void;
+   toString(): string;
 }
 
 export interface ICustomerPJ {

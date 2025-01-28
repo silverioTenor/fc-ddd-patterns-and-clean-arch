@@ -13,7 +13,7 @@ export default class Customer implements ICustomer {
    constructor(_id: string, _name: string) {
       this._id = _id;
       this._name = _name;
-      this.validade();
+      this.validate();
    }
 
    get id() {
@@ -32,7 +32,7 @@ export default class Customer implements ICustomer {
       return this._rewardPoints;
    }
 
-   validade() {
+   validate() {
       if (this._id.length === 0 || validate.version(this._id) !== 4) {
          throw new Error('ID is required!');
       } else if (this._name.length === 0) {

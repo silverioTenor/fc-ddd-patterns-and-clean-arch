@@ -10,6 +10,7 @@ export default class CustomerPj extends Customer implements ICustomerPJ {
       super(uuid(), companyName);
       this._tradeName = tradeName;
       this._cnpj = cnpj;
+      this.validade();
    }
 
    get tradeName(): string {
@@ -21,10 +22,21 @@ export default class CustomerPj extends Customer implements ICustomerPJ {
    }
 
    validade(): void {
-      throw new Error('Method not implemented.');
+      if (this._tradeName.length === 0) {
+         throw new Error('Trade name is required!');
+      } else if (this._cnpj.toString().length !== 14) {
+         throw new Error('Invalid cnpj!');
+      }
    }
 
    changeTradeName(tradeName: string): void {
-      throw new Error('Method not implemented.');
+      if (tradeName.length === 0) {
+         throw new Error('Trade name is required!');
+      }
+      this._tradeName = tradeName;
+   }
+
+   toString(): string {
+      return `${this.name} whose cnpj is ${this._cnpj}`;
    }
 }
