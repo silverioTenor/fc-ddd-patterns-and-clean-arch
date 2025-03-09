@@ -86,7 +86,7 @@ export default class Customer implements ICustomer {
    }
 
    addPoints(points: number) {
-      if (points <= 0) {
+      if (points < 0) {
          throw new Error('Points must be greater than 0!');
       }
 
