@@ -11,9 +11,9 @@ export default class Customer implements ICustomer {
    private _address!: Address;
    private _rewardPoints: number = 0;
 
-   constructor(_name: string) {
-      this._id = uuid();
-      this._name = _name;
+   constructor(name: string, id?: string) {
+      this._id = !!id ? id : uuid();
+      this._name = name;
       this.validate();
    }
 
@@ -43,7 +43,7 @@ export default class Customer implements ICustomer {
 
    recoverIdWhenComingFromStorage(id: string) {
       if (id.length <= 0) {
-         throw new Error('ID is required!')
+         throw new Error('ID is required!');
       }
       this._id = id;
    }
@@ -56,15 +56,15 @@ export default class Customer implements ICustomer {
       this._name = name;
    }
 
-   changeAddress(address: Address) {
-      if (
-         address?.street.length === 0 ||
-         address?.city.length === 0 ||
-         address?.state.length === 0 ||
-         address?.country.length === 0
-      ) {
-         throw new Error('Address is required!');
-      }
+   changeAddress(input: Address) {
+      const address = new Address(
+         input.street,
+         input.number,
+         input.city,
+         input.state,
+         input.country,
+         input.postalCode,
+      );
 
       this._address = address;
    }

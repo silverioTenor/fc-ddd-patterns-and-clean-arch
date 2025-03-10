@@ -4,12 +4,12 @@ import CustomerPj from '../entity/customer-pj';
 
 export default class CustomerFactory implements IFactory<Customer | CustomerPj> {
    create(payload: IPayload): Customer | CustomerPj {
-      const { type, name, companyName, tradeName, cnpj, points, address } = payload;
+      const { id, type, name, companyName, tradeName, cnpj, points, address } = payload;
       let customer;
 
       switch (type) {
          case 'pf':
-            customer = new Customer(name);
+            customer = new Customer(name, id);
             break;
          case 'pj':
             customer = new CustomerPj(companyName, tradeName, cnpj);
