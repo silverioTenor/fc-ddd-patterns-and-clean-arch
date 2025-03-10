@@ -11,6 +11,7 @@ export default class UpdateCustomerUseCase {
 
       const factory = new CustomerFactory();
       const payload = {
+         id: input.id,
          name: input.name,
          address: foundCustomer.address,
          type: input.type,
@@ -18,7 +19,6 @@ export default class UpdateCustomerUseCase {
       };
 
       const customer = factory.create(payload);
-      customer.recoverIdWhenComingFromStorage(input.id);
       await this.customerRepository.update(customer);
    }
 }

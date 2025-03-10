@@ -10,8 +10,9 @@ export default class OrderItem {
       private _productName: string,
       private _quantity: number,
       private _price: number,
+      id?: string,
    ) {
-      this._id = uuid();
+      this._id = !!id ? id : uuid();
       this.validate();
    }
 
@@ -47,13 +48,6 @@ export default class OrderItem {
       } else if (this._price <= 0) {
          throw new Error('Price is required!');
       }
-   }
-
-   recoverIdWhenComingFromStorage(id: string) {
-      if (id.length <= 0) {
-         throw new Error('ID is required!')
-      }
-      this._id = id;
    }
 
    orderItemTotal() {

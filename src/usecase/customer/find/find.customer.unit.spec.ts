@@ -1,4 +1,3 @@
-import CustomerRepository from '@infra/customer/db/sequelize/repository/customer.repository';
 import Customer from '@domain/customer/entity/customer';
 import Address from '@domain/customer/value-object/address';
 import FindCustomerUseCase from './find.customer.usecase';
@@ -26,12 +25,12 @@ describe('Find customer useCase - unit test', () => {
          id: customer.id,
          name: customer.name,
          address: {
-            street: address.street,
-            number: address.number,
-            city: address.city,
-            state: address.state,
-            country: address.country,
-            postalCode: address.postalCode,
+            street: address.getStreet(),
+            number: address.getNumber(),
+            city: address.getCity(),
+            state: address.getState(),
+            country: address.getCountry(),
+            postalCode: address.getPostalCode(),
          },
       };
 

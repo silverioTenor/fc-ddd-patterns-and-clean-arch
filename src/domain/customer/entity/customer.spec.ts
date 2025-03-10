@@ -41,15 +41,16 @@ describe('Customer unit tests', () => {
    it('should throw an error when changing the address to an empty address', () => {
       const customer = new Customer('Willy Wonka');
       const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
-      const invalidAddress = {
-         ...address,
+      const invalidAddress = Object.assign({
          street: '',
+         number: 0,
          city: '',
          state: '',
          country: '',
-      } as Address;
+         postalCode: 0,
+      }, null);
 
-      expect(() => customer.changeAddress(invalidAddress)).toThrow('Address is required!');
+      expect(() => customer.changeAddress(invalidAddress)).toThrow('Street is required!');
    });
 
    it('should activate a customer', () => {
@@ -92,7 +93,6 @@ describe('Customer unit tests', () => {
    it('should throw an error when adding points with a negative value', () => {
       const customer = new Customer('Willy Wonka');
 
-      expect(() => customer.addPoints(0)).toThrow('Points must be greater than 0!');
-      expect(() => customer.addPoints(-10)).toThrow('Points must be greater than 0!');
+      expect(() => customer.addPoints(-10)).toThrow('Points must be equal or greater than 0!');
    });
 });

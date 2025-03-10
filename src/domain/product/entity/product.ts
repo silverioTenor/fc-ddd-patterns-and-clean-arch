@@ -9,8 +9,9 @@ export default class Product implements IProduct {
    constructor(
       private _name: string,
       private _price: number,
+      id?: string,
    ) {
-      this._id = uuid();
+      this._id = !!id ? id : uuid();
       this.validate();
    }
 
@@ -34,13 +35,6 @@ export default class Product implements IProduct {
       } else if (this._price <= 0) {
          throw new Error('Price must be greater than zero');
       }
-   }
-
-   recoverIdWhenComingFromStorage(id: string) {
-      if (id.length <= 0) {
-         throw new Error('ID is required!')
-      }
-      this._id = id;
    }
 
    changePrice(_price: number) {

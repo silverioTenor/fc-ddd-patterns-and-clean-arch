@@ -11,6 +11,7 @@ describe('Customer factory unit test', () => {
          points: 10,
          address: {
             street: 'street',
+            number: 19,
             city: 'city',
             state: 'state',
             country: 'country',
@@ -21,8 +22,9 @@ describe('Customer factory unit test', () => {
       expect(customer).toBeInstanceOf(Customer);
       expect(customer.id).toBeDefined();
       expect(customer.isActive).toBeTruthy();
-      expect(customer.address).toStrictEqual({
+      expect(customer.address).toEqual({
          street: 'street',
+         number: 19,
          city: 'city',
          state: 'state',
          country: 'country',
@@ -40,6 +42,7 @@ describe('Customer factory unit test', () => {
          points: 10,
          address: {
             street: 'street',
+            number: 20,
             city: 'city',
             state: 'state',
             country: 'country',
@@ -50,8 +53,9 @@ describe('Customer factory unit test', () => {
       expect(customerpj).toBeInstanceOf(CustomerPj);
       expect(customerpj.id).toBeDefined();
       expect(customerpj.isActive).toBeTruthy();
-      expect(customerpj.address).toStrictEqual({
+      expect(customerpj.address).toEqual({
          street: 'street',
+         number: 20,
          city: 'city',
          state: 'state',
          country: 'country',

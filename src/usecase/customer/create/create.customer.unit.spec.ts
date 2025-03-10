@@ -24,12 +24,12 @@ describe('Unit Test - Create a customer by use case', () => {
          name: customer.name,
          type: 'pf',
          address: {
-            street: customer.address.street,
-            number: customer.address.number,
-            city: customer.address.city,
-            state: customer.address.state,
-            country: customer.address.country,
-            postalCode: customer.address.postalCode,
+            street: customer.address.getStreet(),
+            number: customer.address.getNumber(),
+            city: customer.address.getCity(),
+            state: customer.address.getState(),
+            country: customer.address.getCountry(),
+            postalCode: customer.address.getPostalCode(),
          },
       };
 
@@ -45,12 +45,12 @@ describe('Unit Test - Create a customer by use case', () => {
          name: customer.name,
          type: 'any',
          address: {
-            street: customer.address.street,
-            number: customer.address.number,
-            city: customer.address.city,
-            state: customer.address.state,
-            country: customer.address.country,
-            postalCode: customer.address.postalCode,
+            street: customer.address.getStreet(),
+            number: customer.address.getNumber(),
+            city: customer.address.getCity(),
+            state: customer.address.getState(),
+            country: customer.address.getCountry(),
+            postalCode: customer.address.getPostalCode(),
          },
       };
 

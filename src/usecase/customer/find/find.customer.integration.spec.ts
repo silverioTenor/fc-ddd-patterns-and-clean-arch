@@ -39,12 +39,12 @@ describe('Find customer useCase - integration test', () => {
          id: customer.id,
          name: customer.name,
          address: {
-            street: address.street,
-            number: address.number,
-            city: address.city,
-            state: address.state,
-            country: address.country,
-            postalCode: address.postalCode,
+            street: customer.address.getStreet(),
+            number: customer.address.getNumber(),
+            city: customer.address.getCity(),
+            state: customer.address.getState(),
+            country: customer.address.getCountry(),
+            postalCode: customer.address.getPostalCode(),
          },
       };
 

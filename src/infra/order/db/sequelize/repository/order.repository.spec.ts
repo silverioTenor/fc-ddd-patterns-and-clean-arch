@@ -88,8 +88,7 @@ describe('Order repository unit test', () => {
       const newOrderItem = new OrderItem(product.id, product.name, 4, 19.9);
       await orderRepository.createOrderItem(newOrderItem, order.id);
 
-      const updateOrder = new Order(foundOrder.customerId, [newOrderItem]);
-      updateOrder.recoverIdWhenComingFromStorage(foundOrder.id);
+      const updateOrder = new Order(foundOrder.customerId, [newOrderItem], foundOrder.id);
 
       /**
        * Update an OrderItem

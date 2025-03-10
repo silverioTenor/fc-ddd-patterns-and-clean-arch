@@ -10,12 +10,12 @@ export default class CustomerRepository implements ICustomertRepository {
          name: entity.name,
          active: entity.isActive(),
          rewardPoints: entity.rewardPoints,
-         street: entity.address.street,
-         number: entity.address.number,
-         city: entity.address.city,
-         state: entity.address.state,
-         country: entity.address.country,
-         postalCode: entity.address.postalCode,
+         street: entity.address.getStreet(),
+         number: entity.address.getNumber(),
+         city: entity.address.getCity(),
+         state: entity.address.getState(),
+         country: entity.address.getCountry(),
+         postalCode: entity.address.getPostalCode(),
       });
    }
 
@@ -52,12 +52,12 @@ export default class CustomerRepository implements ICustomertRepository {
 
       await customer.update(
          {
-            street: entity.address.street,
-            number: entity.address.number,
-            city: entity.address.city,
-            state: entity.address.state,
-            country: entity.address.country,
-            postalCode: entity.address.postalCode,
+            street: entity.address.getStreet(),
+            number: entity.address.getNumber(),
+            city: entity.address.getCity(),
+            state: entity.address.getState(),
+            country: entity.address.getCountry(),
+            postalCode: entity.address.getPostalCode(),
          },
          { where: { id: entity.id } },
       );
@@ -72,7 +72,7 @@ export default class CustomerRepository implements ICustomertRepository {
          throw new Error('Customer not found!');
       }
 
-      const customer = new Customer(customerModel.name);
+      const customer = new Customer(customerModel.name, customerModel.id);
       const address = new Address(
          customerModel.street,
          customerModel.number,
@@ -82,7 +82,6 @@ export default class CustomerRepository implements ICustomertRepository {
          customerModel.postalCode,
       );
 
-      customer.recoverIdWhenComingFromStorage(customerModel.id);
       customer.addPoints(customerModel.rewardPoints);
       customer.changeAddress(address);
       customerModel.active ? customer.activate() : customer.deactivate();
@@ -93,7 +92,7 @@ export default class CustomerRepository implements ICustomertRepository {
    async findAll(): Promise<Customer[]> {
       const customerModel = await CustomerModel.findAll();
       const customers = customerModel.map(customer => {
-         const customerInstance = new Customer(customer.name);
+         const customerInstance = new Customer(customer.name, customer.id);
          const address = new Address(
             customer.street,
             customer.number,
@@ -103,7 +102,6 @@ export default class CustomerRepository implements ICustomertRepository {
             customer.postalCode,
          );
 
-         customerInstance.recoverIdWhenComingFromStorage(customer.id);
          customerInstance.addPoints(customer.rewardPoints);
          customerInstance.changeAddress(address);
          customer.active ? customerInstance.activate() : customerInstance.deactivate();

@@ -72,7 +72,14 @@ describe('Unit test - Update a customer', () => {
       const input = {
          id: customer.id,
          type: 'pf',
-         address: customer.address,
+         address: {
+            street: customer.address.getStreet(),
+            number: customer.address.getNumber(),
+            city: customer.address.getCity(),
+            state: customer.address.getState(),
+            country: customer.address.getCountry(),
+            postalCode: customer.address.getPostalCode(),
+         },
       };
 
       await expect(updateAddressUseCase.execute(input)).resolves.not.toThrow();
@@ -87,11 +94,11 @@ describe('Unit test - Update a customer', () => {
          id: customer.id,
          type: 'pf',
          address: {
-            street: customer.address.street,
-            number: customer.address.number,
-            city: customer.address.city,
-            state: customer.address.state,
-            country: customer.address.country,
+            street: customer.address.getStreet(),
+            number: customer.address.getNumber(),
+            city: customer.address.getCity(),
+            state: customer.address.getState(),
+            country: customer.address.getCountry(),
             postalCode: 0,
          },
       };

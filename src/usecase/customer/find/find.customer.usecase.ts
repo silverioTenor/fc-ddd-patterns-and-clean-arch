@@ -7,19 +7,19 @@ export default class FindCustomerUseCase {
 
    async execute(input: InputFindCustomerDto): Promise<OutputFindCustomerDto> {
       let customer = await this.customerRepository.find(input.id);
-      
+
       return !!customer
          ? {
               id: customer.id,
               name: customer.name,
               address: {
-                 street: customer.address.street,
-                 number: customer.address.number,
-                 city: customer.address.city,
-                 state: customer.address.state,
-                 country: customer.address.country,
-                 postalCode: customer.address.postalCode,
-              },
+               street: customer.address.getStreet(),
+               number: customer.address.getNumber(),
+               city: customer.address.getCity(),
+               state: customer.address.getState(),
+               country: customer.address.getCountry(),
+               postalCode: customer.address.getPostalCode(),
+            },
            }
          : ({} as OutputFindCustomerDto);
    }

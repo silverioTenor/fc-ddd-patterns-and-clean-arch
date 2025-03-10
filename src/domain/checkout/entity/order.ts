@@ -8,8 +8,8 @@ export default class Order {
    private _customerId: string;
    private _items: OrderItem[];
 
-   constructor(customerId: string, items: OrderItem[]) {
-      this._id = uuid();
+   constructor(customerId: string, items: OrderItem[], id?: string) {
+      this._id = !!id ? id : uuid();
       this._customerId = customerId;
       this._items = items;
 
@@ -42,13 +42,6 @@ export default class Order {
       if (isQuantityMinor) {
          throw new Error('Quantity must be greater than zero!');
       }
-   }
-
-   recoverIdWhenComingFromStorage(id: string) {
-      if (id.length <= 0) {
-         throw new Error('ID is required!')
-      }
-      this._id = id;
    }
 
    addItem(item: OrderItem) {

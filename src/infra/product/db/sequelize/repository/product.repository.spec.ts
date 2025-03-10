@@ -41,8 +41,7 @@ describe('Product repository unit test', () => {
 
       await productRepository.create(product);
 
-      const updateProduct = new Product('Product 2', 200);
-      updateProduct.recoverIdWhenComingFromStorage(product.id);
+      const updateProduct = new Product('Product 2', 200, product.id);
       await productRepository.update(updateProduct);
 
       const foundProduct = await productRepository.find(product.id);

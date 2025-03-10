@@ -77,14 +77,12 @@ export default class OrderRepository implements IOrderRepository {
             item.product_name,
             item.quantity,
             item.price,
+            item.id,
          );
-         orderItem.recoverIdWhenComingFromStorage(item.id);
          return orderItem;
       });
 
-      const order = new Order(orderModel.customer_id, items);
-      order.recoverIdWhenComingFromStorage(orderModel.id);
-
+      const order = new Order(orderModel.customer_id, items, orderModel.id);
       return order;
    }
 
@@ -99,13 +97,12 @@ export default class OrderRepository implements IOrderRepository {
                   item.product_name,
                   item.quantity,
                   item.price,
+                  item.id,
                );
-               orderItem.recoverIdWhenComingFromStorage(item.id);
                return orderItem;
             });
 
-            const newOrder = new Order(order.customer_id, items);
-            newOrder.recoverIdWhenComingFromStorage(order.id);
+            const newOrder = new Order(order.customer_id, items, order.id);
 
             return newOrder;
          });

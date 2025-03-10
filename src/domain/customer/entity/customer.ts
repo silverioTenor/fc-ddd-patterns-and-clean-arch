@@ -41,13 +41,6 @@ export default class Customer implements ICustomer {
       }
    }
 
-   recoverIdWhenComingFromStorage(id: string) {
-      if (id.length <= 0) {
-         throw new Error('ID is required!');
-      }
-      this._id = id;
-   }
-
    changeName(name: string) {
       if (name.length === 0) {
          throw new Error('Name is required!');
@@ -56,7 +49,7 @@ export default class Customer implements ICustomer {
       this._name = name;
    }
 
-   changeAddress(input: Address) {
+   changeAddress(input: any) {
       const address = new Address(
          input.street,
          input.number,
@@ -87,7 +80,7 @@ export default class Customer implements ICustomer {
 
    addPoints(points: number) {
       if (points < 0) {
-         throw new Error('Points must be greater than 0!');
+         throw new Error('Points must be equal or greater than 0!');
       }
 
       this._rewardPoints += points;
