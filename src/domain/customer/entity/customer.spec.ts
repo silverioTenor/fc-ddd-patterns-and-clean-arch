@@ -9,7 +9,7 @@ describe('Customer unit tests', () => {
       customer.changeAddress(address);
 
       expect(customer).toBeDefined();
-      expect(customer.address).toStrictEqual(address);
+      expect(customer.getAddress()).toStrictEqual(address);
    });
 
    it('should throw an error when creating an instance without a name', () => {
@@ -20,7 +20,7 @@ describe('Customer unit tests', () => {
       const customer = new Customer('Willy Wonka');
       customer.changeName('Charlie Bucket');
 
-      expect(customer.name).toBe('Charlie Bucket');
+      expect(customer.getName()).toBe('Charlie Bucket');
    });
 
    it('should throw an error when changing the name to an empty string', () => {
@@ -35,7 +35,7 @@ describe('Customer unit tests', () => {
       const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
 
       expect(() => customer.changeAddress(address)).not.toThrow('Address is required!');
-      expect(customer.address).toStrictEqual(address);
+      expect(customer.getAddress()).toStrictEqual(address);
    });
 
    it('should throw an error when changing the address to an empty address', () => {
@@ -81,13 +81,13 @@ describe('Customer unit tests', () => {
 
    it('should add points to a customer', () => {
       const customer = new Customer('Willy Wonka');
-      expect(customer.rewardPoints).toBe(0);
+      expect(customer.getRewardPoints()).toBe(0);
 
       customer.addPoints(10);
-      expect(customer.rewardPoints).toBe(10);
+      expect(customer.getRewardPoints()).toBe(10);
 
       customer.addPoints(10);
-      expect(customer.rewardPoints).toBe(20);
+      expect(customer.getRewardPoints()).toBe(20);
    });
 
    it('should throw an error when adding points with a negative value', () => {

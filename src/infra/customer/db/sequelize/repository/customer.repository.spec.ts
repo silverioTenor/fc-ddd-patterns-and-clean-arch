@@ -1,8 +1,10 @@
 import { Sequelize } from 'sequelize-typescript';
+import { v4 as uuid } from 'uuid';
 import CustomerModel from '../model/customer.model';
 import CustomerRepository from './customer.repository';
 import Customer from '@domain/customer/entity/customer';
 import Address from '@domain/customer/value-object/address';
+import CustomerFactory from '../../../../../domain/customer/factory/customer.tactory';
 
 describe('Customer repository unit test', () => {
    let sequelize: Sequelize;
@@ -33,7 +35,7 @@ describe('Customer repository unit test', () => {
       customer.activate();
 
       await customerRepository.create(customer);
-      const foundCustomer = await customerRepository.find(customer.id);
+      const foundCustomer = await customerRepository.find(customer.getId());
 
       expect(foundCustomer).not.toBeNull();
       expect(foundCustomer).not.toEqual({});
@@ -55,9 +57,9 @@ describe('Customer repository unit test', () => {
       customer.deactivate();
 
       await customerRepository.update(customer);
-      const foundCustomer = await customerRepository.find(customer.id);
+      const foundCustomer = await customerRepository.find(customer.getId());
 
-      expect(foundCustomer.rewardPoints).toBe(30);
+      expect(foundCustomer.getRewardPoints()).toBe(30);
       expect(foundCustomer.isActive()).toBeFalsy();
    });
 
@@ -72,7 +74,13 @@ describe('Customer repository unit test', () => {
 
       await customerRepository.create(customer);
 
-      const updateCustomer = { ...customer, id: 'invalid-uuid' } as Customer;
+      const updateCustomer= new CustomerFactory().create({
+         id: uuid(),
+         type: 'pf',
+         name: 'Willy Wonka',
+         points: 5,
+         address: new Address('Rua A', 20, 'Rio Azul', 'Paraíso', 'Noruega', 12345678),
+      });
 
       await expect(customerRepository.update(updateCustomer)).rejects.toThrow(
          'Customer not found!',
@@ -94,9 +102,9 @@ describe('Customer repository unit test', () => {
       customer.changeAddress(newAddress);
 
       await customerRepository.updateAddress(customer);
-      const foundCustomer = await customerRepository.find(customer.id);
+      const foundCustomer = await customerRepository.find(customer.getId());
 
-      expect(foundCustomer.address).toStrictEqual(newAddress);
+      expect(foundCustomer.getAddress()).toStrictEqual(newAddress);
    });
 
    it('should throw an error when updating address with invalid UUID', async () => {
@@ -111,7 +119,12 @@ describe('Customer repository unit test', () => {
       await customerRepository.create(customer);
 
       const newAddress = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 54321);
-      const updateCustomer = { ...customer, id: 'invalid-uuid', address: newAddress } as Customer;
+      let updateCustomer = new CustomerFactory().create({
+         type: 'pf',
+         name: 'Customer Updated',
+         points: 5,
+         address: newAddress,
+      });
 
       await expect(customerRepository.updateAddress(updateCustomer)).rejects.toThrow(
          'Customer not found!',

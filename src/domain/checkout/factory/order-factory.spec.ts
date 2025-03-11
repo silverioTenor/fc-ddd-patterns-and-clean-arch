@@ -9,7 +9,7 @@ describe('Order factory unit tests', () => {
       const customer = new Customer('Willy Wonka');
       const product = new Product('Product XPTO', 200);
       const order = orderFactory.create({
-         customerId: customer.id,
+         customerId: customer.getId(),
          product: {
             id: product.id,
             name: product.name,

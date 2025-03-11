@@ -20,9 +20,9 @@ describe('Customer factory unit test', () => {
       });
 
       expect(customer).toBeInstanceOf(Customer);
-      expect(customer.id).toBeDefined();
-      expect(customer.isActive).toBeTruthy();
-      expect(customer.address).toEqual({
+      expect(customer.getId()).toBeDefined();
+      expect(customer.isActive()).toBeTruthy();
+      expect(customer.getAddress()).toEqual({
          street: 'street',
          number: 19,
          city: 'city',
@@ -51,9 +51,9 @@ describe('Customer factory unit test', () => {
       });
 
       expect(customerpj).toBeInstanceOf(CustomerPj);
-      expect(customerpj.id).toBeDefined();
-      expect(customerpj.isActive).toBeTruthy();
-      expect(customerpj.address).toEqual({
+      expect(customerpj.getId()).toBeDefined();
+      expect(customerpj.isActive()).toBeTruthy();
+      expect(customerpj.getAddress()).toEqual({
          street: 'street',
          number: 20,
          city: 'city',

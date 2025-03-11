@@ -6,16 +6,16 @@ import CustomerModel from '../model/customer.model';
 export default class CustomerRepository implements ICustomertRepository {
    async create(entity: Customer): Promise<void> {
       await CustomerModel.create({
-         id: entity.id,
-         name: entity.name,
+         id: entity.getId(),
+         name: entity.getName(),
          active: entity.isActive(),
-         rewardPoints: entity.rewardPoints,
-         street: entity.address.getStreet(),
-         number: entity.address.getNumber(),
-         city: entity.address.getCity(),
-         state: entity.address.getState(),
-         country: entity.address.getCountry(),
-         postalCode: entity.address.getPostalCode(),
+         rewardPoints: entity.getRewardPoints(),
+         street: entity.getAddress().getStreet(),
+         number: entity.getAddress().getNumber(),
+         city: entity.getAddress().getCity(),
+         state: entity.getAddress().getState(),
+         country: entity.getAddress().getCountry(),
+         postalCode: entity.getAddress().getPostalCode(),
       });
    }
 
@@ -23,18 +23,18 @@ export default class CustomerRepository implements ICustomertRepository {
       let customer;
 
       try {
-         customer = await CustomerModel.findOne({ where: { id: entity.id }, rejectOnEmpty: true });
+         customer = await CustomerModel.findOne({ where: { id: entity.getId() }, rejectOnEmpty: true });
       } catch (error) {
          throw new Error('Customer not found!');
       }
 
       await customer.update(
          {
-            name: entity.name,
+            name: entity.getName(),
             active: entity.isActive(),
-            rewardPoints: entity.rewardPoints,
+            rewardPoints: entity.getRewardPoints(),
          },
-         { where: { id: entity.id } },
+         { where: { id: entity.getId() } },
       );
    }
 
@@ -43,7 +43,7 @@ export default class CustomerRepository implements ICustomertRepository {
 
       try {
          customer = await CustomerModel.findOne({
-            where: { id: entity.id },
+            where: { id: entity.getId() },
             rejectOnEmpty: true,
          });
       } catch (error) {
@@ -52,14 +52,14 @@ export default class CustomerRepository implements ICustomertRepository {
 
       await customer.update(
          {
-            street: entity.address.getStreet(),
-            number: entity.address.getNumber(),
-            city: entity.address.getCity(),
-            state: entity.address.getState(),
-            country: entity.address.getCountry(),
-            postalCode: entity.address.getPostalCode(),
+            street: entity.getAddress().getStreet(),
+            number: entity.getAddress().getNumber(),
+            city: entity.getAddress().getCity(),
+            state: entity.getAddress().getState(),
+            country: entity.getAddress().getCountry(),
+            postalCode: entity.getAddress().getPostalCode(),
          },
-         { where: { id: entity.id } },
+         { where: { id: entity.getId() } },
       );
    }
 

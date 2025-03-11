@@ -21,15 +21,15 @@ describe('Unit Test - Create a customer by use case', () => {
       const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
 
       const input = {
-         name: customer.name,
+         name: customer.getName(),
          type: 'pf',
          address: {
-            street: customer.address.getStreet(),
-            number: customer.address.getNumber(),
-            city: customer.address.getCity(),
-            state: customer.address.getState(),
-            country: customer.address.getCountry(),
-            postalCode: customer.address.getPostalCode(),
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
          },
       };
 
@@ -42,15 +42,15 @@ describe('Unit Test - Create a customer by use case', () => {
       const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
 
       const input = {
-         name: customer.name,
+         name: customer.getName(),
          type: 'any',
          address: {
-            street: customer.address.getStreet(),
-            number: customer.address.getNumber(),
-            city: customer.address.getCity(),
-            state: customer.address.getState(),
-            country: customer.address.getCountry(),
-            postalCode: customer.address.getPostalCode(),
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
          },
       };
 

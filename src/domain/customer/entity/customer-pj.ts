@@ -2,28 +2,28 @@ import Customer from './customer';
 import { ICustomerPj } from './customer.interface';
 
 export default class CustomerPj extends Customer implements ICustomerPj {
-   private _tradeName: string;
-   private _cnpj: number;
+   private tradeName: string;
+   private cnpj: number;
 
    constructor(companyName: string, tradeName: string, cnpj: number) {
       super(companyName);
-      this._tradeName = tradeName;
-      this._cnpj = cnpj;
+      this.tradeName = tradeName;
+      this.cnpj = cnpj;
       this.validade();
    }
 
-   get tradeName(): string {
-      return this._tradeName;
+   getTradeName(): string {
+      return this.tradeName;
    }
 
-   get cnpj(): number {
-      return this._cnpj;
+   getCnpj(): number {
+      return this.cnpj;
    }
 
    validade(): void {
-      if (this._tradeName.length === 0) {
+      if (this.tradeName.length === 0) {
          throw new Error('Trade name is required!');
-      } else if (this._cnpj.toString().length !== 14) {
+      } else if (this.cnpj.toString().length !== 14) {
          throw new Error('Invalid cnpj!');
       }
    }
@@ -32,10 +32,10 @@ export default class CustomerPj extends Customer implements ICustomerPj {
       if (tradeName.length === 0) {
          throw new Error('Trade name is required!');
       }
-      this._tradeName = tradeName;
+      this.tradeName = tradeName;
    }
 
    toString(): string {
-      return `${this.name} whose cnpj is ${this._cnpj}`;
+      return `${this.getName()} whose cnpj is ${this.cnpj}`;
    }
 }

@@ -61,7 +61,7 @@ describe('Order repository unit test', () => {
        * Create OrderItem
        */
       orderItem = new OrderItem(product.id, product.name, 4, product.price);
-      order = new Order(customer.id, [orderItem]);
+      order = new Order(customer.getId(), [orderItem]);
 
       await orderRepository.create(order);
       await orderRepository.createOrderItem(orderItem, order.id);

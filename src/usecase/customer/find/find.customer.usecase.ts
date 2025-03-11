@@ -10,15 +10,15 @@ export default class FindCustomerUseCase {
 
       return !!customer
          ? {
-              id: customer.id,
-              name: customer.name,
+              id: customer.getId(),
+              name: customer.getName(),
               address: {
-               street: customer.address.getStreet(),
-               number: customer.address.getNumber(),
-               city: customer.address.getCity(),
-               state: customer.address.getState(),
-               country: customer.address.getCountry(),
-               postalCode: customer.address.getPostalCode(),
+               street: customer.getAddress().getStreet(),
+               number: customer.getAddress().getNumber(),
+               city: customer.getAddress().getCity(),
+               state: customer.getAddress().getState(),
+               country: customer.getAddress().getCountry(),
+               postalCode: customer.getAddress().getPostalCode(),
             },
            }
          : ({} as OutputFindCustomerDto);

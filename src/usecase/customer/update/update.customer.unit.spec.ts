@@ -26,8 +26,8 @@ describe('Unit test - Update a customer', () => {
       const updateCustomerUseCase = new UpdateCustomerUseCase(customerRepository);
 
       const input = {
-         id: customer.id,
-         name: customer.name,
+         id: customer.getId(),
+         name: customer.getName(),
          type: 'pf',
       };
 
@@ -40,7 +40,7 @@ describe('Unit test - Update a customer', () => {
       const updateCustomerUseCase = new UpdateCustomerUseCase(customerRepository);
 
       const input = {
-         id: customer.id,
+         id: customer.getId(),
          name: '',
          type: 'pf',
       };
@@ -54,8 +54,8 @@ describe('Unit test - Update a customer', () => {
       const updateCustomerUseCase = new UpdateCustomerUseCase(customerRepository);
 
       const input = {
-         id: customer.id,
-         name: customer.name,
+         id: customer.getId(),
+         name: customer.getName(),
          type: '',
       };
 
@@ -70,15 +70,15 @@ describe('Unit test - Update a customer', () => {
       const updateAddressUseCase = new UpdateAddressUseCase(customerRepository);
 
       const input = {
-         id: customer.id,
+         id: customer.getId(),
          type: 'pf',
          address: {
-            street: customer.address.getStreet(),
-            number: customer.address.getNumber(),
-            city: customer.address.getCity(),
-            state: customer.address.getState(),
-            country: customer.address.getCountry(),
-            postalCode: customer.address.getPostalCode(),
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
          },
       };
 
@@ -91,14 +91,14 @@ describe('Unit test - Update a customer', () => {
       const updateAddressUseCase = new UpdateAddressUseCase(customerRepository);
 
       const input = {
-         id: customer.id,
+         id: customer.getId(),
          type: 'pf',
          address: {
-            street: customer.address.getStreet(),
-            number: customer.address.getNumber(),
-            city: customer.address.getCity(),
-            state: customer.address.getState(),
-            country: customer.address.getCountry(),
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
             postalCode: 0,
          },
       };

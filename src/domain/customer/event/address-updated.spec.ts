@@ -14,7 +14,7 @@ describe('Address updated event unit test', () => {
       customer.changeAddress(address);
       customer.activate();
 
-      expect(customer.address).toStrictEqual(address);
+      expect(customer.getAddress()).toStrictEqual(address);
 
       const eventDispatcher = new EventDispatcher();
       const enviaConsoleLogHandler = new EnviaConsoleLogHandler();
@@ -24,9 +24,9 @@ describe('Address updated event unit test', () => {
       expect(eventDispatcher.getEventHandlers['AddressUpdated'].length).toBe(1);
 
       const addressUpdate = new AddressUpdated({
-         id: customer.id,
-         name: customer.name,
-         address: customer.address,
+         id: customer.getId(),
+         name: customer.getName,
+         address: customer.getAddress(),
       });
 
       eventDispatcher.notify(addressUpdate);

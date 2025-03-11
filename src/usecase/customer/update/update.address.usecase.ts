@@ -11,10 +11,10 @@ export default class UpdateAddressUseCase {
       const factory = new CustomerFactory();
       const payload = {
          id: input.id,
-         name: foundCustomer.name,
+         name: foundCustomer.getName(),
          address: input.address,
          type: input.type,
-         points: foundCustomer.rewardPoints,
+         points: foundCustomer.getRewardPoints(),
       };
 
       const customer = factory.create(payload);

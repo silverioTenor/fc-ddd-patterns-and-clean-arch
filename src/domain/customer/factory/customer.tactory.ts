@@ -21,7 +21,7 @@ export default class CustomerFactory implements IFactory<Customer | CustomerPj> 
       customer.changeAddress(address);
       customer.addPoints(points);
 
-      if(customer.address.getCity().length > 0) {
+      if(customer.getAddress().getCity().length > 0) {
          customer.activate();
       }
 

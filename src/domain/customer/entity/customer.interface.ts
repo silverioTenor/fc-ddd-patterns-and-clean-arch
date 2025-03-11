@@ -1,10 +1,10 @@
 import Address from '../value-object/address';
 
 export interface ICustomer {
-   get id(): string;
-   get name(): string;
-   get address(): Address;
-   get rewardPoints(): number;
+   getId(): string;
+   getName(): string;
+   getAddress(): Address;
+   getRewardPoints(): number;
    validate(): void;
    isActive(): boolean;
    changeAddress(address: Address): void;
@@ -15,7 +15,7 @@ export interface ICustomer {
 }
 
 export interface ICustomerPj {
-   get tradeName(): string;
-   get cnpj(): number;
+   getTradeName(): string;
+   getCnpj(): number;
    changeTradeName(tradeName: string): void;
 }

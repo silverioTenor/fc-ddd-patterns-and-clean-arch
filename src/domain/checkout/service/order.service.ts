@@ -11,7 +11,7 @@ export default class OrderService {
    static placeOrder(customer: Customer, items: OrderItem[]): Order {
       let points = 0;
 
-      const order = new Order(customer?.id, items);
+      const order = new Order(customer?.getId(), items);
 
       if (order.total() >= 10 && order.total() <= 50) {
          points += (order.total() * 5) / 100;

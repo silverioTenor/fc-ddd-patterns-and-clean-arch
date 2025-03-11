@@ -8,8 +8,8 @@ describe('Customer PJ unit tests', () => {
 
       customerPj.changeAddress(address);
 
-      expect(customerPj.id).toBeDefined();
-      expect(customerPj.address).toStrictEqual(address);
+      expect(customerPj.getId()).toBeDefined();
+      expect(customerPj.getAddress()).toStrictEqual(address);
    });
 
    it('should throw an error when creating an instance without company name', () => {
@@ -24,7 +24,7 @@ describe('Customer PJ unit tests', () => {
       const customerPj = new CustomerPj('Company name', 'trade name', 12345678901234);
       customerPj.changeTradeName('Charlie Bucket');
 
-      expect(customerPj.tradeName).toBe('Charlie Bucket');
+      expect(customerPj.getTradeName()).toBe('Charlie Bucket');
    });
 
    it('should throw an error when changing the trade name to an empty string', () => {

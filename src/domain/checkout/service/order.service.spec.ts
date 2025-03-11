@@ -27,7 +27,7 @@ describe('Order service unit tests', () => {
 
       const order = OrderService.placeOrder(customer, [item]);
 
-      expect(customer.rewardPoints).toBe(18);
+      expect(customer.getRewardPoints()).toBe(18);
       expect(order.total()).toBe(120);
    });
 
@@ -36,7 +36,7 @@ describe('Order service unit tests', () => {
       const item2 = new OrderItem(uuid(), 'Product 2', 10, 3);
       const order2 = OrderService.placeOrder(customer, [item2]);
 
-      expect(customer.rewardPoints).toBe(2);
+      expect(customer.getRewardPoints()).toBe(2);
       expect(order2.total()).toBe(30);
    });
 
@@ -46,7 +46,7 @@ describe('Order service unit tests', () => {
       const item3 = new OrderItem(uuid(), 'Product 3', 2, 35);
       const order3 = OrderService.placeOrder(customer, [item3]);
 
-      expect(customer.rewardPoints).toBe(7);
+      expect(customer.getRewardPoints()).toBe(7);
       expect(order3.total()).toBe(70);
    });
 });

@@ -13,9 +13,9 @@ export default class UpdateCustomerUseCase {
       const payload = {
          id: input.id,
          name: input.name,
-         address: foundCustomer.address,
+         address: foundCustomer.getAddress(),
          type: input.type,
-         points: foundCustomer.rewardPoints,
+         points: foundCustomer.getRewardPoints(),
       };
 
       const customer = factory.create(payload);

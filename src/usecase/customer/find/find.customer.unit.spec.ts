@@ -20,10 +20,10 @@ describe('Find customer useCase - unit test', () => {
       const customerRepository = MockRepository();
       const useCase = new FindCustomerUseCase(customerRepository);
 
-      const input = { id: customer.id };
+      const input = { id: customer.getId() };
       const output = {
-         id: customer.id,
-         name: customer.name,
+         id: customer.getId(),
+         name: customer.getName(),
          address: {
             street: address.getStreet(),
             number: address.getNumber(),
