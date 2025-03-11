@@ -4,7 +4,7 @@
    "description": "Show me the code!",
    "main": "src/main.ts",
    "scripts": {
-      "start": "tsc",
+      "start": "ts-node --transpile-only src/main.ts",
       "test": "clear && npm run tsc -- --noEmit && jest",
       "tsc": "tsc",
       "clear": "rm -rf dist"

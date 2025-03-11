@@ -12,6 +12,12 @@
          ],
          "@infra/*": [
             "infra/*"
+         ],
+         "@usecase/*": [
+            "usecase/*"
+         ],
+         "@util/*": [
+            "util/*"
          ]
       },
       "resolveJsonModule": true,
