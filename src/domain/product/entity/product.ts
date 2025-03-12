@@ -4,45 +4,45 @@ import 'dotenv/config';
 import IProduct from './product.interface';
 
 export default class Product implements IProduct {
-   private _id: string;
+   private id: string;
 
    constructor(
-      private _name: string,
-      private _price: number,
+      private name: string,
+      private price: number,
       id?: string,
    ) {
-      this._id = !!id ? id : uuid();
+      this.id = !!id ? id : uuid();
       this.validate();
    }
 
-   get id() {
-      return this._id;
+   getId() {
+      return this.id;
    }
 
-   get name() {
-      return this._name;
+   getName() {
+      return this.name;
    }
 
-   get price() {
-      return this._price;
+   getPrice() {
+      return this.price;
    }
 
    validate() {
-      if (this._id.length === 0 || validate.version(this._id) !== 4) {
+      if (this.id.length === 0 || validate.version(this.id) !== 4) {
          throw new Error('ID is required and must be a valid UUID');
-      } else if (this._name.length === 0) {
+      } else if (this.name.length === 0) {
          throw new Error('Name is required');
-      } else if (this._price <= 0) {
+      } else if (this.price <= 0) {
          throw new Error('Price must be greater than zero');
       }
    }
 
-   changePrice(_price: number) {
-      this._price = _price;
+   changePrice(price: number) {
+      this.price = price;
       this.validate();
    }
 
    toString() {
-      return `${this._id} - ${this._name} - ${this._price}`;
+      return `${this.id} - ${this.name} - ${this.price}`;
    }
 }

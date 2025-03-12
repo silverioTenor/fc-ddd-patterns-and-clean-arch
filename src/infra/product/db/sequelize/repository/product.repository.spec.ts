@@ -28,7 +28,7 @@ describe('Product repository unit test', () => {
       const product = new Product('Product 1', 100);
 
       await productRepository.create(product);
-      const foundProduct = await productRepository.find(product.id);
+      const foundProduct = await productRepository.find(product.getId());
 
       expect(foundProduct).not.toBeNull();
       expect(foundProduct).not.toEqual({});
@@ -41,10 +41,10 @@ describe('Product repository unit test', () => {
 
       await productRepository.create(product);
 
-      const updateProduct = new Product('Product 2', 200, product.id);
+      const updateProduct = new Product('Product 2', 200, product.getId());
       await productRepository.update(updateProduct);
 
-      const foundProduct = await productRepository.find(product.id);
+      const foundProduct = await productRepository.find(product.getId());
 
       expect(foundProduct).not.toBeNull();
       expect(foundProduct).not.toEqual({});
@@ -56,7 +56,7 @@ describe('Product repository unit test', () => {
       const product = new Product('Product 1', 100);
 
       await productRepository.create(product);
-      const foundProduct = await productRepository.find(product.id);
+      const foundProduct = await productRepository.find(product.getId());
 
       expect(foundProduct).not.toBeNull();
       expect(foundProduct).not.toEqual({});

@@ -5,21 +5,21 @@ import ProductModel from '../model/product.model';
 export default class ProductRepository implements IProductRepository {
    async create(entity: Product): Promise<void> {
       await ProductModel.create({
-         id: entity.id,
-         name: entity.name,
-         price: entity.price,
+         id: entity.getId(),
+         name: entity.getName(),
+         price: entity.getPrice(),
       });
    }
 
    async update(entity: Product): Promise<void> {
-      const product = await ProductModel.findOne({ where: { id: entity.id } });
+      const product = await ProductModel.findOne({ where: { id: entity.getId() } });
       if (!!product) {
          await product.update(
             {
-               name: entity.name,
-               price: entity.price,
+               name: entity.getName(),
+               price: entity.getPrice(),
             },
-            { where: { id: entity.id } },
+            { where: { id: entity.getId() } },
          );
       }
    }

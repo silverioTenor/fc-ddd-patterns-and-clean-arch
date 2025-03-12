@@ -11,9 +11,9 @@ describe('Order factory unit tests', () => {
       const order = orderFactory.create({
          customerId: customer.getId(),
          product: {
-            id: product.id,
-            name: product.name,
-            price: product.price,
+            id: product.getId(),
+            name: product.getName(),
+            price: product.getPrice(),
             quantity: 2,
          },
       });

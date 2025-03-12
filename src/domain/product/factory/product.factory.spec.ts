@@ -9,10 +9,10 @@ describe('Product factory unit tests', () => {
          price: 18,
       });
 
-      expect(product.id).toBeDefined();
+      expect(product.getId()).toBeDefined();
       expect(product.constructor.name).toBe('Product');
-      expect(product.name).toBe('Product XPTO');
-      expect(product.price).toBe(18);
+      expect(product.getName()).toBe('Product XPTO');
+      expect(product.getPrice()).toBe(18);
    });
 
    it('should create a product whose type is "b"', () => {
@@ -23,10 +23,10 @@ describe('Product factory unit tests', () => {
          price: 18,
       });
 
-      expect(product.id).toBeDefined();
+      expect(product.getId()).toBeDefined();
       expect(product.constructor.name).toBe('ProductB');
-      expect(product.name).toBe('Product XPTO');
-      expect(product.price).toBe(18);
+      expect(product.getName()).toBe('Product XPTO');
+      expect(product.getPrice()).toBe(18);
    });
 
    it('should throw an error when product type is not supported', () => {

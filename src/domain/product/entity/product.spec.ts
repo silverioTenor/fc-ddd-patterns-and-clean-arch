@@ -9,8 +9,8 @@ describe('Product unit tests', () => {
       const product = new Product(name, price);
       // Assert
       expect(product).toBeInstanceOf(Product);
-      expect(product.name).toBe(name);
-      expect(product.price).toBe(price);
+      expect(product.getName()).toBe(name);
+      expect(product.getPrice()).toBe(price);
    });
 
    it('should throw an error if the name is empty', () => {
@@ -27,11 +27,11 @@ describe('Product unit tests', () => {
       const product = new Product('Product Name', 100);
       product.changePrice(200);
 
-      expect(product.price).toBe(200);
+      expect(product.getPrice()).toBe(200);
    });
 
    it('should return the product as a string', () => {
       const product = new Product('Product Name', 100);
-      expect(product.toString()).toBe(`${product.id} - ${product.name} - ${product.price}`);
+      expect(product.toString()).toBe(`${product.getId()} - ${product.getName()} - ${product.getPrice()}`);
    });
 });

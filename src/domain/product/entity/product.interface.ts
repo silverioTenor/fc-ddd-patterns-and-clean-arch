@@ -1,6 +1,6 @@
 export default interface IProduct {
-   get id(): string;
-   get name(): string;
-   get price(): number;
+   getId(): string;
+   getName(): string;
+   getPrice(): number;
    changePrice(price: number): void;
 }

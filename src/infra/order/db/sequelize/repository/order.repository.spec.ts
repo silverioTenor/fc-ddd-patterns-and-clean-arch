@@ -60,7 +60,7 @@ describe('Order repository unit test', () => {
       /**
        * Create OrderItem
        */
-      orderItem = new OrderItem(product.id, product.name, 4, product.price);
+      orderItem = new OrderItem(product.getId(), product.getName(), 4, product.getPrice());
       order = new Order(customer.getId(), [orderItem]);
 
       await orderRepository.create(order);
@@ -85,7 +85,7 @@ describe('Order repository unit test', () => {
       /**
        * Create a new OrderItem
        */
-      const newOrderItem = new OrderItem(product.id, product.name, 4, 19.9);
+      const newOrderItem = new OrderItem(product.getId(), product.getName(), 4, 19.9);
       await orderRepository.createOrderItem(newOrderItem, order.id);
 
       const updateOrder = new Order(foundOrder.customerId, [newOrderItem], foundOrder.id);
@@ -103,7 +103,7 @@ describe('Order repository unit test', () => {
       /**
        * Create a new OrderItem
        */
-      const newOrderItem = new OrderItem(product.id, product.name, 4, 19.9);
+      const newOrderItem = new OrderItem(product.getId(), product.getName(), 4, 19.9);
       await orderRepository.createOrderItem(newOrderItem, order.id);
 
       const updateOrder = {
