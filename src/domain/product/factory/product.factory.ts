@@ -5,13 +5,13 @@ import { IFactory, IPayload } from '../../@shared/factory/factory.interface';
 
 export default class ProductFactory implements IFactory<IProduct> {
    create(payload: IPayload): Product {
-      const { type, name, price } = payload;
+      const { id, type, name, price } = payload;
 
       switch (type) {
          case 'A':
-            return new Product(name, price);
+            return new Product(name, price, id);
          case 'B':
-            return new ProductB(name, price);
+            return new ProductB(name, price, id);
          default:
             throw new Error('Product type not supported');
       }
