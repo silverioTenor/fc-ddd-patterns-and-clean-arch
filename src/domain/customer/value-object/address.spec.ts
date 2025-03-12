@@ -52,7 +52,6 @@ describe('Address unit tests', () => {
    it('should return the address as a string', () => {
       const address = new Address('Rua A', 123, 'São Paulo', 'SP', 'Brazil', 12345678);
 
-      console.log(JSON.stringify(address))
-      // expect(address.toString()).toBe('Rua A, 123 - São Paulo/SP, Brazil - 12345678');
+      expect(address.toString()).toBe('Rua A, 123 - São Paulo/SP, Brazil - 12345678');
    });
 });
