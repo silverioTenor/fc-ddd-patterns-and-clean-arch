@@ -1,8 +1,8 @@
 export interface InputCreateOrderDto {
    customerId: string;
    products: Array<{
-      productId: string;
-      productName: string;
+      id: string;
+      name: string;
       quantity: number;
       price: number;
    }>;

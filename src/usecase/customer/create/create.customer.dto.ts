@@ -11,17 +11,17 @@ export interface InputCreateCustomerDto {
    type: string;
 }
 
-// export interface OutputCreateCustomerDto {
-//    id: string;
-//    name: string;
-//    rewardPoints: number;
-//    active: boolean;
-//    address: {
-//       street: string;
-//       number: number;
-//       city: string;
-//       state: string;
-//       country: string;
-//       postalCode: number;
-//    };
-// }
+export interface OutputCreateCustomerDto {
+   id: string;
+   name: string;
+   rewardPoints: number;
+   active: boolean;
+   address: {
+      street: string;
+      number: number;
+      city: string;
+      state: string;
+      country: string;
+      postalCode: number;
+   };
+}
