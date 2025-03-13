@@ -4,40 +4,40 @@ import OrderItem from './order-item';
 import 'dotenv/config';
 
 export default class Order {
-   private _id: string;
-   private _customerId: string;
-   private _items: OrderItem[];
+   private id: string;
+   private customerId: string;
+   private items: OrderItem[];
 
    constructor(customerId: string, items: OrderItem[], id?: string) {
-      this._id = !!id ? id : uuid();
-      this._customerId = customerId;
-      this._items = items;
+      this.id = !!id ? id : uuid();
+      this.customerId = customerId;
+      this.items = items;
 
       this.validate();
    }
 
-   get id() {
-      return this._id;
+   getId() {
+      return this.id;
    }
 
-   get customerId() {
-      return this._customerId;
+   getCustomerId() {
+      return this.customerId;
    }
 
-   get items() {
-      return this._items;
+   getItems() {
+      return this.items;
    }
 
    validate() {
-      if (this._id.length === 0 || validate.version(this._id) !== 4) {
+      if (this.id.length === 0 || validate.version(this.id) !== 4) {
          throw new Error('Id is required!');
-      } else if (this._customerId.length === 0 || validate.version(this._customerId) !== 4) {
+      } else if (this.customerId.length === 0 || validate.version(this.customerId) !== 4) {
          throw new Error('Customer id is required!');
-      } else if (this._items.length === 0) {
+      } else if (this.items.length === 0) {
          throw new Error('Must have at least one item!');
       }
 
-      const isQuantityMinor = this._items.some(item => item.quantity <= 0);
+      const isQuantityMinor = this.items.some(item => item.getQuantity() <= 0);
 
       if (isQuantityMinor) {
          throw new Error('Quantity must be greater than zero!');
@@ -45,21 +45,21 @@ export default class Order {
    }
 
    addItem(item: OrderItem) {
-      this._items.push(item);
+      this.items.push(item);
    }
 
    removeItem(item: OrderItem) {
-      const index = this._items.indexOf(item);
+      const index = this.items.indexOf(item);
       if (index > -1) {
-         this._items.splice(index, 1);
+         this.items.splice(index, 1);
       }
    }
 
    total() {
-      return this._items.reduce((acc, item) => acc + item.orderItemTotal(), 0);
+      return this.items.reduce((acc, item) => acc + item.orderItemTotal(), 0);
    }
 
    toString() {
-      return `Order #${this._id} - Customer #${this._customerId}`;
+      return `Order #${this.id} - Customer #${this.customerId}`;
    }
 }

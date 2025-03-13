@@ -3,58 +3,58 @@ import validate from 'uuid-validate';
 import 'dotenv/config';
 
 export default class OrderItem {
-   private _id: string;
+   private id: string;
 
    constructor(
-      private _productId: string,
-      private _productName: string,
-      private _quantity: number,
-      private _price: number,
+      private productId: string,
+      private productName: string,
+      private quantity: number,
+      private price: number,
       id?: string,
    ) {
-      this._id = !!id ? id : uuid();
+      this.id = !!id ? id : uuid();
       this.validate();
    }
 
-   get id() {
-      return this._id;
+   getId() {
+      return this.id;
    }
 
-   get productId() {
-      return this._productId;
+   getProductId() {
+      return this.productId;
    }
 
-   get productName() {
-      return this._productName;
+   getProductName() {
+      return this.productName;
    }
 
-   get quantity() {
-      return this._quantity;
+   getQuantity() {
+      return this.quantity;
    }
 
-   get price() {
-      return this._price;
+   getPrice() {
+      return this.price;
    }
 
    validate() {
-      if (this._id.length === 0 || validate.version(this._id) !== 4) {
+      if (this.id.length === 0 || validate.version(this.id) !== 4) {
          throw new Error('ID is required!');
-      } else if (this._productId.length === 0 || validate.version(this._productId) !== 4) {
+      } else if (this.productId.length === 0 || validate.version(this.productId) !== 4) {
          throw new Error('Product ID is required!');
-      } else if (this._productName.length === 0) {
+      } else if (this.productName.length === 0) {
          throw new Error('Product name is required!');
-      } else if (this._quantity <= 0) {
+      } else if (this.quantity <= 0) {
          throw new Error('Quantity must be greater than zero!');
-      } else if (this._price <= 0) {
+      } else if (this.price <= 0) {
          throw new Error('Price is required!');
       }
    }
 
    orderItemTotal() {
-      return this._quantity * this._price;
+      return this.quantity * this.price;
    }
 
    toString() {
-      return `${this._productName} - ${this._quantity} x ${this._price}`;
+      return `${this.productName} - ${this.quantity} x ${this.price}`;
    }
 }

@@ -1,5 +1,5 @@
 export interface IFactory<K> {
-   create(payload: IPayload): K;
+   create(payload: any): K;
 }
 
 export interface IPayload {

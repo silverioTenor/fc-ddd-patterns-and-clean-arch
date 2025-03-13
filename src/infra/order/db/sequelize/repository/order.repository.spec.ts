@@ -64,7 +64,7 @@ describe('Order repository unit test', () => {
       order = new Order(customer.getId(), [orderItem]);
 
       await orderRepository.create(order);
-      await orderRepository.createOrderItem(orderItem, order.id);
+      await orderRepository.createOrderItem(orderItem, order.getId());
    });
 
    afterEach(async () => {
@@ -72,31 +72,31 @@ describe('Order repository unit test', () => {
    });
 
    it('should create a new order', async () => {
-      let foundOrder = await orderRepository.find(order.id);
+      let foundOrder = await orderRepository.find(order.getId());
       expect(foundOrder).not.toBeNull();
       expect(foundOrder).not.toBeUndefined();
       expect(foundOrder.total()).toBe(80);
    });
 
    it('should update an order', async () => {
-      let foundOrder = await orderRepository.find(order.id);
+      let foundOrder = await orderRepository.find(order.getId());
       expect(foundOrder).toStrictEqual(order);
 
       /**
        * Create a new OrderItem
        */
       const newOrderItem = new OrderItem(product.getId(), product.getName(), 4, 19.9);
-      await orderRepository.createOrderItem(newOrderItem, order.id);
+      await orderRepository.createOrderItem(newOrderItem, order.getId());
 
-      const updateOrder = new Order(foundOrder.customerId, [newOrderItem], foundOrder.id);
+      const updateOrder = new Order(foundOrder.getCustomerId(), [newOrderItem], foundOrder.getId());
 
       /**
        * Update an OrderItem
        */
       await orderRepository.update(updateOrder);
-      foundOrder = await orderRepository.find(order.id);
+      foundOrder = await orderRepository.find(order.getId());
 
-      expect(foundOrder.items.length).toBe(2);
+      expect(foundOrder.getItems().length).toBe(2);
    });
 
    it('should throw error when update with invalid uuid', async () => {
@@ -104,13 +104,13 @@ describe('Order repository unit test', () => {
        * Create a new OrderItem
        */
       const newOrderItem = new OrderItem(product.getId(), product.getName(), 4, 19.9);
-      await orderRepository.createOrderItem(newOrderItem, order.id);
+      await orderRepository.createOrderItem(newOrderItem, order.getId());
 
       const updateOrder = {
          ...order,
          id: 'invalid-id',
-         items: [order.items, newOrderItem],
-      } as Order;
+         items: [order.getItems(), newOrderItem],
+      } as unknown as Order;
 
       await expect(async () => orderRepository.update(updateOrder)).rejects.toThrow(
          'Order not found!',

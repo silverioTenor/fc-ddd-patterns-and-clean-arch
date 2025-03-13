@@ -6,11 +6,11 @@ describe('OrderItem unit tests', () => {
       const orderItem = new OrderItem(uuid(), 'P1', 4, 12);
 
       expect(orderItem).toBeDefined();
-      expect(orderItem.id).toBeDefined();
-      expect(orderItem.productId).toBeDefined();
-      expect(orderItem.productName).toBe('P1');
-      expect(orderItem.quantity).toBe(4);
-      expect(orderItem.price).toBe(12);
+      expect(orderItem.getId()).toBeDefined();
+      expect(orderItem.getProductId()).toBeDefined();
+      expect(orderItem.getProductName()).toBe('P1');
+      expect(orderItem.getQuantity).toBe(4);
+      expect(orderItem.getPrice()).toBe(12);
    });
 
    it('should throw an error when creating an order item with invalid product ID', () => {

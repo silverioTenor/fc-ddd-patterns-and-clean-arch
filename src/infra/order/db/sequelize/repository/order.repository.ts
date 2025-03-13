@@ -7,14 +7,14 @@ import OrderModel from '../model/order.model';
 export default class OrderRepository implements IOrderRepository {
    async create(entity: Order): Promise<void> {
       await OrderModel.create({
-         id: entity.id,
-         customer_id: entity.customerId,
-         items: entity.items.map(item => ({
-            id: item.id,
-            product_id: item.productId,
-            product_name: item.productName,
-            quantity: item.quantity,
-            price: item.price,
+         id: entity.getId(),
+         customer_id: entity.getCustomerId(),
+         items: entity.getItems().map(item => ({
+            id: item.getId(),
+            product_id: item.getProductId(),
+            product_name: item.getProductName(),
+            quantity: item.getQuantity(),
+            price: item.getPrice(),
          })),
          total: entity.total(),
       });
@@ -22,12 +22,12 @@ export default class OrderRepository implements IOrderRepository {
 
    async createOrderItem(entity: OrderItem, orderId: string): Promise<void> {
       await OrderItemModel.create({
-         id: entity.id,
-         product_id: entity.productId,
+         id: entity.getId(),
+         product_id: entity.getProductId(),
          order_id: orderId,
-         product_name: entity.productName,
-         quantity: entity.quantity,
-         price: entity.price,
+         product_name: entity.getProductName(),
+         quantity: entity.getQuantity(),
+         price: entity.getPrice(),
       });
    }
 
@@ -36,7 +36,7 @@ export default class OrderRepository implements IOrderRepository {
 
       try {
          orderModel = await OrderModel.findOne({
-            where: { id: entity.id },
+            where: { id: entity.getId() },
             include: ['items'],
             rejectOnEmpty: true,
          });
@@ -45,12 +45,12 @@ export default class OrderRepository implements IOrderRepository {
       }
 
       await orderModel.update({
-         items: entity.items.map(item => ({
-            id: item.id,
-            product_id: item.productId,
-            product_name: item.productName,
-            quantity: item.quantity,
-            price: item.price,
+         items: entity.getItems().map(item => ({
+            id: item.getId(),
+            product_id: item.getProductId(),
+            product_name: item.getProductName(),
+            quantity: item.getQuantity(),
+            price: item.getPrice(),
          })),
          total: entity.total(),
       });
