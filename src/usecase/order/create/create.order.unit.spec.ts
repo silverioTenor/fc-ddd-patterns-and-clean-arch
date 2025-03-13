@@ -1,9 +1,9 @@
-import OrderFactory from '../../domain/checkout/factory/order-factory';
-import CustomerFactory from '../../domain/customer/factory/customer.tactory';
-import Address from '../../domain/customer/value-object/address';
-import ProductFactory from '../../domain/product/factory/product.factory';
-import CreateCustomerUseCase from '../customer/create/create.customer.usecase';
-import CreateProductUsecase from '../product/create/create.product.usecase';
+import OrderFactory from '../../../domain/checkout/factory/order-factory';
+import CustomerFactory from '../../../domain/customer/factory/customer.tactory';
+import Address from '../../../domain/customer/value-object/address';
+import ProductFactory from '../../../domain/product/factory/product.factory';
+import CreateCustomerUseCase from '../../customer/create/create.customer.usecase';
+import CreateProductUsecase from '../../product/create/create.product.usecase';
 import CreateOrderUseCase from './create.order.usecase';
 
 const customerFactory = new CustomerFactory();

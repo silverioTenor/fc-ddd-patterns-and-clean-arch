@@ -1,14 +1,14 @@
 import { Sequelize } from 'sequelize-typescript';
-import OrderFactory from '../../domain/checkout/factory/order-factory';
-import CustomerFactory from '../../domain/customer/factory/customer.tactory';
-import Address from '../../domain/customer/value-object/address';
-import ProductFactory from '../../domain/product/factory/product.factory';
+import OrderFactory from '../../../domain/checkout/factory/order-factory';
+import CustomerFactory from '../../../domain/customer/factory/customer.tactory';
+import Address from '../../../domain/customer/value-object/address';
+import ProductFactory from '../../../domain/product/factory/product.factory';
 import CreateOrderUseCase from './create.order.usecase';
-import OrderModel from '../../infra/order/db/sequelize/model/order.model';
-import OrderItemModel from '../../infra/order/db/sequelize/model/order-item.model';
-import OrderRepository from '../../infra/order/db/sequelize/repository/order.repository';
-import CustomerModel from '../../infra/customer/db/sequelize/model/customer.model';
-import ProductModel from '../../infra/product/db/sequelize/model/product.model';
+import OrderModel from '../../../infra/order/db/sequelize/model/order.model';
+import OrderItemModel from '../../../infra/order/db/sequelize/model/order-item.model';
+import OrderRepository from '../../../infra/order/db/sequelize/repository/order.repository';
+import CustomerModel from '../../../infra/customer/db/sequelize/model/customer.model';
+import ProductModel from '../../../infra/product/db/sequelize/model/product.model';
 
 const customerFactory = new CustomerFactory();
 const productFactory = new ProductFactory();
