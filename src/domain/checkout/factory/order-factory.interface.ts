@@ -1,6 +1,6 @@
 export interface IOrderPayload {
    orderId?: string;
-   orderItemId?: string;
+   orderItemId?: Array<string>;
    customerId: string;
    products: Array<{
       id: string;
