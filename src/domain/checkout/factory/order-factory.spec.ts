@@ -10,12 +10,14 @@ describe('Order factory unit tests', () => {
       const product = new Product('Product XPTO', 200);
       const order = orderFactory.create({
          customerId: customer.getId(),
-         product: {
-            id: product.getId(),
-            name: product.getName(),
-            price: product.getPrice(),
-            quantity: 2,
-         },
+         products: [
+            {
+               id: product.getId(),
+               name: product.getName(),
+               price: product.getPrice(),
+               quantity: 2,
+            },
+         ],
       });
 
       expect(order).toBeDefined();

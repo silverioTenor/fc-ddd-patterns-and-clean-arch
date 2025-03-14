@@ -37,7 +37,7 @@ export default class Order {
          throw new Error('Must have at least one item!');
       }
 
-      const isQuantityMinor = this.items.some(item => item.getQuantity() <= 0);
+      const isQuantityMinor = this.items.some((item: any) => item.quantity <= 0);
 
       if (isQuantityMinor) {
          throw new Error('Quantity must be greater than zero!');

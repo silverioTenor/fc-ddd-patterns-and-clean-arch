@@ -9,7 +9,7 @@ describe('OrderItem unit tests', () => {
       expect(orderItem.getId()).toBeDefined();
       expect(orderItem.getProductId()).toBeDefined();
       expect(orderItem.getProductName()).toBe('P1');
-      expect(orderItem.getQuantity).toBe(4);
+      expect(orderItem.getQuantity()).toBe(4);
       expect(orderItem.getPrice()).toBe(12);
    });
 

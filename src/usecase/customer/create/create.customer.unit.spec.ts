@@ -33,8 +33,22 @@ describe('Unit Test - Create a customer by use case', () => {
          },
       };
 
-      expect(await createCustomerUseCase.execute(input)).toBeUndefined();
-      expect(async () => await createCustomerUseCase.execute(input)).not.toThrow();
+      const outputCustomerCreated = await createCustomerUseCase.execute(input);
+
+      expect(outputCustomerCreated).toEqual({
+         id: outputCustomerCreated.id,
+         name: customer.getName(),
+         rewardPoints: outputCustomerCreated.rewardPoints,
+         active: outputCustomerCreated.active,
+         address: {
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
+         },
+      });
    });
 
    it('should throw an error when trying create a customer with invalid type', async () => {

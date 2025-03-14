@@ -9,9 +9,9 @@ describe('Order unit tests', () => {
       const order = new Order(uuid(), [item1, item2]);
 
       expect(order).toBeInstanceOf(Order);
-      expect(order.id).toBeDefined();
-      expect(order.customerId).toBeDefined();
-      expect(order.items.length > 0).toBeTruthy();
+      expect(order.getId()).toBeDefined();
+      expect(order.getCustomerId()).toBeDefined();
+      expect(order.getItems().length > 0).toBeTruthy();
    });
 
    it('should throw an error when create an instance without items', () => {
@@ -66,7 +66,7 @@ describe('Order unit tests', () => {
          productName: 'Product 3',
          quantity: -7,
          price: 30,
-      } as OrderItem;
+      } as unknown as OrderItem;
 
       expect(() => {
          new Order(uuid(), [item1, item2, item3]);
