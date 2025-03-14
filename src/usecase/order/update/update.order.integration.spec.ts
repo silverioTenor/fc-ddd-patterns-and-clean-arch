@@ -1,4 +1,4 @@
-import { customerSeed, orderSeedOutput, productSeed } from '@util/seed';
+import { customerSeed, orderSeed, productSeed } from '@util/seed';
 import CreateOrderUseCase from '../create/create.order.usecase';
 import UpdateOrderUseCase from './update.order.usecase';
 import { Sequelize } from 'sequelize-typescript';
@@ -6,7 +6,6 @@ import OrderModel from '@infra/order/db/sequelize/model/order.model';
 import OrderItemModel from '@infra/order/db/sequelize/model/order-item.model';
 import CustomerModel from '@infra/customer/db/sequelize/model/customer.model';
 import ProductModel from '@infra/product/db/sequelize/model/product.model';
-import IOrderRepository from '@domain/checkout/repository/order.interface';
 import OrderRepository from '@infra/order/db/sequelize/repository/order.repository';
 import CustomerRepository from '@infra/customer/db/sequelize/repository/customer.repository';
 import ProductRepository from '@infra/product/db/sequelize/repository/product.repository';
@@ -34,7 +33,7 @@ describe('Unit test - updating order', () => {
       await sequelize.sync();
    });
 
-   it('should update an order', async () => {
+   test('should update an order', async () => {
       /**
        * ================================
        * ======== CREATE USECASES =======
@@ -45,13 +44,22 @@ describe('Unit test - updating order', () => {
       const createProductUseCase = new CreateProductUsecase(productRepository);
       const createOrderUseCase = new CreateOrderUseCase(orderRepository);
 
-
       const outputCustomerCreated = await createCustomerUseCase.execute(customerSeed);
       const outputProductCreated = await createProductUseCase.execute(productSeed);
 
-      orderSeedOutput.customerId = outputCustomerCreated.id;
-      orderSeedOutput.products[0].id = outputProductCreated.id;
-      const outputOrderCreated = await createOrderUseCase.execute(orderSeedOutput);
+      const inputCreateOrder = {
+         customerId: outputCustomerCreated.id,
+         products: orderSeed.items.map(p => {
+            return {
+               id: outputProductCreated.id,
+               name: p.productName,
+               quantity: p.quantity,
+               price: p.price,
+            }
+         }),
+      };
+
+      const outputOrderCreated = await createOrderUseCase.execute(inputCreateOrder);
 
       /**
        * =====================================
@@ -63,15 +71,59 @@ describe('Unit test - updating order', () => {
 
       const input = {
          id: outputOrderCreated.id,
-         products: orderSeedOutput.products,
+         items: outputOrderCreated.items,
       };
       const outputOrderUpdated = await updateOrderUseCase.execute(input);
 
-      expect(outputOrderUpdated).toStrictEqual({
+      expect(outputOrderUpdated).toEqual({
          id: outputOrderCreated.id,
-         customerId: outputOrderCreated.customerId,
-         products: orderSeedOutput.products,
-         total: orderSeedOutput.total,
+         customerId: outputCustomerCreated.id,
+         items: outputOrderCreated.items,
+         total: orderSeed.total,
       });
-   });
+   }, 120000);
+
+   test('should throw an error when trying update an order with invalid-uuid', async () => {
+      /**
+       * ================================
+       * ======== CREATE USECASES =======
+       * ================================
+       */
+
+      const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
+      const createProductUseCase = new CreateProductUsecase(productRepository);
+      const createOrderUseCase = new CreateOrderUseCase(orderRepository);
+
+      const outputCustomerCreated = await createCustomerUseCase.execute(customerSeed);
+      const outputProductCreated = await createProductUseCase.execute(productSeed);
+
+      const inputCreateOrder = {
+         customerId: outputCustomerCreated.id,
+         products: orderSeed.items.map(p => {
+            return {
+               id: outputProductCreated.id,
+               name: p.productName,
+               quantity: p.quantity,
+               price: p.price,
+            }
+         }),
+      };
+
+      const outputOrderCreated = await createOrderUseCase.execute(inputCreateOrder);
+
+      /**
+       * =====================================
+       * ======== UPDATE ORDER USECASE =======
+       * =====================================
+       */
+
+      const updateOrderUseCase = new UpdateOrderUseCase(orderRepository);
+
+      const input = {
+         id: 'invalid-uuid',
+         items: outputOrderCreated.items,
+      };
+
+      await expect(updateOrderUseCase.execute(input)).rejects.toThrow('Order not found!');
+   }, 120000);
 });

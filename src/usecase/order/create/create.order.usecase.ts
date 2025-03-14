@@ -2,8 +2,8 @@ import IOrderRepository from '@domain/checkout/repository/order.interface';
 import { InputCreateOrderDto, OutputCreateOrderDto } from './create.order.dto';
 import Mapper from '@util/mapper';
 import Order from '@domain/checkout/entity/order';
-import OrderItem from '../../../domain/checkout/entity/order-item';
-import OrderFactory from '../../../domain/checkout/factory/order-factory';
+import OrderItem from '@domain/checkout/entity/order-item';
+import OrderFactory from '@domain/checkout/factory/order-factory';
 
 export default class CreateOrderUseCase {
    constructor(private orderRepository: IOrderRepository) {}
@@ -12,7 +12,7 @@ export default class CreateOrderUseCase {
       const factory = new OrderFactory();
       const order = factory.create({
          customerId: input.customerId,
-         products: input.products as any,
+         products: input.products,
       });
 
       try {

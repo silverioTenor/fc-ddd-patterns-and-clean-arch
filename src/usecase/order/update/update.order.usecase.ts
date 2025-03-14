@@ -2,6 +2,7 @@ import IOrderRepository from '@domain/checkout/repository/order.interface';
 import { InputUpdateOrderDto, OutputUpdateOrderDto } from './update.order.dto';
 import OrderFactory from '@domain/checkout/factory/order-factory';
 import Order from '@domain/checkout/entity/order';
+import Mapper from '../../../util/mapper';
 
 export default class UpdateOrderUseCase {
    constructor(private orderRepository: IOrderRepository) {}
@@ -22,26 +23,21 @@ export default class UpdateOrderUseCase {
          orderId: input.id,
          orderItemId: foundOrder.items.map((p: any) => p.id),
          customerId: foundOrder.customerId,
-         products: input.products,
+         products: input.items.map(p => {
+            return {
+               id: p.productId,
+               name: p.productName,
+               quantity: p.quantity,
+               price: p.price,
+            };
+         }),
       });
 
       await this.orderRepository.update(order);
-      return this.mapOrderToDto(order);
-   }
 
-   private mapOrderToDto(order: Order): OutputUpdateOrderDto {
-      return {
-         id: order.getId(),
-         customerId: order.getCustomerId(),
-         products: order.getItems().map(item => {
-            return {
-               id: item.getProductId(),
-               name: item.getProductName(),
-               quantity: item.getQuantity(),
-               price: item.getPrice(),
-            };
-         }),
-         total: order.total(),
-      };
+      let outputOrderUpdated = Mapper.convertTo<Order, OutputUpdateOrderDto>(order);
+      outputOrderUpdated.total = order.total();
+
+      return outputOrderUpdated;
    }
 }

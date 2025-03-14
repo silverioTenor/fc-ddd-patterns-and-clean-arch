@@ -30,18 +30,6 @@ export const orderSeed = {
          id: uuid(),
          productId: productSeed.id,
          productName: productSeed.name,
-         price: productSeed.price,
-      },
-   ],
-};
-
-export const orderSeedOutput = {
-   id: uuid(),
-   customerId: customerSeed.id,
-   products: [
-      {
-         id: productSeed.id,
-         name: productSeed.name,
          quantity: 2,
          price: productSeed.price,
       },

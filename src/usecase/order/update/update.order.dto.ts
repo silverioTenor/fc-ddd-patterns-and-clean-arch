@@ -1,8 +1,9 @@
 export interface InputUpdateOrderDto {
    id: string;
-   products: Array<{
+   items: Array<{
       id: string;
-      name: string;
+      productId: string;
+      productName: string;
       quantity: number;
       price: number;
    }>;
@@ -11,9 +12,10 @@ export interface InputUpdateOrderDto {
 export interface OutputUpdateOrderDto {
    id: string;
    customerId: string;
-   products: Array<{
+   items: Array<{
       id: string;
-      name: string;
+      producId: string;
+      productName: string;
       quantity: number;
       price: number;
    }>;
