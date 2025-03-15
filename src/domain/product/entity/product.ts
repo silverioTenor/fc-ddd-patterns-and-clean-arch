@@ -29,11 +29,11 @@ export default class Product implements IProduct {
    }
 
    validate() {
-      if (this.id.length === 0 || validate.version(this.id) !== 4) {
+      if (!(!!this.id) || validate.version(this.id) !== 4) {
          throw new HttpValidation('ID is required and must be a valid UUID');
-      } else if (this.name.length === 0) {
+      } else if (!(!!this.name)) {
          throw new HttpValidation('Name is required');
-      } else if (this.price <= 0) {
+      } else if (!(!!this.price) || this.price <= 0) {
          throw new HttpValidation('Price must be greater than zero');
       }
    }

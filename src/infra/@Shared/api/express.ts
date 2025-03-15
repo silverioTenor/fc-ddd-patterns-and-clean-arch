@@ -2,6 +2,7 @@ import 'express-async-errors';
 import express, { NextFunction } from 'express';
 import { Sequelize } from 'sequelize-typescript';
 import CustomerModel from '../../customer/db/sequelize/model/customer.model';
+import ProductModel from '../../product/db/sequelize/model/product.model';
 import routes from './route/index.routes';
 import { Request, Response } from 'express';
 import ErrorHandling from './middleware/error.handling.midlleware';
@@ -23,7 +24,7 @@ const setupDb = async () => {
       logging: false,
    });
 
-   sequelize.addModels([CustomerModel]);
+   sequelize.addModels([CustomerModel, ProductModel]);
    await sequelize.sync();
 };
 setupDb();

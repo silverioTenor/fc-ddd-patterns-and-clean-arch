@@ -34,7 +34,7 @@
    "author": "",
    "license": "ISC",
    "scripts": {
-      "start": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/infra/api/server.ts",
+      "start": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/infra/@Shared/api/server.ts",
       "test": "clear && npm run tsc -- --noEmit && jest",
       "tsc": "tsc",
       "clear": "rm -rf dist"
