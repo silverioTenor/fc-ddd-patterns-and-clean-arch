@@ -35,9 +35,14 @@ describe('Find customer useCase - integration test', () => {
       await customerRepository.create(customer);
 
       const input = { id: customer.getId() };
-      const output = {
+
+      const result = await useCase.execute(input);
+      
+      expect(result).toEqual({
          id: customer.getId(),
          name: customer.getName(),
+         active: customer.isActive(),
+         rewardPoints: customer.getRewardPoints(),
          address: {
             street: customer.getAddress().getStreet(),
             number: customer.getAddress().getNumber(),
@@ -46,9 +51,6 @@ describe('Find customer useCase - integration test', () => {
             country: customer.getAddress().getCountry(),
             postalCode: customer.getAddress().getPostalCode(),
          },
-      };
-
-      const result = await useCase.execute(input);
-      expect(result).toEqual(output);
+      });
    }, 20000);
 });

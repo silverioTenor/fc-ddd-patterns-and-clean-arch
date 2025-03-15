@@ -21,21 +21,23 @@ describe('Find customer useCase - unit test', () => {
       const useCase = new FindCustomerUseCase(customerRepository);
 
       const input = { id: customer.getId() };
-      const output = {
-         id: customer.getId(),
-         name: customer.getName(),
-         address: {
-            street: address.getStreet(),
-            number: address.getNumber(),
-            city: address.getCity(),
-            state: address.getState(),
-            country: address.getCountry(),
-            postalCode: address.getPostalCode(),
-         },
-      };
 
       const result = await useCase.execute(input);
-      expect(result).toEqual(output);
+
+      expect(result).toEqual({
+         id: customer.getId(),
+         name: customer.getName(),
+         active: customer.isActive(),
+         rewardPoints: customer.getRewardPoints(),
+         address: {
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
+         },
+      });
    });
 
    it('should throw an error when trying to find a customer', async () => {

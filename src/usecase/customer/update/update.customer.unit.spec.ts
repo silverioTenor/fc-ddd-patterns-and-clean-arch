@@ -31,7 +31,21 @@ describe('Unit test - Update a customer', () => {
          type: 'pf',
       };
 
-      await updateCustomerUseCase.execute(input);
+      const outputCustomerUpdated = await updateCustomerUseCase.execute(input);
+      expect(outputCustomerUpdated).toEqual({
+         id: customer.getId(),
+         name: customer.getName(),
+         active: customer.isActive(),
+         rewardPoints: customer.getRewardPoints(),
+         address: {
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
+         },
+      });
    });
 
    it('should throw an error when trying update a customer without name', async () => {
@@ -82,7 +96,21 @@ describe('Unit test - Update a customer', () => {
          },
       };
 
-      await expect(updateAddressUseCase.execute(input)).resolves.not.toThrow();
+      const outputCustomerUpdated = await updateAddressUseCase.execute(input);
+      expect(outputCustomerUpdated).toEqual({
+         id: customer.getId(),
+         name: customer.getName(),
+         active: customer.isActive(),
+         rewardPoints: customer.getRewardPoints(),
+         address: {
+            street: customer.getAddress().getStreet(),
+            number: customer.getAddress().getNumber(),
+            city: customer.getAddress().getCity(),
+            state: customer.getAddress().getState(),
+            country: customer.getAddress().getCountry(),
+            postalCode: customer.getAddress().getPostalCode(),
+         },
+      });
    });
 
    it('should throw an error when trying update an address without postalCode', async () => {

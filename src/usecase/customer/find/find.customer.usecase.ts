@@ -8,7 +8,6 @@ export default class FindCustomerUseCase {
 
    async execute(input: InputFindCustomerDto): Promise<OutputFindCustomerDto> {
       let customer = await this.customerRepository.find(input.id);
-      const model = ['id', 'name', 'address'];
-      return Mapper.convertTo<ICustomer, OutputFindCustomerDto>(customer, model);
+      return Mapper.convertTo<ICustomer, OutputFindCustomerDto>(customer);
    }
 }

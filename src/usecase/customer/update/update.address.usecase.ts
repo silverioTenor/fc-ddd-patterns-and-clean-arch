@@ -1,11 +1,13 @@
 import CustomerFactory from '@domain/customer/factory/customer.tactory';
 import ICustomertRepository from '@domain/customer/repository/customer.interface';
-import { InputUpdateAddressDto } from './update.customer.dto';
+import { InputUpdateAddressDto, OutputUpdateCustomerDto } from './update.customer.dto';
+import Mapper from '@util/mapper';
+import Customer from '@domain/customer/entity/customer';
 
 export default class UpdateAddressUseCase {
    constructor(private customerRepository: ICustomertRepository) {}
 
-   async execute(input: InputUpdateAddressDto): Promise<void> {
+   async execute(input: InputUpdateAddressDto): Promise<OutputUpdateCustomerDto> {
       const foundCustomer = await this.customerRepository.find(input.id);
 
       const factory = new CustomerFactory();
@@ -19,5 +21,7 @@ export default class UpdateAddressUseCase {
 
       const customer = factory.create(payload);
       await this.customerRepository.update(customer);
+
+      return Mapper.convertTo<Customer, OutputUpdateCustomerDto>(customer);
    }
 }
