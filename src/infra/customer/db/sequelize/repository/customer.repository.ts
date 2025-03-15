@@ -2,6 +2,7 @@ import Customer from '@domain/customer/entity/customer';
 import ICustomertRepository from '@domain/customer/repository/customer.interface';
 import Address from '@domain/customer/value-object/address';
 import CustomerModel from '../model/customer.model';
+import HttpNotFound from '@infra/api/errors/http.not.found.error';
 
 export default class CustomerRepository implements ICustomertRepository {
    async create(entity: Customer): Promise<void> {
@@ -20,22 +21,23 @@ export default class CustomerRepository implements ICustomertRepository {
    }
 
    async update(entity: Customer): Promise<void> {
-      let customer;
+      const customer = await CustomerModel.findOne({
+         where: { id: entity.getId() },
+         rejectOnEmpty: true,
+      });
 
-      try {
-         customer = await CustomerModel.findOne({ where: { id: entity.getId() }, rejectOnEmpty: true });
-      } catch (error) {
-         throw new Error('Customer not found!');
+      if (!!customer) {
+         await customer.update(
+            {
+               name: entity.getName(),
+               active: entity.isActive(),
+               rewardPoints: entity.getRewardPoints(),
+            },
+            { where: { id: entity.getId() } },
+         );
       }
 
-      await customer.update(
-         {
-            name: entity.getName(),
-            active: entity.isActive(),
-            rewardPoints: entity.getRewardPoints(),
-         },
-         { where: { id: entity.getId() } },
-      );
+      throw new HttpNotFound('Customer not found!');
    }
 
    async updateAddress(entity: Customer): Promise<void> {
@@ -64,29 +66,27 @@ export default class CustomerRepository implements ICustomertRepository {
    }
 
    async find(id: string): Promise<Customer> {
-      let customerModel;
+      const customerModel = await CustomerModel.findOne({ where: { id }, rejectOnEmpty: true });
 
-      try {
-         customerModel = await CustomerModel.findOne({ where: { id }, rejectOnEmpty: true });
-      } catch (error) {
-         throw new Error('Customer not found!');
+      if (!!customerModel) {
+         const customer = new Customer(customerModel.name, customerModel.id);
+         const address = new Address(
+            customerModel.street,
+            customerModel.number,
+            customerModel.city,
+            customerModel.state,
+            customerModel.country,
+            customerModel.postalCode,
+         );
+
+         customer.addPoints(customerModel.rewardPoints);
+         customer.changeAddress(address);
+         customerModel.active ? customer.activate() : customer.deactivate();
+
+         return customer;
       }
 
-      const customer = new Customer(customerModel.name, customerModel.id);
-      const address = new Address(
-         customerModel.street,
-         customerModel.number,
-         customerModel.city,
-         customerModel.state,
-         customerModel.country,
-         customerModel.postalCode,
-      );
-
-      customer.addPoints(customerModel.rewardPoints);
-      customer.changeAddress(address);
-      customerModel.active ? customer.activate() : customer.deactivate();
-
-      return customer;
+      throw new HttpNotFound('Customer not found!');
    }
 
    async findAll(): Promise<Customer[]> {

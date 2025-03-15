@@ -1,6 +1,7 @@
 import Product from '@domain/product/entity/product';
 import IProductRepository from '@domain/product/repository/product.interface';
 import ProductModel from '../model/product.model';
+import HttpNotFound from '@infra/api/errors/http.not.found.error';
 
 export default class ProductRepository implements IProductRepository {
    async create(entity: Product): Promise<void> {
@@ -26,12 +27,13 @@ export default class ProductRepository implements IProductRepository {
 
    async find(id: string): Promise<Product> {
       const product = await ProductModel.findOne({ where: { id } });
+
       if (!!product) {
          const newProduct = new Product(product.name, product.price, product.id);
          return newProduct;
       }
 
-      return  ({} as Product);
+      throw new HttpNotFound('Product not found!');
    }
 
    async findAll(): Promise<Product[]> {

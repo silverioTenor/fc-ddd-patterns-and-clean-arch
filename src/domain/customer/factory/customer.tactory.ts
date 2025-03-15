@@ -1,3 +1,4 @@
+import HttpBadRequest from '@infra/api/errors/http.bad.request.error';
 import { IFactory, IPayload } from '../../@shared/factory/factory.interface';
 import Customer from '../entity/customer';
 import CustomerPj from '../entity/customer-pj';
@@ -15,7 +16,7 @@ export default class CustomerFactory implements IFactory<Customer | CustomerPj> 
             customer = new CustomerPj(companyName, tradeName, cnpj);
             break;
          default:
-            throw new Error('Customer type not allowed');
+            throw new HttpBadRequest('Customer type not allowed');
       }
 
       customer.changeAddress(address);

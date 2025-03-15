@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
 import IProduct from './product.interface';
+import HttpValidation from '@infra/api/errors/http.validation.error';
 
 export default class Product implements IProduct {
    private id: string;
@@ -29,11 +30,11 @@ export default class Product implements IProduct {
 
    validate() {
       if (this.id.length === 0 || validate.version(this.id) !== 4) {
-         throw new Error('ID is required and must be a valid UUID');
+         throw new HttpValidation('ID is required and must be a valid UUID');
       } else if (this.name.length === 0) {
-         throw new Error('Name is required');
+         throw new HttpValidation('Name is required');
       } else if (this.price <= 0) {
-         throw new Error('Price must be greater than zero');
+         throw new HttpValidation('Price must be greater than zero');
       }
    }
 

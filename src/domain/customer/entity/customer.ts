@@ -3,6 +3,7 @@ import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
 import { ICustomer } from './customer.interface';
+import HttpValidation from '@infra/api/errors/http.validation.error';
 
 export default class Customer implements ICustomer {
    private id: string;
@@ -35,15 +36,15 @@ export default class Customer implements ICustomer {
 
    validate() {
       if (this.id.length === 0 || validate.version(this.id) !== 4) {
-         throw new Error('ID is required!');
+         throw new HttpValidation('ID is required!');
       } else if (this.name.length === 0) {
-         throw new Error('Name is required!');
+         throw new HttpValidation('Name is required!');
       }
    }
 
    changeName(name: string) {
       if (name.length === 0) {
-         throw new Error('Name is required!');
+         throw new HttpValidation('Name is required!');
       }
 
       this.name = name;
@@ -68,7 +69,7 @@ export default class Customer implements ICustomer {
 
    activate() {
       if (this.address === null || this.address === undefined) {
-         throw new Error('Address is mandatory to activate a customer!');
+         throw new HttpValidation('Address is mandatory to activate a customer!');
       }
 
       this.active = true;
@@ -80,7 +81,7 @@ export default class Customer implements ICustomer {
 
    addPoints(points: number) {
       if (points < 0) {
-         throw new Error('Points must be equal or greater than 0!');
+         throw new HttpValidation('Points must be equal or greater than 0!');
       }
 
       this.rewardPoints += points;

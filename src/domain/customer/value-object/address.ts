@@ -1,3 +1,5 @@
+import HttpValidation from "@infra/api/errors/http.validation.error";
+
 export default class Address {
    private street: string;
    private number: number;
@@ -50,17 +52,17 @@ export default class Address {
 
    validate() {
       if (this.street.length === 0) {
-         throw new Error('Street is required!');
+         throw new HttpValidation('Street is required!');
       } else if (this.number === 0) {
-         throw new Error('Number is required!');
+         throw new HttpValidation('Number is required!');
       } else if (this.city.length === 0) {
-         throw new Error('City is required!');
+         throw new HttpValidation('City is required!');
       } else if (this.state.length === 0) {
-         throw new Error('State is required!');
+         throw new HttpValidation('State is required!');
       } else if (this.country.length === 0) {
-         throw new Error('Country is required!');
+         throw new HttpValidation('Country is required!');
       } else if (this.postalCode <= 0) {
-         throw new Error('Postal code is required!');
+         throw new HttpValidation('Postal code is required!');
       }
    }
 

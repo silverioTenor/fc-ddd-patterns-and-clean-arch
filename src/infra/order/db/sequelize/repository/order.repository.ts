@@ -3,6 +3,7 @@ import OrderItem from '@domain/checkout/entity/order-item';
 import IOrderRepository from '@domain/checkout/repository/order.interface';
 import OrderItemModel from '../model/order-item.model';
 import OrderModel from '../model/order.model';
+import HttpNotFound from '@infra/api/errors/http.not.found.error';
 
 export default class OrderRepository implements IOrderRepository {
    async create(entity: Order): Promise<void> {
@@ -32,58 +33,54 @@ export default class OrderRepository implements IOrderRepository {
    }
 
    async update(entity: Order): Promise<void> {
-      let orderModel;
+      const orderModel = await OrderModel.findOne({
+         where: { id: entity.getId() },
+         include: ['items'],
+         rejectOnEmpty: true,
+      });
 
-      try {
-         orderModel = await OrderModel.findOne({
-            where: { id: entity.getId() },
-            include: ['items'],
-            rejectOnEmpty: true,
+      if (!!orderModel) {
+         await orderModel.update({
+            items: entity.getItems().map(item => ({
+               id: item.getId(),
+               product_id: item.getProductId(),
+               product_name: item.getProductName(),
+               quantity: item.getQuantity(),
+               price: item.getPrice(),
+            })),
+            total: entity.total(),
          });
-      } catch (error) {
-         throw new Error('Order not found!');
       }
 
-      await orderModel.update({
-         items: entity.getItems().map(item => ({
-            id: item.getId(),
-            product_id: item.getProductId(),
-            product_name: item.getProductName(),
-            quantity: item.getQuantity(),
-            price: item.getPrice(),
-         })),
-         total: entity.total(),
-      });
+      throw new HttpNotFound('Order not found!');
    }
 
    async find(id: string): Promise<Order> {
-      let orderModel: OrderModel;
-
-      try {
-         orderModel = await OrderModel.findOne({
-            where: { id },
-            include: ['items'],
-            rejectOnEmpty: true,
-         });
-      } catch (error) {
-         throw new Error('Order not found!');
-      }
-
-      orderModel = orderModel.toJSON();
-
-      const items = orderModel.items.map((item: OrderItemModel) => {
-         const orderItem = new OrderItem(
-            item.product_id,
-            item.product_name,
-            item.quantity,
-            item.price,
-            item.id,
-         );
-         return orderItem;
+      let orderModel = await OrderModel.findOne({
+         where: { id },
+         include: ['items'],
+         rejectOnEmpty: true,
       });
 
-      const order = new Order(orderModel.customer_id, items, orderModel.id);
-      return order;
+      if (!!orderModel) {
+         orderModel = orderModel.toJSON();
+
+         const items = orderModel.items.map((item: OrderItemModel) => {
+            const orderItem = new OrderItem(
+               item.product_id,
+               item.product_name,
+               item.quantity,
+               item.price,
+               item.id,
+            );
+            return orderItem;
+         });
+
+         const order = new Order(orderModel.customer_id, items, orderModel.id);
+         return order;
+      }
+
+      throw new HttpNotFound('Order not found!');
    }
 
    async findAll(): Promise<Order[]> {

@@ -15,11 +15,7 @@ export default class CreateOrderUseCase {
          products: input.products,
       });
 
-      try {
-         await this.orderRepository.create(order);
-      } catch (error) {
-         throw new Error(`Error creating order: ${error}`);
-      }
+      await this.orderRepository.create(order);
 
       const orderItemsPromise = order.getItems().map((item: OrderItem) => {
          return this.orderRepository.createOrderItem(item, order.getId());

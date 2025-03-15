@@ -1,3 +1,4 @@
+import HttpNotFound from '@infra/api/errors/http.not.found.error';
 import Customer from './customer';
 import { ICustomerPj } from './customer.interface';
 
@@ -22,15 +23,15 @@ export default class CustomerPj extends Customer implements ICustomerPj {
 
    validade(): void {
       if (this.tradeName.length === 0) {
-         throw new Error('Trade name is required!');
+         throw new HttpNotFound('Trade name is required!');
       } else if (this.cnpj.toString().length !== 14) {
-         throw new Error('Invalid cnpj!');
+         throw new HttpNotFound('Invalid cnpj!');
       }
    }
 
    changeTradeName(tradeName: string): void {
       if (tradeName.length === 0) {
-         throw new Error('Trade name is required!');
+         throw new HttpNotFound('Trade name is required!');
       }
       this.tradeName = tradeName;
    }

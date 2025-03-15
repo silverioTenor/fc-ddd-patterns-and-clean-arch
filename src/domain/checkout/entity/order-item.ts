@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
+import HttpValidation from '@infra/api/errors/http.validation.error';
 
 export default class OrderItem {
    private id: string;
@@ -38,15 +39,15 @@ export default class OrderItem {
 
    validate() {
       if (this.id.length === 0 || validate.version(this.id) !== 4) {
-         throw new Error('ID is required!');
+         throw new HttpValidation('ID is required!');
       } else if (this.productId.length === 0 || validate.version(this.productId) !== 4) {
-         throw new Error('Product ID is required!');
+         throw new HttpValidation('Product ID is required!');
       } else if (this.productName.length === 0) {
-         throw new Error('Product name is required!');
+         throw new HttpValidation('Product name is required!');
       } else if (this.quantity <= 0) {
-         throw new Error('Quantity must be greater than zero!');
+         throw new HttpValidation('Quantity must be greater than zero!');
       } else if (this.price <= 0) {
-         throw new Error('Price is required!');
+         throw new HttpValidation('Price is required!');
       }
    }
 
