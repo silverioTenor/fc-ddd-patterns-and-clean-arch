@@ -8,16 +8,16 @@ export default class CustomerController {
       const customerCreateUseCase = new CreateCustomerUseCase(customerRepository);
 
       const inputCustomerCreate = {
-         name: req.body?.name,
+         name: req.body.name,
          address: {
-            street: req.body?.address?.street,
-            number: req.body?.address?.number,
-            city: req.body?.address?.city,
-            state: req.body?.address?.state,
-            country: req.body?.address?.country,
-            postalCode: req.body?.address?.postalCode,
+            street: req.body.address.street,
+            number: req.body.address.number,
+            city: req.body.address.city,
+            state: req.body.address.state,
+            country: req.body.address.country,
+            postalCode: req.body.address.postalCode,
          },
-         type: req.body?.type,
+         type: req.body.type,
       };
 
       const outputCustomerCreated = await customerCreateUseCase.execute(inputCustomerCreate);

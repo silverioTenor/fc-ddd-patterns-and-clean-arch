@@ -51,17 +51,17 @@ export default class Address {
    }
 
    validate() {
-      if (this.street.length === 0) {
+      if (!!this.street) {
          throw new HttpValidation('Street is required!');
       } else if (this.number === 0) {
          throw new HttpValidation('Number is required!');
-      } else if (this.city.length === 0) {
+      } else if (!!this.city) {
          throw new HttpValidation('City is required!');
-      } else if (this.state.length === 0) {
+      } else if (!!this.state) {
          throw new HttpValidation('State is required!');
-      } else if (this.country.length === 0) {
+      } else if (!!this.country) {
          throw new HttpValidation('Country is required!');
-      } else if (this.postalCode <= 0) {
+      } else if (!!this.postalCode === false || this.postalCode <= 0) {
          throw new HttpValidation('Postal code is required!');
       }
    }

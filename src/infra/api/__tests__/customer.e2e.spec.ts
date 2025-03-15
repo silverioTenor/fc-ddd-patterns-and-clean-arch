@@ -42,4 +42,15 @@ describe('E2E test for customer', () => {
          },
       });
    }, 60000);
+
+   test('should throw an error when trying create a customer with invalid data', async () => {
+      const response = await request(app)
+         .post('/customer')
+         .send({
+            name: 'Willy Wonka',
+            type: 'pf',
+         });
+
+      expect(response.status).toBe(500);
+   }, 60000);
 });
