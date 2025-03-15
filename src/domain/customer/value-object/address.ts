@@ -1,4 +1,4 @@
-import HttpValidation from "@infra/api/errors/http.validation.error";
+import HttpValidation from "@infra/@Shared/api/error/http.validation.error";
 
 export default class Address {
    private street: string;

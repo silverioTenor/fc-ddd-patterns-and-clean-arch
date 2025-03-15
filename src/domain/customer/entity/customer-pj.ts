@@ -1,4 +1,4 @@
-import HttpNotFound from '@infra/api/errors/http.not.found.error';
+import HttpNotFound from '@infra/@Shared/api/error/http.not.found.error';
 import Customer from './customer';
 import { ICustomerPj } from './customer.interface';
 

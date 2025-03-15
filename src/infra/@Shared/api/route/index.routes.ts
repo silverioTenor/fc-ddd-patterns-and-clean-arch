@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import customerRouter from './customer.routes';
+import customerRouter from '@infra/customer/api/route/customer.routes';
 
 const routes = Router();
 

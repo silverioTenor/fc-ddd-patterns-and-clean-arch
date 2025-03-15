@@ -1,10 +1,10 @@
 import 'express-async-errors';
 import express, { NextFunction } from 'express';
 import { Sequelize } from 'sequelize-typescript';
-import CustomerModel from '../customer/db/sequelize/model/customer.model';
-import routes from './routes/index.routes';
+import CustomerModel from '../../customer/db/sequelize/model/customer.model';
+import routes from './route/index.routes';
 import { Request, Response } from 'express';
-import ErrorHandling from './middlewares/error.handling.midlleware';
+import ErrorHandling from './middleware/error.handling.midlleware';
 
 export const app = express();
 app.use(express.json());

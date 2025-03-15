@@ -2,7 +2,7 @@ import { v4 as uuid} from 'uuid';
 import validate from 'uuid-validate';
 import OrderItem from './order-item';
 import 'dotenv/config';
-import HttpValidation from '@infra/api/errors/http.validation.error';
+import HttpValidation from '@infra/@Shared/api/error/http.validation.error';
 
 export default class Order {
    private id: string;

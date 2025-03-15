@@ -1,4 +1,4 @@
-import HttpBadRequest from '@infra/api/errors/http.bad.request.error';
+import HttpBadRequest from '@infra/@Shared/api/error/http.bad.request.error';
 import { IFactory, IPayload } from '../../@shared/factory/factory.interface';
 import Customer from '../entity/customer';
 import CustomerPj from '../entity/customer-pj';
