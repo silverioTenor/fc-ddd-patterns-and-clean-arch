@@ -20,7 +20,7 @@ export default class UpdateAddressUseCase {
       };
 
       const customer = factory.create(payload);
-      await this.customerRepository.update(customer);
+      await this.customerRepository.updateAddress(customer);
 
       return Mapper.convertTo<Customer, OutputUpdateCustomerDto>(customer);
    }
