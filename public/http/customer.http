@@ -1,0 +1,52 @@
+### CREATE
+
+POST http://localhost:3000/customer HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Willy Wonka",
+   "address": {
+      "street": "Chocolate Factory",
+      "number": 22,
+      "city": "Wonderland",
+      "state": "Fairyland",
+      "country": "Candyland",
+      "postalCode": 12345678
+   },
+   "type": "pf"
+}
+
+### FIND
+
+GET http://localhost:3000/customer/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+
+### LIST
+
+GET http://localhost:3000/customer/ HTTP/1.1
+
+### UPDATE
+
+PUT http://localhost:3000/customer/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Sr. Armando",
+   "type": "pf"
+}
+
+### UPDATE ADDRESS
+
+PATCH http://localhost:3000/customer/address/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+Content-Type: application/json
+
+{
+   "address": {
+      "street": "Rua do Relógio",
+      "number": 22,
+      "city": "Londres",
+      "state": "Algum Estado",
+      "country": "Reino Unido",
+      "postalCode": 49284730
+   },
+   "type": "pf"
+}
