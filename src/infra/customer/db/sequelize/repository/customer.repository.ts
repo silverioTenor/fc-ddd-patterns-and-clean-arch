@@ -23,7 +23,7 @@ export default class CustomerRepository implements ICustomertRepository {
    async update(entity: Customer): Promise<void> {
       const customer = await CustomerModel.findOne({
          where: { id: entity.getId() },
-         rejectOnEmpty: true,
+         rejectOnEmpty: false,
       });
 
       if (!!customer) {
@@ -35,38 +35,38 @@ export default class CustomerRepository implements ICustomertRepository {
             },
             { where: { id: entity.getId() } },
          );
+         return
       }
 
       throw new HttpNotFound('Customer not found!');
    }
 
    async updateAddress(entity: Customer): Promise<void> {
-      let customer;
+      const customer = await CustomerModel.findOne({
+         where: { id: entity.getId() },
+         rejectOnEmpty: false,
+      });
 
-      try {
-         customer = await CustomerModel.findOne({
-            where: { id: entity.getId() },
-            rejectOnEmpty: true,
-         });
-      } catch (error) {
-         throw new Error('Customer not found!');
+      if (!!customer) {
+         await customer.update(
+            {
+               street: entity.getAddress().getStreet(),
+               number: entity.getAddress().getNumber(),
+               city: entity.getAddress().getCity(),
+               state: entity.getAddress().getState(),
+               country: entity.getAddress().getCountry(),
+               postalCode: entity.getAddress().getPostalCode(),
+            },
+            { where: { id: entity.getId() } },
+         );
+         return;
       }
 
-      await customer.update(
-         {
-            street: entity.getAddress().getStreet(),
-            number: entity.getAddress().getNumber(),
-            city: entity.getAddress().getCity(),
-            state: entity.getAddress().getState(),
-            country: entity.getAddress().getCountry(),
-            postalCode: entity.getAddress().getPostalCode(),
-         },
-         { where: { id: entity.getId() } },
-      );
+      throw new HttpNotFound('Customer not found!');
    }
 
    async find(id: string): Promise<Customer> {
-      const customerModel = await CustomerModel.findOne({ where: { id }, rejectOnEmpty: true });
+      const customerModel = await CustomerModel.findOne({ where: { id }, rejectOnEmpty: false });
 
       if (!!customerModel) {
          const customer = new Customer(customerModel.name, customerModel.id);

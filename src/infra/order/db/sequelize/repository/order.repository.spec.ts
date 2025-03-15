@@ -12,6 +12,7 @@ import Order from '@domain/checkout/entity/order';
 import CustomerRepository from '@infra/customer/db/sequelize/repository/customer.repository';
 import ProductRepository from '@infra/product/db/sequelize/repository/product.repository';
 import OrderModel from '../model/order.model';
+import OrderFactory from '../../../../../domain/checkout/factory/order-factory';
 
 describe('Order repository unit test', () => {
    let sequelize: Sequelize;
@@ -110,6 +111,7 @@ describe('Order repository unit test', () => {
          ...order,
          id: 'invalid-id',
          items: [order.getItems(), newOrderItem],
+         getId: () => 'invalid-id',
       } as unknown as Order;
 
       await expect(async () => orderRepository.update(updateOrder)).rejects.toThrow(

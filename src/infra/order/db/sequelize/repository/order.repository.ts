@@ -36,7 +36,7 @@ export default class OrderRepository implements IOrderRepository {
       const orderModel = await OrderModel.findOne({
          where: { id: entity.getId() },
          include: ['items'],
-         rejectOnEmpty: true,
+         rejectOnEmpty: false,
       });
 
       if (!!orderModel) {
@@ -50,6 +50,7 @@ export default class OrderRepository implements IOrderRepository {
             })),
             total: entity.total(),
          });
+         return
       }
 
       throw new HttpNotFound('Order not found!');
@@ -59,7 +60,7 @@ export default class OrderRepository implements IOrderRepository {
       let orderModel = await OrderModel.findOne({
          where: { id },
          include: ['items'],
-         rejectOnEmpty: true,
+         rejectOnEmpty: false,
       });
 
       if (!!orderModel) {
