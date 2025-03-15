@@ -21,6 +21,7 @@ const MockRepository = () => {
       findAll: jest.fn().mockReturnValue(Promise.resolve([firstCustomer, secondCustomer])),
       create: jest.fn(),
       update: jest.fn(),
+      updateAddress: jest.fn(),
    };
 };
 
