@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import OrderRepository from '../../db/sequelize/repository/order.repository';
 import CreateOrderUseCase from '@usecase/order/create/create.order.usecase';
+import FindOrderUseCase from '@usecase/order/find/find.order.usecase';
 
 export default class OrderController {
    private constructor() {}
@@ -25,5 +26,15 @@ export default class OrderController {
 
       const outputOrderCreated = await createOrderUseCase.execute(inputCreateOrder);
       return res.status(201).json(outputOrderCreated);
+   }
+
+   static async find(req: Request, res: Response): Promise<Response> {
+      const orderRepository = new OrderRepository();
+      const findOrderUseCase = new FindOrderUseCase(orderRepository);
+
+      const inputFindOrder = { id: req.params.id };
+
+      const outputFoundOrder = await findOrderUseCase.execute(inputFindOrder);
+      return res.status(200).json(outputFoundOrder);
    }
 }

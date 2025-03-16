@@ -7,4 +7,8 @@ orderRouter.post('/', async (req: Request, res: Response) => {
    await OrderController.create(req, res);
 });
 
+orderRouter.get('/:id', async (req: Request, res: Response) => {
+   await OrderController.find(req, res);
+});
+
 export default orderRouter;
