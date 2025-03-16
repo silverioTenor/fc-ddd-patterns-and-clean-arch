@@ -6,6 +6,8 @@ import ProductModel from '../../product/db/sequelize/model/product.model';
 import routes from './route/index.routes';
 import { Request, Response } from 'express';
 import ErrorHandling from './middleware/error.handling.midlleware';
+import OrderModel from '../../order/db/sequelize/model/order.model';
+import OrderItemModel from '../../order/db/sequelize/model/order-item.model';
 
 export const app = express();
 app.use(express.json());
@@ -24,7 +26,7 @@ const setupDb = async () => {
       logging: false,
    });
 
-   sequelize.addModels([CustomerModel, ProductModel]);
+   sequelize.addModels([CustomerModel, ProductModel, OrderModel, OrderItemModel]);
    await sequelize.sync();
 };
 setupDb();
