@@ -15,7 +15,7 @@ export default class UpdateCustomerUseCase {
          id: input.id,
          name: input.name,
          address: foundCustomer.getAddress(),
-         type: input.type,
+         type: input.type || 'pf',
          points: foundCustomer.getRewardPoints(),
       };
 

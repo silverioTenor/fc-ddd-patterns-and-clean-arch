@@ -1,7 +1,7 @@
 export interface InputUpdateCustomerDto {
    id: string;
    name: string;
-   type: string;
+   type?: string;
 }
 
 export interface InputUpdateAddressDto {
