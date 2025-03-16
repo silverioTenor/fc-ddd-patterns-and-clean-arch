@@ -1,0 +1,27 @@
+### CREATE
+
+POST http://localhost:3000/product HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Product 1",
+   "price": 199.9
+}
+
+### FIND
+
+GET http://localhost:3000/product/7682859c-244e-45f7-ab15-fe02f0859eb7 HTTP/1.1
+
+### LIST
+
+GET http://localhost:3000/product/ HTTP/1.1
+
+### UPDATE
+
+PUT http://localhost:3000/product/7682859c-244e-45f7-ab15-fe02f0859eb7 HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Sr. Armando",
+   "price": 149.9
+}

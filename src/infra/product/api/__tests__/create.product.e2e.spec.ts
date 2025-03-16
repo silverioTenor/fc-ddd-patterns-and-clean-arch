@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app, sequelize } from '@infra/@Shared/api/express';
 
-describe('E2E test - Create product', () => {
+describe('e2e test product - CREATE', () => {
    beforeEach(async () => {
       await sequelize.sync({ force: true });
    });
