@@ -8,7 +8,7 @@ export interface InputCreateCustomerDto {
       country: string;
       postalCode: number;
    };
-   type: string;
+   type?: string;
 }
 
 export interface OutputCreateCustomerDto {

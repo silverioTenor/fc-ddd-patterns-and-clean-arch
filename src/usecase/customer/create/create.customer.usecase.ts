@@ -14,7 +14,7 @@ export default class CreateCustomerUseCase {
          name: input.name,
          address: input.address,
          points: globalSettings.customer.pointsRules.creation,
-         type: input.type,
+         type: input.type || 'pf',
       };
 
       const customer = customerFactory.create(payload);
