@@ -38,15 +38,15 @@ export default class OrderItem {
    }
 
    validate() {
-      if (this.id.length === 0 || validate.version(this.id) !== 4) {
+      if (!(!!this.id) || validate.version(this.id) !== 4) {
          throw new HttpValidation('ID is required!');
-      } else if (this.productId.length === 0 || validate.version(this.productId) !== 4) {
+      } else if (!(!!this.productId) || validate.version(this.productId) !== 4) {
          throw new HttpValidation('Product ID is required!');
-      } else if (this.productName.length === 0) {
+      } else if (!(!!this.productName)) {
          throw new HttpValidation('Product name is required!');
-      } else if (this.quantity <= 0) {
+      } else if (!(!!this.quantity) || this.quantity <= 0) {
          throw new HttpValidation('Quantity must be greater than zero!');
-      } else if (this.price <= 0) {
+      } else if (!(!!this.price) || this.price <= 0) {
          throw new HttpValidation('Price is required!');
       }
    }

@@ -30,11 +30,11 @@ export default class Order {
    }
 
    validate() {
-      if (this.id.length === 0 || validate.version(this.id) !== 4) {
+      if (!(!!this.id) || validate.version(this.id) !== 4) {
          throw new HttpValidation('Id is required!');
-      } else if (this.customerId.length === 0 || validate.version(this.customerId) !== 4) {
+      } else if (!(!!this.customerId) || validate.version(this.customerId) !== 4) {
          throw new HttpValidation('Customer id is required!');
-      } else if (this.items.length === 0) {
+      } else if (!(!!this.items)) {
          throw new HttpValidation('Must have at least one item!');
       }
 
