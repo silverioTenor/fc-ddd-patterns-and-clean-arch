@@ -19,8 +19,9 @@ export default class UpdateOrderUseCase {
          orderId: input.id,
          orderItemId: foundOrder.items.map((p: any) => p.id),
          customerId: foundOrder.customerId,
-         products: input.items.map(p => {
+         products: input.items.map((p, i) => {
             return {
+               orderItemId: foundOrder.items[i].id,
                id: p.productId,
                name: p.productName,
                quantity: p.quantity,
