@@ -34,7 +34,7 @@ export default class Order {
          throw new HttpValidation('Id is required!');
       } else if (!(!!this.customerId) || validate.version(this.customerId) !== 4) {
          throw new HttpValidation('Customer id is required!');
-      } else if (!(!!this.items)) {
+      } else if (!!this.items && this.items.length <= 0) {
          throw new HttpValidation('Must have at least one item!');
       }
 

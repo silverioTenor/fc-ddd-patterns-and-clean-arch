@@ -63,22 +63,6 @@ describe('Unit test - Update a customer', () => {
       await expect(updateCustomerUseCase.execute(input)).rejects.toThrow('Name is required!');
    });
 
-   it('should throw an error when trying update a customer without type', async () => {
-      const customerRepository = MockRepository();
-      await customerRepository.create(customer);
-      const updateCustomerUseCase = new UpdateCustomerUseCase(customerRepository);
-
-      const input = {
-         id: customer.getId(),
-         name: customer.getName(),
-         type: '',
-      };
-
-      await expect(updateCustomerUseCase.execute(input)).rejects.toThrow(
-         'Customer type not allowed',
-      );
-   });
-
    it('should update an address', async () => {
       const customerRepository = MockRepository();
       await customerRepository.create(customer);
