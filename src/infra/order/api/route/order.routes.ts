@@ -11,4 +11,8 @@ orderRouter.get('/:id', async (req: Request, res: Response) => {
    await OrderController.find(req, res);
 });
 
+orderRouter.put('/:id', async (req: Request, res: Response) => {
+   await OrderController.update(req, res);
+});
+
 export default orderRouter;
