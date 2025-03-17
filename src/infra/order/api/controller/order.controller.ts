@@ -3,6 +3,7 @@ import OrderRepository from '../../db/sequelize/repository/order.repository';
 import CreateOrderUseCase from '@usecase/order/create/create.order.usecase';
 import FindOrderUseCase from '@usecase/order/find/find.order.usecase';
 import UpdateOrderUseCase from '@usecase/order/update/update.order.usecase';
+import ListOrderUseCase from '../../../../usecase/order/list/list.order.usecase';
 
 export default class OrderController {
    private constructor() {}
@@ -58,5 +59,15 @@ export default class OrderController {
 
       const outputOrderCreated = await updateOrderUseCase.execute(inputUpdateOrder);
       return res.status(200).json(outputOrderCreated);
+   }
+
+   static async list(req: Request, res: Response): Promise<Response> {
+      const orderRepository = new OrderRepository();
+      const listOrderUseCase = new ListOrderUseCase(orderRepository);
+
+      const outputOrderList = await listOrderUseCase.execute();
+      return res.status(200).json({
+         orders: outputOrderList,
+      });
    }
 }
