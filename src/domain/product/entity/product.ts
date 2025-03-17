@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
 import IProduct from './product.interface';
-import HttpValidation from '@infra/@Shared/api/error/http.validation.error';
+import HttpValidation from '@infra/@shared/api/error/http.validation.error';
 
 export default class Product implements IProduct {
    private id: string;

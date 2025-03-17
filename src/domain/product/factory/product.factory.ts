@@ -2,7 +2,7 @@ import Product from "../entity/product";
 import IProduct from "../entity/product.interface";
 import ProductB from '../entity/product-b';
 import { IFactory, IPayload } from '../../@shared/factory/factory.interface';
-import HttpBadRequest from "@infra/@Shared/api/error/http.bad.request.error";
+import HttpBadRequest from "@infra/@shared/api/error/http.bad.request.error";
 
 export default class ProductFactory implements IFactory<IProduct> {
    create(payload: IPayload): Product {

@@ -3,7 +3,7 @@ import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
 import { ICustomer } from './customer.interface';
-import HttpValidation from '@infra/@Shared/api/error/http.validation.error';
+import HttpValidation from '@infra/@shared/api/error/http.validation.error';
 
 export default class Customer implements ICustomer {
    private id: string;

@@ -1,7 +1,7 @@
 import Product from '@domain/product/entity/product';
 import IProductRepository from '@domain/product/repository/product.interface';
 import ProductModel from '../model/product.model';
-import HttpNotFound from '@infra/@Shared/api/error/http.not.found.error';
+import HttpNotFound from '@infra/@shared/api/error/http.not.found.error';
 
 export default class ProductRepository implements IProductRepository {
    async create(entity: Product): Promise<void> {

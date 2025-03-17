@@ -3,7 +3,7 @@ import OrderItem from '@domain/checkout/entity/order-item';
 import IOrderRepository from '@domain/checkout/repository/order.interface';
 import OrderItemModel from '../model/order-item.model';
 import OrderModel from '../model/order.model';
-import HttpNotFound from '@infra/@Shared/api/error/http.not.found.error';
+import HttpNotFound from '@infra/@shared/api/error/http.not.found.error';
 
 export default class OrderRepository implements IOrderRepository {
    async create(entity: Order): Promise<void> {

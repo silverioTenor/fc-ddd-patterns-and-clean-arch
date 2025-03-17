@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app, sequelize } from '@infra/@Shared/api/express';
+import { app, sequelize } from '@infra/@shared/api/express';
 
 describe('e2e test product - FIND', () => {
    beforeEach(async () => {

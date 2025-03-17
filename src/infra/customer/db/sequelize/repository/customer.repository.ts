@@ -2,7 +2,7 @@ import Customer from '@domain/customer/entity/customer';
 import ICustomertRepository from '@domain/customer/repository/customer.interface';
 import Address from '@domain/customer/value-object/address';
 import CustomerModel from '../model/customer.model';
-import HttpNotFound from '@infra/@Shared/api/error/http.not.found.error';
+import HttpNotFound from '@infra/@shared/api/error/http.not.found.error';
 
 export default class CustomerRepository implements ICustomertRepository {
    async create(entity: Customer): Promise<void> {
