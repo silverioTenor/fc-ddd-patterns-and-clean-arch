@@ -12,7 +12,7 @@ describe('e2e test order - FIND', () => {
 
    it('should find an order', async () => {
       const { body: customer } = await request(app)
-         .post('/customer')
+         .post('/customer/create')
          .send({
             name: 'Willy Wonka',
             address: {
@@ -52,7 +52,7 @@ describe('e2e test order - FIND', () => {
 
    it('should throw an error when trying finding an order with invalid-uuid', async () => {
       const { body: customer } = await request(app)
-         .post('/customer')
+         .post('/customer/create')
          .send({
             name: 'Willy Wonka',
             address: {

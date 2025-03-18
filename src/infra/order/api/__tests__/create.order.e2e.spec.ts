@@ -12,7 +12,7 @@ describe('e2e test order - CREATE', () => {
 
    it('should create an order', async () => {
       const { body: customer } = await request(app)
-         .post('/customer')
+         .post('/customer/create')
          .send({
             name: 'Willy Wonka',
             address: {

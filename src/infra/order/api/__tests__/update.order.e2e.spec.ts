@@ -12,7 +12,7 @@ describe('e2e test order - UPDATE', () => {
 
    it('should update an order', async () => {
       const { body: customer } = await request(app)
-         .post('/customer')
+         .post('/customer/create')
          .send({
             name: 'Willy Wonka',
             address: {
@@ -65,7 +65,7 @@ describe('e2e test order - UPDATE', () => {
 
    it('should throw an error when trying updating an order without items', async () => {
       const { body: customer } = await request(app)
-         .post('/customer')
+         .post('/customer/create')
          .send({
             name: 'Willy Wonka',
             address: {
