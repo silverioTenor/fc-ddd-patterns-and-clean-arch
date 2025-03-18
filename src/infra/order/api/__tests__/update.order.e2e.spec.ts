@@ -25,13 +25,13 @@ describe('e2e test order - UPDATE', () => {
             },
          });
 
-      const { body: product } = await request(app).post('/product').send({
+      const { body: product } = await request(app).post('/product/create').send({
          name: 'Product 1',
          price: 19.9,
       });
 
       const { body: orderCreated } = await request(app)
-         .post('/order')
+         .post('/order/create')
          .send({
             customerId: customer.id,
             products: [
@@ -45,10 +45,10 @@ describe('e2e test order - UPDATE', () => {
          });
 
       const { status, body: orderUpdated } = await request(app)
-         .put(`/order/${orderCreated.id}`)
+         .put(`/order/update/${orderCreated.id}`)
          .send({
             customerId: customer.id,
-            products: (orderCreated.items as any[]).map(i => {
+            items: (orderCreated.items as any[]).map(i => {
                return {
                   id: i.id,
                   productId: product.id,
@@ -78,13 +78,13 @@ describe('e2e test order - UPDATE', () => {
             },
          });
 
-      const { body: product } = await request(app).post('/product').send({
+      const { body: product } = await request(app).post('/product/create').send({
          name: 'Product 1',
          price: 19.9,
       });
 
       const { body: orderCreated } = await request(app)
-         .post('/order')
+         .post('/order/create')
          .send({
             customerId: customer.id,
             products: [
@@ -98,7 +98,7 @@ describe('e2e test order - UPDATE', () => {
          });
 
       const { status, body: orderUpdated } = await request(app)
-         .put(`/order/${orderCreated.id}`)
+         .put(`/order/update/${orderCreated.id}`)
          .send({
             customerId: customer.id,
          });

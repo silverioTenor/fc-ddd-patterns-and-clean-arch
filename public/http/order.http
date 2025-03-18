@@ -1,6 +1,6 @@
 ### CREATE
 
-POST http://localhost:3000/order HTTP/1.1
+POST http://localhost:3000/order/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -17,17 +17,16 @@ Content-Type: application/json
 
 ### FIND
 
-GET http://localhost:3000/order/0a47d66f-58c8-41b5-88ee-ca1bacb65203 HTTP/1.1
+GET http://localhost:3000/order/find/0a47d66f-58c8-41b5-88ee-ca1bacb65203 HTTP/1.1
 
 ### UPDATE
 
-PUT http://localhost:3000/order/0a47d66f-58c8-41b5-88ee-ca1bacb65203 HTTP/1.1
+PUT http://localhost:3000/order/update/0a47d66f-58c8-41b5-88ee-ca1bacb65203 HTTP/1.1
 Content-Type: application/json
 
 {
-   "id": "0a47d66f-58c8-41b5-88ee-ca1bacb65203",
    "customerId": "167570de-5d99-4fee-ad52-3e84dce26ad6",
-   "products": [
+   "items": [
       {
          "id": "09b5fafe-5762-4a6c-a759-e1734f67ae1a",
          "productId": "09b5fafe-5762-4a6c-a759-e1734f67ae1a",

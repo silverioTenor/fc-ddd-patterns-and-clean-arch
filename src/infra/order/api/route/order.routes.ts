@@ -3,15 +3,15 @@ import OrderController from '../controller/order.controller';
 
 const orderRouter = Router();
 
-orderRouter.post('/', async (req: Request, res: Response) => {
+orderRouter.post('/create', async (req: Request, res: Response) => {
    await OrderController.create(req, res);
 });
 
-orderRouter.get('/:id', async (req: Request, res: Response) => {
+orderRouter.get('/find/:id', async (req: Request, res: Response) => {
    await OrderController.find(req, res);
 });
 
-orderRouter.put('/:id', async (req: Request, res: Response) => {
+orderRouter.put('/update/:id', async (req: Request, res: Response) => {
    await OrderController.update(req, res);
 });
 

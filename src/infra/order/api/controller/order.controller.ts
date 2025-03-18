@@ -3,7 +3,7 @@ import OrderRepository from '../../db/sequelize/repository/order.repository';
 import CreateOrderUseCase from '@usecase/order/create/create.order.usecase';
 import FindOrderUseCase from '@usecase/order/find/find.order.usecase';
 import UpdateOrderUseCase from '@usecase/order/update/update.order.usecase';
-import ListOrderUseCase from '../../../../usecase/order/list/list.order.usecase';
+import ListOrderUseCase from '@usecase/order/list/list.order.usecase';
 
 export default class OrderController {
    private constructor() {}
@@ -46,7 +46,7 @@ export default class OrderController {
 
       const inputUpdateOrder = {
          id: req.params.id,
-         items: (req.body.products as any[]).map(i => {
+         items: (req.body.items as any[]).map(i => {
             return {
                id: i.id,
                productId: i.productId,

@@ -25,13 +25,13 @@ describe('e2e test order - CREATE', () => {
             },
          });
 
-      const { body: product } = await request(app).post('/product').send({
+      const { body: product } = await request(app).post('/product/create').send({
          name: 'Product 1',
          price: 19.9,
       });
 
       const { status, body: order } = await request(app)
-         .post('/order')
+         .post('/order/create')
          .send({
             customerId: customer.id,
             products: [
@@ -61,13 +61,13 @@ describe('e2e test order - CREATE', () => {
    });
 
    it('should throw an error when trying creating an order without customerId', async () => {
-      const { body: product } = await request(app).post('/product').send({
+      const { body: product } = await request(app).post('/product/create').send({
          name: 'Product 1',
          price: 19.9,
       });
 
       const { status, body } = await request(app)
-         .post('/order')
+         .post('/order/create')
          .send({
             products: [
                {

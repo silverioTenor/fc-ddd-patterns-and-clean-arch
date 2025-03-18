@@ -25,13 +25,13 @@ describe('e2e test order - LIST', () => {
             },
          });
 
-      const { body: product } = await request(app).post('/product').send({
+      const { body: product } = await request(app).post('/product/create').send({
          name: 'Product 1',
          price: 19.9,
       });
 
       const { body: order } = await request(app)
-         .post('/order')
+         .post('/order/create')
          .send({
             customerId: customer.id,
             products: [
