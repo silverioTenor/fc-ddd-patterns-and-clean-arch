@@ -15,7 +15,7 @@ describe('e2e test product - CREATE', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      const { status, body: product } = await request(app).post('/product').send(payload);
+      const { status, body: product } = await request(app).post('/product/create').send(payload);
 
       expect(status).toBe(201);
       expect(product).toEqual({
@@ -29,7 +29,7 @@ describe('e2e test product - CREATE', () => {
       const payload = {
          price: 199.9
       };
-      const response = await request(app).post('/product').send(payload);
+      const response = await request(app).post('/product/create').send(payload);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -42,7 +42,7 @@ describe('e2e test product - CREATE', () => {
       const payload = {
          name: 'Product 1',
       };
-      const response = await request(app).post('/product').send(payload);
+      const response = await request(app).post('/product/create').send(payload);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({

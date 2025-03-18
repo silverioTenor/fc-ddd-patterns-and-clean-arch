@@ -23,7 +23,7 @@ paths:
             - customer
          summary: Create a customer
          description:
-         operationId: create
+         operationId: createCustomer
          requestBody:
             content:
                application/json:
@@ -70,7 +70,7 @@ paths:
          tags:
             - customer
          summary: Find a customer
-         operationId: find
+         operationId: findCustomer
          parameters:
             - name: id
               in: path
@@ -95,7 +95,7 @@ paths:
          tags:
             - customer
          summary: Update a customer
-         operationId: update
+         operationId: updateCustomer
          parameters:
             - name: id
               in: path
@@ -193,7 +193,7 @@ paths:
          tags:
             - customer
          summary: Customer listing
-         operationId: list
+         operationId: listCustomer
          responses:
             200:
                description: OK
@@ -201,6 +201,133 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/CustomerList'
+   /product/create:
+      post:
+         tags:
+            - product
+         summary: Create a product
+         description:
+         operationId: createProduct
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/ProductCreateDTO'
+                  examples:
+                     product:
+                        value:
+                           name: Product One
+                           price: 247.9
+         responses:
+            201:
+               description: Created
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Product'
+            404:
+               description: Product not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            422:
+               description: Business rules validation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            500:
+               description: Internal server error
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /product/find/{id}:
+      get:
+         tags:
+            - product
+         summary: Find a product
+         operationId: findProduct
+         parameters:
+            - name: id
+              in: path
+              schema:
+                 type: string
+              required: true
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Product'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /product/update/{id}:
+      put:
+         tags:
+            - product
+         summary: Update a product
+         operationId: updateProduct
+         parameters:
+            - name: id
+              in: path
+              schema:
+                 type: string
+              required: true
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/ProductUpdateDTO'
+                  examples:
+                     product:
+                        value:
+                           name: Product XPTO
+                           price: 289.9
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Product'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            422:
+               description: Business rules validation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            500:
+               description: Internal server error
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /product:
+      get:
+         tags:
+            - product
+         summary: Product listing
+         operationId: listProduct
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ProductList'
 components:
    schemas:
       Customer:
@@ -278,6 +405,35 @@ components:
             customers:
                items:
                   $ref: '#/components/schemas/Customer'
+      Product:
+         type: object
+         properties:
+            id:
+               type: string
+            name:
+               type: string
+            price:
+               type: number
+      ProductCreateDTO:
+         type: object
+         properties:
+            name:
+               type: string
+            price:
+               type: number
+      ProductUpdateDTO:
+         type: object
+         properties:
+            name:
+               type: string
+            price:
+               type: number
+      ProductList:
+         type: object
+         properties:
+            products:
+               items:
+                  $ref: '#/components/schemas/Product'
       ResponseError:
          type: object
          required:

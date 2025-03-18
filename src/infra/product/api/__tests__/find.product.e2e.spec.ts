@@ -15,8 +15,10 @@ describe('e2e test product - FIND', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      const { body: productCreated } = await request(app).post('/product').send(payload);
-      const { status, body: product } = await request(app).get(`/product/${productCreated.id}`);
+      const { body: productCreated } = await request(app).post('/product/create').send(payload);
+      const { status, body: product } = await request(app).get(
+         `/product/find/${productCreated.id}`,
+      );
 
       expect(status).toBe(200);
       expect(product).toEqual(productCreated);
@@ -27,8 +29,8 @@ describe('e2e test product - FIND', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      await request(app).post('/product').send(payload);
-      const { status, body } = await request(app).get('/product/invalid-uuid');
+      await request(app).post('/product/create').send(payload);
+      const { status, body } = await request(app).get('/product/find/invalid-uuid');
 
       expect(status).toBe(404);
       expect(body).toEqual({

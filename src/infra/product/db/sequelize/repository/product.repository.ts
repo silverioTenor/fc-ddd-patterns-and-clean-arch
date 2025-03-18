@@ -13,7 +13,11 @@ export default class ProductRepository implements IProductRepository {
    }
 
    async update(entity: Product): Promise<void> {
-      const product = await ProductModel.findOne({ where: { id: entity.getId() } });
+      const product = await ProductModel.findOne({
+         where: { id: entity.getId() },
+         rejectOnEmpty: false,
+      });
+
       if (!!product) {
          await product.update(
             {
@@ -22,11 +26,14 @@ export default class ProductRepository implements IProductRepository {
             },
             { where: { id: entity.getId() } },
          );
+         return;
       }
+
+      throw new HttpNotFound('Product not found!');
    }
 
    async find(id: string): Promise<Product> {
-      const product = await ProductModel.findOne({ where: { id } });
+      const product = await ProductModel.findOne({ where: { id }, rejectOnEmpty: false });
 
       if (!!product) {
          const newProduct = new Product(product.name, product.price, product.id);

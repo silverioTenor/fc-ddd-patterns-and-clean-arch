@@ -15,13 +15,13 @@ describe('e2e test product - UPDATE', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      const { body: productCreated } = await request(app).post('/product').send(payload);
+      const { body: productCreated } = await request(app).post('/product/create').send(payload);
 
       payload.name = 'Product Updated';
       payload.price = 149.9;
 
       const { status, body: productUpdated } = await request(app)
-         .put(`/product/${productCreated.id}`)
+         .put(`/product/update/${productCreated.id}`)
          .send(payload);
 
       expect(status).toBe(200);
@@ -37,13 +37,13 @@ describe('e2e test product - UPDATE', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      await request(app).post('/product').send(payload);
+      await request(app).post('/product/create').send(payload);
 
       payload.name = 'Product Updated';
       payload.price = 149.9;
 
       const { status, body: productUpdated } = await request(app)
-         .put('/product/invalid-uuid')
+         .put('/product/update/invalid-uuid')
          .send(payload);
 
       expect(status).toBe(404);

@@ -15,7 +15,7 @@ describe('e2e test product - LIST', () => {
          name: 'Product 1',
          price: 199.9,
       };
-      const { body: productCreated } = await request(app).post('/product').send(payload);
+      const { body: productCreated } = await request(app).post('/product/create').send(payload);
       const { status, body: products } = await request(app).get('/product');
 
       expect(status).toBe(200);
@@ -24,7 +24,7 @@ describe('e2e test product - LIST', () => {
       });
    });
 
-   it('should return an empty product list when no found products created', async () => {
+   it('should return an empty product list when no found products', async () => {
       const { status, body: products } = await request(app).get('/product');
 
       expect(status).toBe(200);
