@@ -1,0 +1,290 @@
+openapi: 3.1.0
+
+info:
+   description: Test application to create and manage products, customers and their orders
+   version: 1.0.0
+   title: Clean Arch API
+servers:
+   - url: http://localhost:3000
+     description: DEV environment
+tags:
+   - name: customer
+     description: Operations about customers
+   - name: product
+     description: Operations about products
+   - name: order
+     description: Operations about orders
+schemes:
+   - http
+paths:
+   /customer/create:
+      post:
+         tags:
+            - customer
+         summary: Create a customer
+         description:
+         operationId: create
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/CustomerCreateDTO'
+                  examples:
+                     customer:
+                        value:
+                           name: Charlotte Linlin
+                           address:
+                              street: 140 Sugar Avenue
+                              number: 40
+                              city: Chocolatown
+                              state: Whole Cake
+                              country: Totto Land
+                              postalCode: 12345678
+         responses:
+            201:
+               description: Created
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Customer'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            422:
+               description: Business rules validation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            500:
+               description: Internal server error
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /customer/find/{id}:
+      get:
+         tags:
+            - customer
+         summary: Find a customer
+         operationId: find
+         parameters:
+            - name: id
+              in: path
+              schema:
+                 type: string
+              required: true
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Customer'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /customer/update/{id}:
+      patch:
+         tags:
+            - customer
+         summary: Update a customer
+         operationId: update
+         parameters:
+            - name: id
+              in: path
+              schema:
+                 type: string
+              required: true
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/CustomerUpdateDTO'
+                  examples:
+                     customer:
+                        value:
+                           name: Big Mom
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Customer'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            422:
+               description: Business rules validation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            500:
+               description: Internal server error
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /customer/update-address/{id}:
+      put:
+         tags:
+            - customer
+         summary: Update a customer address
+         operationId: updateAddress
+         parameters:
+            - name: id
+              in: path
+              schema:
+                 type: string
+              required: true
+         requestBody:
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/AddressUpdateDTO'
+                  examples:
+                     customer:
+                        value:
+                           address:
+                              street: 140 Sugar Avenue - Updated
+                              number: 82
+                              city: Chocolatown - Updated
+                              state: Whole Cake - Updated
+                              country: Totto Land - Updated
+                              postalCode: 87654321
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Customer'
+            404:
+               description: Customer not found
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            422:
+               description: Business rules validation
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+            500:
+               description: Internal server error
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/ResponseError'
+   /customer:
+      get:
+         tags:
+            - customer
+         summary: Customer listing
+         operationId: list
+         responses:
+            200:
+               description: OK
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/CustomerList'
+components:
+   schemas:
+      Customer:
+         type: object
+         properties:
+            id:
+               type: string
+            name:
+               type: string
+            active:
+               type: boolean
+            rewardPoints:
+               type: number
+            address:
+               type: object
+               properties:
+                  street:
+                     type: string
+                  number:
+                     type: number
+                  city:
+                     type: string
+                  state:
+                     type: string
+                  country:
+                     type: string
+                  postalCode:
+                     type: number
+      CustomerCreateDTO:
+         type: object
+         properties:
+            name:
+               type: string
+            address:
+               type: object
+               properties:
+                  street:
+                     type: string
+                  number:
+                     type: number
+                  city:
+                     type: string
+                  state:
+                     type: string
+                  country:
+                     type: string
+                  postalCode:
+                     type: number
+      CustomerUpdateDTO:
+         type: object
+         properties:
+            name:
+               type: string
+      AddressUpdateDTO:
+         type: object
+         properties:
+            address:
+               type: object
+               properties:
+                  street:
+                     type: string
+                  number:
+                     type: number
+                  city:
+                     type: string
+                  state:
+                     type: string
+                  country:
+                     type: string
+                  postalCode:
+                     type: number
+      CustomerList:
+         type: object
+         properties:
+            customers:
+               items:
+                  $ref: '#/components/schemas/Customer'
+      ResponseError:
+         type: object
+         required:
+            - status
+            - message
+         properties:
+            status:
+               type: string
+            message:
+               type: string
