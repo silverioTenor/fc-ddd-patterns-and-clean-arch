@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(routes);
 
 const swaggerDocConverted = fs.readFileSync(
-   path.join(__dirname, '..', 'config', 'swagger.yml'),
+   path.join(__dirname, 'config', 'swagger.yml'),
    'utf8',
 );
 const swaggerDocFile = YAML.parse(swaggerDocConverted);
