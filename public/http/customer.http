@@ -1,6 +1,6 @@
 ### CREATE
 
-POST http://localhost:3000/customer HTTP/1.1
+POST http://localhost:3000/customer/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -17,15 +17,15 @@ Content-Type: application/json
 
 ### FIND
 
-GET http://localhost:3000/customer/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+GET http://localhost:3000/customer/find/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
 
 ### LIST
 
-GET http://localhost:3000/customer/ HTTP/1.1
+GET http://localhost:3000/customer HTTP/1.1
 
 ### UPDATE
 
-PUT http://localhost:3000/customer/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+PUT http://localhost:3000/customer/update/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ### UPDATE ADDRESS
 
-PATCH http://localhost:3000/customer/address/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
+PATCH http://localhost:3000/customer/update-address/bb7e75d5-1a19-4e23-b502-8b315fc24973 HTTP/1.1
 Content-Type: application/json
 
 {
