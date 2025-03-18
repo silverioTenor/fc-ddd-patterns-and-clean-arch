@@ -6,7 +6,7 @@ export interface InputUpdateCustomerDto {
 
 export interface InputUpdateAddressDto {
    id: string;
-   type: string;
+   type?: string;
    address: {
       street: string;
       number: number;

@@ -34,4 +34,22 @@ describe('Unit test - customer list', () => {
 
       expect(customers).toEqual([firstCustomer, secondCustomer]);
    });
+
+   it('should return an empty list when no found customers', async () => {
+      const FakeRepository = () => {
+         return {
+            find: jest.fn(),
+            findAll: jest.fn().mockReturnValue(Promise.resolve([])),
+            create: jest.fn(),
+            update: jest.fn(),
+            updateAddress: jest.fn(),
+         };
+      };
+      const customerRepository = FakeRepository();
+      const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
+
+      const customers = await listCustomerUseCase.execute();
+
+      expect(customers).toEqual([]);
+   });
 });
