@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../error/app.error';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
 export default class ErrorHandling {
    static handle(err: Error | AppError, _: Request, res: Response, _next: NextFunction): Response {
@@ -8,6 +9,8 @@ export default class ErrorHandling {
             status: 'error',
             message: err.message,
          });
+      } else if(err instanceof NotificationError) {
+         return res.status(400).json(err);
       }
 
       console.error(err);
