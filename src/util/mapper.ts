@@ -1,47 +1,57 @@
 export default class Mapper {
    private constructor() {}
 
-   static convertTo<T extends object, K>(entity: T, listProps?: Array<string>): K {
+   static convertTo<T extends object, K>(entity: T, blackList?: Array<string>): K {
       let result = {} as K;
 
-      if (listProps) {
-         listProps.forEach(props => {
-            (result as any)[props] = entity[props as keyof T];
-         });
-
-         return result;
-      }
-
       Object.keys(entity).forEach(key => {
-         (result as any)[key] = entity[key as keyof T];
+         if (!blackList?.includes(key)) {
+            if (typeof entity[key as keyof T] === 'object') {
+               const element = (entity as any)[key];
+               let tmp = {} as any;
+
+               Object.keys(element).forEach((subKey, i, list) => {
+                  if (!blackList?.includes(subKey)) {
+                     tmp[subKey] = element[subKey];
+                  }
+
+                  if (list.length - 1 === i) {
+                     entity[key as keyof T] = tmp;
+                  }
+               });
+            }
+
+            (result as any)[key] = entity[key as keyof T];
+         }
       });
 
       return result;
    }
 
-   static convertListTo<T extends object, K>(entityList: T[], listProps?: Array<string>): K[] {
+   static convertListTo<T extends object, K>(entityList: T[], blackList?: Array<string>): K[] {
       let result: K[] = [];
 
-      if (!listProps) {
-         entityList.forEach((e: T) => {
-            let obj = {} as K;
+      entityList.forEach((e: T) => {
+         let obj = {} as any;
 
-            Object.keys(e).forEach(key => {
-               (obj as any)[key] = e[key as keyof T];
-            });
+         Object.keys(e).forEach(key => {
+            if (!blackList?.includes(key)) {
+               if (typeof e[key as keyof T] === 'object') {
+                  const element = (e as any)[key];
+                  let tmp = {} as any;
 
-            result.push(obj);
-         });
+                  Object.keys(element).forEach((subKey, i, list) => {
+                     if (!blackList?.includes(subKey)) {
+                        tmp[subKey] = element[subKey];
+                     }
 
-         return result;
-      }
+                     if (list.length - 1 === i) {
+                        (e as any)[key] = tmp;
+                     }
+                  });
+               }
 
-      entityList.forEach((entity: T) => {
-         let obj = {} as K;
-
-         Object.keys(entity).forEach(key => {
-            if (listProps.includes(key)) {
-               (obj as any)[key] = entity[key as keyof T];
+               obj[key] = e[key as keyof T];
             }
          });
 
