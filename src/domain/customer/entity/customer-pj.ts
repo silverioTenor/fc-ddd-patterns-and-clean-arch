@@ -1,16 +1,20 @@
-import HttpNotFound from '@infra/@shared/api/error/http.not.found.error';
 import Customer from './customer';
 import { ICustomerPj } from './customer.interface';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
 export default class CustomerPj extends Customer implements ICustomerPj {
    private tradeName: string;
    private cnpj: number;
 
-   constructor(companyName: string, tradeName: string, cnpj: number) {
-      super(companyName);
+   constructor(companyName: string, tradeName: string, cnpj: number, id?: string) {
+      super(companyName, id);
       this.tradeName = tradeName;
       this.cnpj = cnpj;
       this.validade();
+
+      if (this.notification.hasErrors()) {
+         throw new NotificationError(this.notification.getErrors());
+      }
    }
 
    getTradeName(): string {
@@ -22,16 +26,25 @@ export default class CustomerPj extends Customer implements ICustomerPj {
    }
 
    validade(): void {
-      if (this.tradeName.length === 0) {
-         throw new HttpNotFound('Trade name is required!');
+      if (!(!!this.tradeName)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Trade name is required!',
+         });
       } else if (this.cnpj.toString().length !== 14) {
-         throw new HttpNotFound('Invalid cnpj!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Invalid cnpj!',
+         });
       }
    }
 
    changeTradeName(tradeName: string): void {
-      if (tradeName.length === 0) {
-         throw new HttpNotFound('Trade name is required!');
+      if (!(!!tradeName)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Trade name is required!',
+         });
       }
       this.tradeName = tradeName;
    }

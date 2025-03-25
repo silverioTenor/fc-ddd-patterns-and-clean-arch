@@ -1,6 +1,7 @@
-import HttpValidation from "@infra/@shared/api/error/http.validation.error";
+import NotificationError from '../../@shared/notification/notification.error';
+import Entity from '@domain/@shared/entity/entity.abstract';
 
-export default class Address {
+export default class Address extends Entity {
    private street: string;
    private number: number;
    private city: string;
@@ -16,6 +17,7 @@ export default class Address {
       country: string,
       postalCode: number,
    ) {
+      super();
       this.street = street;
       this.number = number;
       this.city = city;
@@ -24,6 +26,10 @@ export default class Address {
       this.postalCode = postalCode;
 
       this.validate();
+
+      if (this.notification.hasErrors()) {
+         throw new NotificationError(this.notification.getErrors());
+      }
    }
 
    getStreet() {
@@ -52,17 +58,40 @@ export default class Address {
 
    validate() {
       if (!(!!this.street)) {
-         throw new HttpValidation('Street is required!');
-      } else if (this.number === 0) {
-         throw new HttpValidation('Number is required!');
-      } else if (!(!!this.city)) {
-         throw new HttpValidation('City is required!');
-      } else if (!(!!this.state)) {
-         throw new HttpValidation('State is required!');
-      } else if (!(!!this.country)) {
-         throw new HttpValidation('Country is required!');
-      } else if (!(!!this.postalCode) || this.postalCode <= 0) {
-         throw new HttpValidation('Postal code is required!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Street is required!',
+         });
+      }
+      if (this.number === 0) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Number is required!',
+         });
+      }
+      if (!(!!this.city)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'City is required!',
+         });
+      }
+      if (!(!!this.state)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'State is required!',
+         });
+      }
+      if (!(!!this.country)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Country is required!',
+         });
+      }
+      if (!(!!this.postalCode) || this.postalCode <= 0) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Postal code is required!',
+         });
       }
    }
 

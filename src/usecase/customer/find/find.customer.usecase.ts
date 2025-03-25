@@ -8,6 +8,6 @@ export default class FindCustomerUseCase {
 
    async execute(input: InputFindCustomerDto): Promise<OutputFindCustomerDto> {
       let customer = await this.customerRepository.find(input.id);
-      return Mapper.convertTo<ICustomer, OutputFindCustomerDto>(customer);
+      return Mapper.convertTo<ICustomer, OutputFindCustomerDto>(customer, ['notification']);
    }
 }

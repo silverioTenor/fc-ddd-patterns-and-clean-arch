@@ -48,6 +48,6 @@ describe('e2e test customer - CREATE', () => {
          name: 'Willy Wonka',
       });
 
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(400);
    }, 60000);
 });

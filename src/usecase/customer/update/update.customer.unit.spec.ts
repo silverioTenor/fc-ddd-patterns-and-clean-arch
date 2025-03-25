@@ -2,14 +2,19 @@ import CustomerFactory from '@domain/customer/factory/customer.tactory';
 import Address from '@domain/customer/value-object/address';
 import UpdateCustomerUseCase from './update.customer.usecase';
 import UpdateAddressUseCase from './update.address.usecase';
+import Mapper from '@util/mapper';
+import Customer from '@domain/customer/entity/customer';
+import { OutputUpdateCustomerDto } from './update.customer.dto';
 
 const factory = new CustomerFactory();
+const address = new Address('Rua A', 20, 'Rio Azul', 'Paraíso', 'Noruega', 12345678);
 const customer = factory.create({
    type: 'pf',
    name: 'Willy Wonka',
    points: 5,
-   address: new Address('Rua A', 20, 'Rio Azul', 'Paraíso', 'Noruega', 12345678),
+   address,
 });
+
 const MockRepository = () => {
    return {
       find: jest.fn().mockReturnValue(Promise.resolve(customer)),
@@ -33,6 +38,7 @@ describe('Unit test - Update a customer', () => {
       };
 
       const outputCustomerUpdated = await updateCustomerUseCase.execute(input);
+
       expect(outputCustomerUpdated).toEqual({
          id: customer.getId(),
          name: customer.getName(),
@@ -60,7 +66,9 @@ describe('Unit test - Update a customer', () => {
          type: 'pf',
       };
 
-      await expect(updateCustomerUseCase.execute(input)).rejects.toThrow('Name is required!');
+      await expect(updateCustomerUseCase.execute(input)).rejects.toThrow(
+         'customer: Name is required!',
+      );
    });
 
    it('should update an address', async () => {
@@ -82,6 +90,7 @@ describe('Unit test - Update a customer', () => {
       };
 
       const outputCustomerUpdated = await updateAddressUseCase.execute(input);
+
       expect(outputCustomerUpdated).toEqual({
          id: customer.getId(),
          name: customer.getName(),
@@ -116,6 +125,8 @@ describe('Unit test - Update a customer', () => {
          },
       };
 
-      await expect(updateAddressUseCase.execute(input)).rejects.toThrow('Postal code is required!');
+      await expect(updateAddressUseCase.execute(input)).rejects.toThrow(
+         'address: Postal code is required!',
+      );
    });
 });

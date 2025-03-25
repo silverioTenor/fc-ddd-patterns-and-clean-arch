@@ -20,6 +20,6 @@ export default class CreateCustomerUseCase {
       const customer = customerFactory.create(payload);
       await this.customerRepository.create(customer);
 
-      return Mapper.convertTo<Customer, OutputCreateCustomerDto>(customer);
+      return Mapper.convertTo<Customer, OutputCreateCustomerDto>(customer, ['notification']);
    }
 }

@@ -22,6 +22,6 @@ export default class UpdateCustomerUseCase {
       const customer = factory.create(payload);
       await this.customerRepository.update(customer);
 
-      return Mapper.convertTo<Customer, OutputUpdateCustomerDto>(customer);
+      return Mapper.convertTo<Customer, OutputUpdateCustomerDto>(customer, ['notification']);
    }
 }

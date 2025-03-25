@@ -3,9 +3,10 @@ import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
 import { ICustomer } from './customer.interface';
-import HttpValidation from '@infra/@shared/api/error/http.validation.error';
+import Entity from '@domain/@shared/entity/entity.abstract';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
-export default class Customer implements ICustomer {
+export default class Customer extends Entity implements ICustomer {
    private id: string;
    private name: string;
    private active: boolean = false;
@@ -13,9 +14,14 @@ export default class Customer implements ICustomer {
    private rewardPoints: number = 0;
 
    constructor(name: string, id?: string) {
+      super();
       this.id = !!id ? id : uuid();
       this.name = name;
       this.validate();
+
+      if (this.notification.hasErrors()) {
+         throw new NotificationError(this.notification.getErrors());
+      }
    }
 
    getId() {
@@ -35,16 +41,28 @@ export default class Customer implements ICustomer {
    }
 
    validate() {
-      if (this.id.length === 0 || validate.version(this.id) !== 4) {
-         throw new HttpValidation('ID is required!');
-      } else if (this.name.length === 0) {
-         throw new HttpValidation('Name is required!');
+      if (!(!!this.id) || validate.version(this.id) !== 4) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'ID is required!',
+         });
+      }
+      if (!(!!this.name)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Name is required!',
+         });
       }
    }
 
    changeName(name: string) {
-      if (name.length === 0) {
-         throw new HttpValidation('Name is required!');
+      if (!(!!name)) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Name is required!',
+         });
+
+         throw new NotificationError(this.notification.getErrors());
       }
 
       this.name = name;
@@ -69,7 +87,12 @@ export default class Customer implements ICustomer {
 
    activate() {
       if (this.address === null || this.address === undefined) {
-         throw new HttpValidation('Address is mandatory to activate a customer!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Address is mandatory to activate a customer!',
+         });
+
+         throw new NotificationError(this.notification.getErrors());
       }
 
       this.active = true;
@@ -81,7 +104,12 @@ export default class Customer implements ICustomer {
 
    addPoints(points: number) {
       if (points < 0) {
-         throw new HttpValidation('Points must be equal or greater than 0!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Points must be equal or greater than 0!',
+         });
+
+         throw new NotificationError(this.notification.getErrors());
       }
 
       this.rewardPoints += points;

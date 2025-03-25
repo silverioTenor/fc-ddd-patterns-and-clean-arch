@@ -1,6 +1,7 @@
-import Customer from "../entity/customer";
-import CustomerPj from "../entity/customer-pj";
-import CustomerFactory from "./customer.tactory";
+import Mapper from '@util/mapper';
+import Customer from '../entity/customer';
+import CustomerPj from '../entity/customer-pj';
+import CustomerFactory from './customer.tactory';
 
 describe('Customer factory unit test', () => {
    it('should create a new instance to customer', () => {
@@ -16,13 +17,14 @@ describe('Customer factory unit test', () => {
             state: 'state',
             country: 'country',
             postalCode: 12345678,
-         }
+         },
       });
 
-      expect(customer).toBeInstanceOf(Customer);
-      expect(customer.getId()).toBeDefined();
-      expect(customer.isActive()).toBeTruthy();
-      expect(customer.getAddress()).toEqual({
+      const customerMapped = Mapper.convertTo<Customer, any>(customer, ['notification']);
+
+      expect(customerMapped.id).toBeDefined();
+      expect(customerMapped.active).toBeTruthy();
+      expect(customerMapped.address).toEqual({
          street: 'street',
          number: 19,
          city: 'city',
@@ -47,13 +49,16 @@ describe('Customer factory unit test', () => {
             state: 'state',
             country: 'country',
             postalCode: 12345678,
-         }
-      });
+         },
+      }) as CustomerPj;
 
-      expect(customerpj).toBeInstanceOf(CustomerPj);
-      expect(customerpj.getId()).toBeDefined();
-      expect(customerpj.isActive()).toBeTruthy();
-      expect(customerpj.getAddress()).toEqual({
+      const customerPjMapped = Mapper.convertTo<CustomerPj, any>(customerpj, [
+         'notification',
+      ]);
+
+      expect(customerPjMapped.id).toBeDefined();
+      expect(customerPjMapped.active).toBeTruthy();
+      expect(customerPjMapped.address).toEqual({
          street: 'street',
          number: 20,
          city: 'city',
@@ -78,7 +83,7 @@ describe('Customer factory unit test', () => {
                state: 'state',
                country: 'country',
                postalCode: 12345678,
-            }
+            },
          });
       }).toThrow('Customer type not allowed');
    });

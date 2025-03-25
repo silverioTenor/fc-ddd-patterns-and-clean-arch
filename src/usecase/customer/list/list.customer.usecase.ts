@@ -8,6 +8,6 @@ export default class ListCustomerUseCase {
 
    async execute(): Promise<OutputListCustomerDto[]> {
       const customerList = await this.customerRepository.findAll();
-      return Mapper.convertListTo<ICustomer, OutputListCustomerDto>(customerList);
+      return Mapper.convertListTo<ICustomer, OutputListCustomerDto>(customerList, ['notification']);
    }
 }
