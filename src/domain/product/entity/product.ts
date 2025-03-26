@@ -2,9 +2,8 @@ import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
 import IProduct from './product.interface';
-import HttpValidation from '@infra/@shared/api/error/http.validation.error';
 import Entity from '@domain/@shared/entity/entity.abstract';
-import NotificationError from '../../@shared/notification/notification.error';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
 export default class Product extends Entity implements IProduct {
    private id: string;
