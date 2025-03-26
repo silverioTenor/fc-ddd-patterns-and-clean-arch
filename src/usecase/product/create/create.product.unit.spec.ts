@@ -1,4 +1,4 @@
-import CreateProductUsecase from "./create.product.usecase";
+import CreateProductUsecase from './create.product.usecase';
 
 const input = { name: 'Product 1', price: 19.9 };
 
@@ -19,12 +19,14 @@ describe('Unit test - product creation', () => {
       await expect(createProductUseCase.execute(input)).resolves.toHaveProperty('id');
    });
 
-      it('should throw an error when creating a product without name', async () => {
-         const productRepository = MockRepository();
-         const createProductUseCase = new CreateProductUsecase(productRepository);
+   it('should throw an error when creating a product without name', async () => {
+      const productRepository = MockRepository();
+      const createProductUseCase = new CreateProductUsecase(productRepository);
 
-         input.name = '';
+      input.name = '';
 
-         await expect(createProductUseCase.execute(input)).rejects.toThrow('Name is required');
-      });
+      await expect(createProductUseCase.execute(input)).rejects.toThrow(
+         'product: Name is required',
+      );
+   });
 });

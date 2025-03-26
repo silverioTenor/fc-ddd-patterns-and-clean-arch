@@ -34,6 +34,7 @@ describe('Integration test - Updating product', () => {
       };
 
       const result = await updateProductUseCase.execute(input);
+      
       expect(result).toEqual(input);
       expect(result.name).toBe('Product Updated');
    });

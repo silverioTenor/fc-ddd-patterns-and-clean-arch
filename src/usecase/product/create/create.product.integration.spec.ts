@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import CreateProductUsecase from './create.product.usecase';
 import ProductModel from '@infra/product/db/sequelize/model/product.model';
-import ProductRepository from '../../../infra/product/db/sequelize/repository/product.repository';
+import ProductRepository from '@infra/product/db/sequelize/repository/product.repository';
 
 const input = { name: 'Product 1', price: 19.9 };
 
@@ -32,6 +32,6 @@ describe('Integration test - product creation', () => {
 
       input.name = '';
 
-      await expect(createProductUseCase.execute(input)).rejects.toThrow('Name is required');
+      await expect(createProductUseCase.execute(input)).rejects.toThrow('product: Name is required');
    });
 });

@@ -25,16 +25,20 @@ describe('e2e test product - CREATE', () => {
       });
    });
 
-   it('should throw an error when trying creating a product without price', async () => {
+   it('should throw an error when trying creating a product without name', async () => {
       const payload = {
          price: 199.9
       };
       const response = await request(app).post('/product/create').send(payload);
 
-      expect(response.status).toBe(422);
+      expect(response.status).toBe(400);
       expect(response.body).toEqual({
-         status: 'error',
-         message: 'Name is required',
+         errors: [
+            {
+               context: 'product',
+               message: 'Name is required',
+            }
+         ]
       });
    });
 
@@ -44,10 +48,14 @@ describe('e2e test product - CREATE', () => {
       };
       const response = await request(app).post('/product/create').send(payload);
 
-      expect(response.status).toBe(422);
+      expect(response.status).toBe(400);
       expect(response.body).toEqual({
-         status: 'error',
-         message: 'Price must be greater than zero',
+         errors: [
+            {
+               context: 'product',
+               message: 'Price must be greater than zero',
+            }
+         ]
       });
    });
 });

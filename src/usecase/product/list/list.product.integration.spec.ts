@@ -31,9 +31,20 @@ describe('Unit test - Listing product', () => {
 
       const products = await listProductUseCase.execute();
 
-      expect(products).toEqual([productOne, productTwo]);
       expect(products[0].name).toBe('Product 1');
       expect(products[1].name).toBe('Product 2');
+      expect(products).toEqual([
+         {
+            id: productOne.getId(),
+            name: productOne.getName(),
+            price: productOne.getPrice(),
+         },
+         {
+            id: productTwo.getId(),
+            name: productTwo.getName(),
+            price: productTwo.getPrice(),
+         },
+      ]);
    });
 
    it('should return an empty list when no producs are found', async () => {

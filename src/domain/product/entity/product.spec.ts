@@ -14,12 +14,12 @@ describe('Product unit tests', () => {
    });
 
    it('should throw an error if the name is empty', () => {
-      expect(() => new Product('', 100)).toThrow('Name is required');
+      expect(() => new Product('', 100)).toThrow('product: Name is required');
    });
 
    it('should throw an error if the price is less than or equal to zero', () => {
       expect(() => new Product('Product Name', 0)).toThrow(
-         'Price must be greater than zero',
+         'product: Price must be greater than zero',
       );
    });
 

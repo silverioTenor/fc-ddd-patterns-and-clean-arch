@@ -13,8 +13,8 @@ export default class ProductController {
       const createProductUseCase = new CreateProductUsecase(productRepository);
 
       const inputProductCreate = {
-         name: req.body.name,
-         price: req.body.price,
+         name: req.body?.name,
+         price: req.body?.price,
       };
 
       const outputProductCreated = await createProductUseCase.execute(inputProductCreate);
@@ -27,8 +27,8 @@ export default class ProductController {
 
       const inputProductUpdate = {
          id: req.params.id,
-         name: req.body.name,
-         price: req.body.price,
+         name: req.body?.name,
+         price: req.body?.price,
       };
 
       const outputProductUpdated = await updateProductUseCase.execute(inputProductUpdate);

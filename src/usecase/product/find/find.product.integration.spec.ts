@@ -30,7 +30,11 @@ describe('Integration test - Finding product', () => {
       const input = { id: product.getId() }
       const foundProduct = await findProductUseCase.execute(input);
 
-      expect(foundProduct).toEqual(product);
       expect(foundProduct.id).toBe(product.getId());
+      expect(foundProduct).toEqual({
+         id: product.getId(),
+         name: product.getName(),
+         price: product.getPrice(),
+      });
    });
 });

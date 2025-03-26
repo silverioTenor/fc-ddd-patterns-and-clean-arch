@@ -8,6 +8,6 @@ export default class ListProductUseCase {
 
    async execute(): Promise<OutputListProductDto[]> {
       const products = await this.productRepository.findAll();
-      return Mapper.convertListTo<Product, OutputListProductDto>(products);
+      return Mapper.convertListTo<Product, OutputListProductDto>(products, ['notification']);
    }
 }

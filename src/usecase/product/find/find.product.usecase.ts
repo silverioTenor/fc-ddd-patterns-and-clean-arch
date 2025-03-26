@@ -8,6 +8,6 @@ export default class FindProductUseCase {
 
    async execute(input: InputFindProductDto): Promise<OutputFindProductDto> {
       const foundProduct = await this.productRepository.find(input.id);
-      return Mapper.convertTo<Product, OutputFindProductDto>(foundProduct);
+      return Mapper.convertTo<Product, OutputFindProductDto>(foundProduct, ['notification']);
    }
 }

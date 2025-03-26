@@ -8,7 +8,7 @@ export default class UpdateProductUseCase {
    constructor(private productRepository: IProductRepository) {}
 
    async execute(input: InputUpdateProducDto): Promise<OutputUpdateProductDto> {
-      const foundProduct = await this.productRepository.find(input.id);
+      await this.productRepository.find(input.id);
 
       const factory = new ProductFactory();
       const updateProduct = factory.create({
@@ -19,6 +19,6 @@ export default class UpdateProductUseCase {
       });
 
       await this.productRepository.update(updateProduct);
-      return Mapper.convertTo<Product, OutputUpdateProductDto>(updateProduct);
+      return Mapper.convertTo<Product, OutputUpdateProductDto>(updateProduct, ['notification']);
    }
 }
