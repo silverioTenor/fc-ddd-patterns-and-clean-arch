@@ -31,7 +31,7 @@ describe('e2e test order - LIST', () => {
       });
 
       const { body: order } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -44,7 +44,7 @@ describe('e2e test order - LIST', () => {
             ],
          });
 
-      const { status, body: orderList } = await request(app).get('/order').send();
+      const { status, body: orderList } = await request(app).get('/checkout').send();
 
       expect(status).toBe(200);
       expect(orderList).toEqual({
@@ -53,7 +53,7 @@ describe('e2e test order - LIST', () => {
    });
 
    test('should return an empty list when no found order', async () => {
-      const { status, body } = await request(app).get('/order').send()
+      const { status, body } = await request(app).get('/checkout').send()
 
       expect(status).toBe(200);
       expect(body).toEqual({

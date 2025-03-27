@@ -23,6 +23,6 @@ export default class CreateOrderUseCase {
 
       await Promise.all(orderItemsPromise);
 
-      return Mapper.convertTo<Order, OutputCreateOrderDto>(order);
+      return Mapper.convertTo<Order, OutputCreateOrderDto>(order, ['notification']);
    }
 }

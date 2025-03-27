@@ -6,17 +6,37 @@ export default class Mapper {
 
       Object.keys(entity).forEach(key => {
          if (!blackList?.includes(key)) {
-            if (typeof entity[key as keyof T] === 'object') {
-               const element = (entity as any)[key];
-               let tmp = {} as any;
+            if (Array.isArray(entity[key as keyof T])) {
+               const arrayProps = (entity as any)[key] as any[];
+               const arrayTemp = [] as any[];
 
-               Object.keys(element).forEach((subKey, i, list) => {
+               arrayProps.forEach(props => {
+                  const element = {} as any;
+
+                  Object.keys(props).forEach((subKey, i, list) => {
+                     if (!blackList?.includes(subKey)) {
+                        element[subKey] = props[subKey];
+                     }
+
+                     if (list.length - 1 === i) {
+                        arrayTemp.push(element);
+                     }
+                  });
+               });
+
+               (entity as any)[key] = arrayTemp;
+
+            } else if (typeof entity[key as keyof T] === 'object') {
+               const property = (entity as any)[key];
+               let element = {} as any;
+
+               Object.keys(property).forEach((subKey, i, list) => {
                   if (!blackList?.includes(subKey)) {
-                     tmp[subKey] = element[subKey];
+                     element[subKey] = property[subKey];
                   }
 
                   if (list.length - 1 === i) {
-                     entity[key as keyof T] = tmp;
+                     entity[key as keyof T] = element;
                   }
                });
             }
@@ -31,13 +51,33 @@ export default class Mapper {
    static convertListTo<T extends object, K>(entityList: T[], blackList?: Array<string>): K[] {
       let result: K[] = [];
 
-      entityList.forEach((e: T) => {
+      entityList.forEach((entity: T) => {
          let obj = {} as any;
 
-         Object.keys(e).forEach(key => {
+         Object.keys(entity).forEach(key => {
             if (!blackList?.includes(key)) {
-               if (typeof e[key as keyof T] === 'object') {
-                  const element = (e as any)[key];
+               if (Array.isArray(entity[key as keyof T])) {
+                  const arrayProps = (entity as any)[key] as any[];
+                  const arrayTemp = [] as any[];
+
+                  arrayProps.forEach(props => {
+                     const element = {} as any;
+
+                     Object.keys(props).forEach((subKey, i, list) => {
+                        if (!blackList?.includes(subKey)) {
+                           element[subKey] = props[subKey];
+                        }
+
+                        if (list.length - 1 === i) {
+                           arrayTemp.push(element);
+                        }
+                     });
+                  });
+
+                  (entity as any)[key] = arrayTemp;
+
+               } else if (typeof entity[key as keyof T] === 'object') {
+                  const element = (entity as any)[key];
                   let tmp = {} as any;
 
                   Object.keys(element).forEach((subKey, i, list) => {
@@ -46,12 +86,12 @@ export default class Mapper {
                      }
 
                      if (list.length - 1 === i) {
-                        (e as any)[key] = tmp;
+                        (entity as any)[key] = tmp;
                      }
                   });
                }
 
-               obj[key] = e[key as keyof T];
+               obj[key] = entity[key as keyof T];
             }
          });
 

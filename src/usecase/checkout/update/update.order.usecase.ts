@@ -29,11 +29,14 @@ export default class UpdateOrderUseCase {
             };
          }),
       });
+      const total = order.total()
 
       await this.orderRepository.update(order);
 
-      let outputOrderUpdated = Mapper.convertTo<Order, OutputUpdateOrderDto>(order);
-      outputOrderUpdated.total = order.total();
+      let outputOrderUpdated = Mapper.convertTo<Order, OutputUpdateOrderDto>(order, [
+         'notification',
+      ]);
+      outputOrderUpdated.total = total;
 
       return outputOrderUpdated;
    }

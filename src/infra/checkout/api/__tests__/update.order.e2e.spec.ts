@@ -31,7 +31,7 @@ describe('e2e test order - UPDATE', () => {
       });
 
       const { body: orderCreated } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -45,7 +45,7 @@ describe('e2e test order - UPDATE', () => {
          });
 
       const { status, body: orderUpdated } = await request(app)
-         .put(`/order/update/${orderCreated.id}`)
+         .put(`/checkout/update/${orderCreated.id}`)
          .send({
             customerId: customer.id,
             items: (orderCreated.items as any[]).map(i => {
@@ -84,7 +84,7 @@ describe('e2e test order - UPDATE', () => {
       });
 
       const { body: orderCreated } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -98,7 +98,7 @@ describe('e2e test order - UPDATE', () => {
          });
 
       const { status, body: orderUpdated } = await request(app)
-         .put(`/order/update/${orderCreated.id}`)
+         .put(`/checkout/update/${orderCreated.id}`)
          .send({
             customerId: customer.id,
          });

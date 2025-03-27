@@ -31,7 +31,7 @@ describe('e2e test order - CREATE', () => {
       });
 
       const { status, body: order } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -67,7 +67,7 @@ describe('e2e test order - CREATE', () => {
       });
 
       const { status, body } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             products: [
                {
@@ -82,7 +82,7 @@ describe('e2e test order - CREATE', () => {
       expect(status).toBe(422);
       expect(body).toEqual({
          status: 'error',
-         message: 'Customer id is required!',
+         message: 'order: Customer id is required!',
       });
    });
 });

@@ -31,7 +31,7 @@ describe('e2e test order - FIND', () => {
       });
 
       const { body: order } = await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -44,7 +44,7 @@ describe('e2e test order - FIND', () => {
             ],
          });
 
-      const { status, body: foundOrder } = await request(app).get(`/order/find/${order.id}`).send();
+      const { status, body: foundOrder } = await request(app).get(`/checkout/find/${order.id}`).send();
 
       expect(status).toBe(200);
       expect(foundOrder).toEqual(order);
@@ -71,7 +71,7 @@ describe('e2e test order - FIND', () => {
       });
 
       await request(app)
-         .post('/order/create')
+         .post('/checkout/create')
          .send({
             customerId: customer.id,
             products: [
@@ -84,7 +84,7 @@ describe('e2e test order - FIND', () => {
             ],
          });
 
-      const { status, body } = await request(app).get('/order/find/invalid-uuid').send()
+      const { status, body } = await request(app).get('/checkout/find/invalid-uuid').send()
 
       expect(status).toBe(404);
       expect(body).toEqual({

@@ -12,7 +12,7 @@ tags:
      description: Operations about customers
    - name: product
      description: Operations about products
-   - name: order
+   - name: checkout
      description: Operations about orders
 schemes:
    - http
@@ -53,12 +53,12 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
@@ -124,12 +124,12 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
@@ -176,12 +176,12 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
@@ -231,12 +231,12 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
@@ -303,12 +303,12 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
@@ -328,11 +328,11 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ProductList'
-   /order/create:
+   /checkout/create:
       post:
          tags:
-            - order
-         summary: Create a order
+            - checkout
+         summary: Create an order
          description:
          operationId: createOrder
          requestBody:
@@ -362,23 +362,23 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-   /order/find/{id}:
+   /checkout/find/{id}:
       get:
          tags:
-            - order
-         summary: Find a order
+            - checkout
+         summary: Find an order
          operationId: findOrder
          parameters:
             - name: id
@@ -399,11 +399,11 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-   /order/update/{id}:
+   /checkout/update/{id}:
       put:
          tags:
-            - order
-         summary: Update a order
+            - checkout
+         summary: Update an order
          operationId: updateOrder
          parameters:
             - name: id
@@ -439,22 +439,22 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-            422:
+            400:
                description: Business rules validation
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/ResponseError'
+                        $ref: '#/components/schemas/ResponseErrorValidation'
             500:
                description: Internal server error
                content:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/ResponseError'
-   /order:
+   /checkout:
       get:
          tags:
-            - order
+            - checkout
          summary: Order listing
          operationId: listOrder
          responses:
@@ -634,11 +634,21 @@ components:
                $ref: '#/components/schemas/Order'
       ResponseError:
          type: object
-         required:
-            - status
-            - message
          properties:
             status:
+               type: string
+            message:
+               type: string
+      ResponseErrorValidation:
+         type: object
+         properties:
+            errors:
+               type: array
+               $ref: '#/components/schemas/ValidationError'
+      ValidationError:
+         type: object
+         properties:
+            context:
                type: string
             message:
                type: string

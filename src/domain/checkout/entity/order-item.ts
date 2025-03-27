@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import validate from 'uuid-validate';
 import 'dotenv/config';
-import HttpValidation from '@infra/@shared/api/error/http.validation.error';
+import Entity from '@domain/@shared/entity/entity.abstract';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
-export default class OrderItem {
+export default class OrderItem extends Entity {
    private id: string;
 
    constructor(
@@ -13,8 +14,13 @@ export default class OrderItem {
       private price: number,
       id?: string,
    ) {
+      super();
       this.id = !!id ? id : uuid();
       this.validate();
+
+      if (this.notification.hasErrors()) {
+         throw new NotificationError(this.notification.getErrors());
+      }
    }
 
    getId() {
@@ -39,15 +45,30 @@ export default class OrderItem {
 
    validate() {
       if (!(!!this.id) || validate.version(this.id) !== 4) {
-         throw new HttpValidation('ID is required!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'ID is required!',
+         });
       } else if (!(!!this.productId) || validate.version(this.productId) !== 4) {
-         throw new HttpValidation('Product ID is required!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Product ID is required!',
+         });
       } else if (!(!!this.productName)) {
-         throw new HttpValidation('Product name is required!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Product name is required!',
+         });
       } else if (!(!!this.quantity) || this.quantity <= 0) {
-         throw new HttpValidation('Quantity must be greater than zero!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Quantity must be greater than zero!',
+         });
       } else if (!(!!this.price) || this.price <= 0) {
-         throw new HttpValidation('Price is required!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Price is required!',
+         });
       }
    }
 

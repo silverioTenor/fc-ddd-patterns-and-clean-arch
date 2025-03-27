@@ -2,19 +2,25 @@ import { v4 as uuid} from 'uuid';
 import validate from 'uuid-validate';
 import OrderItem from './order-item';
 import 'dotenv/config';
-import HttpValidation from '@infra/@shared/api/error/http.validation.error';
+import Entity from '@domain/@shared/entity/entity.abstract';
+import NotificationError from '@domain/@shared/notification/notification.error';
 
-export default class Order {
+export default class Order extends Entity {
    private id: string;
    private customerId: string;
    private items: OrderItem[];
 
    constructor(customerId: string, items: OrderItem[], id?: string) {
+      super();
       this.id = !!id ? id : uuid();
       this.customerId = customerId;
       this.items = items;
 
       this.validate();
+
+      if (this.notification.hasErrors()) {
+         throw new NotificationError(this.notification.getErrors());
+      }
    }
 
    getId() {
@@ -31,17 +37,31 @@ export default class Order {
 
    validate() {
       if (!(!!this.id) || validate.version(this.id) !== 4) {
-         throw new HttpValidation('Id is required!');
-      } else if (!(!!this.customerId) || validate.version(this.customerId) !== 4) {
-         throw new HttpValidation('Customer id is required!');
-      } else if (!!this.items && this.items.length <= 0) {
-         throw new HttpValidation('Must have at least one item!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'ID is required!',
+         });
+      }
+      if (!(!!this.customerId) || validate.version(this.customerId) !== 4) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Customer ID is required!',
+         });
+      }
+      if (!!this.items && this.items.length <= 0) {
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Must have at least one item!',
+         });
       }
 
       const isQuantityMinor = this.items.some((item: any) => item.quantity <= 0);
 
       if (isQuantityMinor) {
-         throw new HttpValidation('Quantity must be greater than zero!');
+         this.notification.addError({
+            context: this.constructor.name.toLowerCase(),
+            message: 'Quantity must be greater than zero!',
+         });
       }
    }
 
