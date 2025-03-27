@@ -1,6 +1,7 @@
-import CustomerFactory from "@domain/customer/factory/customer.tactory";
-import Address from "@domain/customer/value-object/address";
-import ListCustomerUseCase from "./list.customer.usecase";
+import CustomerFactory from '@domain/customer/factory/customer.tactory';
+import Address from '@domain/customer/value-object/address';
+import ListCustomerUseCase from './list.customer.usecase';
+import Mapper from '@util/mapper';
 
 const factory = new CustomerFactory();
 const firstCustomer = factory.create({
@@ -31,8 +32,12 @@ describe('Unit test - customer list', () => {
       const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
 
       const customers = await listCustomerUseCase.execute();
+      const customersFiltered = Mapper.convertListTo<any, any>(
+         [firstCustomer, secondCustomer],
+         ['notification'],
+      );
 
-      expect(customers).toEqual([firstCustomer, secondCustomer]);
+      expect(customers).toEqual(customersFiltered);
    });
 
    it('should return an empty list when no found customers', async () => {

@@ -23,6 +23,12 @@ describe('Product unit tests', () => {
       );
    });
 
+   it('should throw an error when the name and the price is invalid', () => {
+      expect(() => new Product('', 0)).toThrow(
+         'product: Name is required,\nproduct: Price must be greater than zero',
+      );
+   });
+
    it('should change the price of the product', () => {
       const product = new Product('Product Name', 100);
       product.changePrice(200);

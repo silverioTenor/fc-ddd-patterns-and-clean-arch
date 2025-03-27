@@ -79,10 +79,14 @@ describe('e2e test order - CREATE', () => {
             ],
          });
 
-      expect(status).toBe(422);
+      expect(status).toBe(400);
       expect(body).toEqual({
-         status: 'error',
-         message: 'order: Customer id is required!',
+         errors: [
+            {
+               context: 'order',
+               message: 'Customer ID is required!',
+            },
+         ],
       });
    });
 });
