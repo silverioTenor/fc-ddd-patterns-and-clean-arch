@@ -28,7 +28,7 @@ describe('Customer repository unit test', () => {
    it('should create a customer', async () => {
       const customerRepository = new CustomerRepository();
       const customer = new Customer('Customer 1');
-      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer.addPoints(10);
       customer.changeAddress(address);
@@ -45,7 +45,7 @@ describe('Customer repository unit test', () => {
    it('should update a customer', async () => {
       const customerRepository = new CustomerRepository();
       const customer = new Customer('Customer 1');
-      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer.addPoints(10);
       customer.changeAddress(address);
@@ -66,7 +66,7 @@ describe('Customer repository unit test', () => {
    it('should throw an error when updating with invalid UUID', async () => {
       const customerRepository = new CustomerRepository();
       const customer = new Customer('Customer 1');
-      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer.addPoints(10);
       customer.changeAddress(address);
@@ -90,7 +90,7 @@ describe('Customer repository unit test', () => {
    it('should update customer address', async () => {
       const customerRepository = new CustomerRepository();
       const customer = new Customer('Customer 1');
-      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer.addPoints(10);
       customer.changeAddress(address);
@@ -98,7 +98,7 @@ describe('Customer repository unit test', () => {
 
       await customerRepository.create(customer);
 
-      const newAddress = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 54321);
+      const newAddress = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 12345678);
       customer.changeAddress(newAddress);
 
       await customerRepository.updateAddress(customer);
@@ -110,7 +110,7 @@ describe('Customer repository unit test', () => {
    it('should throw an error when updating address with invalid UUID', async () => {
       const customerRepository = new CustomerRepository();
       const customer = new Customer('Customer 1');
-      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer.addPoints(10);
       customer.changeAddress(address);
@@ -118,7 +118,7 @@ describe('Customer repository unit test', () => {
 
       await customerRepository.create(customer);
 
-      const newAddress = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 54321);
+      const newAddress = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 12345678);
       let updateCustomer = new CustomerFactory().create({
          type: 'pf',
          name: 'Customer Updated',
@@ -139,14 +139,14 @@ describe('Customer repository unit test', () => {
    it('should return a list of customers', async () => {
       const customerRepository = new CustomerRepository();
       const customer1 = new Customer('Customer 1');
-      const address1 = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345);
+      const address1 = new Address('Street 1', 1, 'City 1', 'State 1', 'Country 1', 12345678);
 
       customer1.addPoints(10);
       customer1.changeAddress(address1);
       customer1.activate();
 
       const customer2 = new Customer('Customer 2');
-      const address2 = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 54321);
+      const address2 = new Address('Street 2', 2, 'City 2', 'State 2', 'Country 2', 12345678);
 
       customer2.addPoints(20);
       customer2.changeAddress(address2);

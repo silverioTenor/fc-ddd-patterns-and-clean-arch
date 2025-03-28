@@ -126,7 +126,7 @@ describe('Unit test - Update a customer', () => {
       };
 
       await expect(updateAddressUseCase.execute(input)).rejects.toThrow(
-         'address: Postal code is required!',
+         'address: Postal code must have 8 digits!',
       );
    });
 });
