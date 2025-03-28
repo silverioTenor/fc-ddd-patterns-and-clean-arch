@@ -40,7 +40,7 @@ describe('Customer unit tests', () => {
       const customer = new Customer('Willy Wonka');
       const address = new Address('Street', 123, 'City', 'State', 'Country', 12345678);
       customer.changeAddress(address);
-      
+
       const invalidAddress = {
          street: '',
          number: 0,
@@ -50,7 +50,7 @@ describe('Customer unit tests', () => {
          postalCode: 0,
       };
 
-      const throwMsg = `address: Street is required!,\naddress: Number is required!,\naddress: City is required!,\naddress: State is required!,\naddress: Country is required!,\naddress: Postal code is required!`
+      const throwMsg = `address: Street is required!,\naddress: Number is required!,\naddress: City is required!,\naddress: State is required!,\naddress: Country is required!,\naddress: Postal code is required!`;
 
       expect(() => customer.changeAddress(invalidAddress)).toThrow(throwMsg);
    });
@@ -67,7 +67,9 @@ describe('Customer unit tests', () => {
    it('should throw an error when trying activate a customer without an address', () => {
       const customer = new Customer('Willy Wonka');
 
-      expect(() => customer.activate()).toThrow('customer: Address is mandatory to activate a customer!');
+      expect(() => customer.activate()).toThrow(
+         'customer: Address is mandatory to activate a customer!',
+      );
       expect(customer.isActive()).toBeFalsy();
    });
 
@@ -95,6 +97,8 @@ describe('Customer unit tests', () => {
    it('should throw an error when adding points with a negative value', () => {
       const customer = new Customer('Willy Wonka');
 
-      expect(() => customer.addPoints(-10)).toThrow('customer: Points must be equal or greater than 0!');
+      expect(() => customer.addPoints(-10)).toThrow(
+         'customer: Points must be equal or greater than 0!',
+      );
    });
 });

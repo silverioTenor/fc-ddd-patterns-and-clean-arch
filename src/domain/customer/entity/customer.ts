@@ -5,6 +5,7 @@ import 'dotenv/config';
 import { ICustomer } from './customer.interface';
 import Entity from '@domain/@shared/entity/entity.abstract';
 import NotificationError from '@domain/@shared/notification/notification.error';
+import CUstomerValidatorFactory from '../factory/customer.validator.factory';
 
 export default class Customer extends Entity implements ICustomer {
    private id: string;
@@ -41,18 +42,7 @@ export default class Customer extends Entity implements ICustomer {
    }
 
    validate() {
-      if (!(!!this.id) || validate.version(this.id) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'ID is required!',
-         });
-      }
-      if (!(!!this.name)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Name is required!',
-         });
-      }
+      CUstomerValidatorFactory.create().validate(this);
    }
 
    changeName(name: string) {
