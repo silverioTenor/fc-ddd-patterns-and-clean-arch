@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid';
-import validate from 'uuid-validate';
 import 'dotenv/config';
 import Entity from '@domain/@shared/entity/entity.abstract';
 import NotificationError from '@domain/@shared/notification/notification.error';
+import OrderItemValidatorFactory from '../factory/order-item.validator.factory';
 
 export default class OrderItem extends Entity {
    private id: string;
@@ -44,32 +44,7 @@ export default class OrderItem extends Entity {
    }
 
    validate() {
-      if (!(!!this.id) || validate.version(this.id) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'ID is required!',
-         });
-      } else if (!(!!this.productId) || validate.version(this.productId) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Product ID is required!',
-         });
-      } else if (!(!!this.productName)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Product name is required!',
-         });
-      } else if (!(!!this.quantity) || this.quantity <= 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Quantity must be greater than zero!',
-         });
-      } else if (!(!!this.price) || this.price <= 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Price is required!',
-         });
-      }
+      OrderItemValidatorFactory.create().validate(this);
    }
 
    orderItemTotal() {

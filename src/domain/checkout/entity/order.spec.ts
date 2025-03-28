@@ -19,7 +19,7 @@ describe('Order unit tests', () => {
    });
 
    it('should throw an error when creating an instance without a customer ID', () => {
-      expect(() => new Order('', [])).toThrow('order: Customer ID is required!,\norder: Must have at least one item!');
+      expect(() => new Order('', [])).toThrow('order: Customer ID is required!');
    });
 
    it('should add an item', () => {
@@ -39,7 +39,7 @@ describe('Order unit tests', () => {
 
       order.removeItem(item2);
 
-      expect(order['items'].length).toBe(1);
+      expect(order.getItems().length).toBe(1);
    });
 
    it('should calculate the total', () => {
@@ -70,7 +70,7 @@ describe('Order unit tests', () => {
 
       expect(() => {
          new Order(uuid(), [item1, item2, item3]);
-      }).toThrow('order: Quantity must be greater than zero!');
+      }).toThrow('orderItem: Quantity must be greater than zero!');
    });
 
    it('should calculate total', () => {

@@ -1,9 +1,9 @@
-import { v4 as uuid} from 'uuid';
-import validate from 'uuid-validate';
+import { v4 as uuid } from 'uuid';
 import OrderItem from './order-item';
 import 'dotenv/config';
 import Entity from '@domain/@shared/entity/entity.abstract';
 import NotificationError from '@domain/@shared/notification/notification.error';
+import OrderValidatorFactory from '../factory/order.validator.factory';
 
 export default class Order extends Entity {
    private id: string;
@@ -14,7 +14,9 @@ export default class Order extends Entity {
       super();
       this.id = !!id ? id : uuid();
       this.customerId = customerId;
-      this.items = items;
+      this.items = items.map((item: any) => {
+         return new OrderItem(item.productId, item.productName, item.quantity, item.price, item.id);
+      });
 
       this.validate();
 
@@ -36,33 +38,7 @@ export default class Order extends Entity {
    }
 
    validate() {
-      if (!(!!this.id) || validate.version(this.id) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'ID is required!',
-         });
-      }
-      if (!(!!this.customerId) || validate.version(this.customerId) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Customer ID is required!',
-         });
-      }
-      if (!!this.items && this.items.length <= 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Must have at least one item!',
-         });
-      }
-
-      const isQuantityMinor = this.items.some((item: any) => item.quantity <= 0);
-
-      if (isQuantityMinor) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Quantity must be greater than zero!',
-         });
-      }
+      OrderValidatorFactory.create().validate(this);
    }
 
    addItem(item: OrderItem) {
@@ -70,7 +46,7 @@ export default class Order extends Entity {
    }
 
    removeItem(item: OrderItem) {
-      const index = this.items.indexOf(item);
+      const index = this.items.findIndex(i => i.getId() === item.getId());
       if (index > -1) {
          this.items.splice(index, 1);
       }

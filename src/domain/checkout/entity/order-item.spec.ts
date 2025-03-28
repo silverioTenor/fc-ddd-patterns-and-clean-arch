@@ -14,23 +14,25 @@ describe('OrderItem unit tests', () => {
    });
 
    it('should throw an error when creating an order item with invalid product ID', () => {
-      expect(() => new OrderItem('', 'P1', 4, 12)).toThrow('orderitem: Product ID is required!');
+      expect(() => new OrderItem('', 'P1', 4, 12)).toThrow('orderItem: Product ID is required!');
    });
 
    it('should throw an error when creating an order item with invalid product name', () => {
       expect(() => new OrderItem(uuid(), '', 4, 12)).toThrow(
-         'orderitem: Product name is required!',
+         'orderItem: Product name is required!',
       );
    });
 
    it('should throw an error when creating an order item with invalid quantity', () => {
       expect(() => new OrderItem(uuid(), 'P1', 0, 12)).toThrow(
-         'orderitem: Quantity must be greater than zero!',
+         'orderItem: Quantity must be greater than zero!',
       );
    });
 
    it('should throw an error when creating an order item with invalid price', () => {
-      expect(() => new OrderItem(uuid(), 'P1', 4, 0)).toThrow('orderitem: Price is required!');
+      expect(() => new OrderItem(uuid(), 'P1', 4, 0)).toThrow(
+         'orderItem: Price must be greater than zero!',
+      );
    });
 
    it('should calculate the total price of the order item', () => {
