@@ -50,7 +50,7 @@ describe('Customer unit tests', () => {
          postalCode: 0,
       };
 
-      const throwMsg = `address: Street is required!,\naddress: Number is required!,\naddress: City is required!,\naddress: State is required!,\naddress: Country is required!,\naddress: Postal code is required!`;
+      const throwMsg = `address: Street is required!,\naddress: Number must be positive!,\naddress: City is required!,\naddress: State is required!,\naddress: Country is required!,\naddress: Postal code must have 8 digits!`;
 
       expect(() => customer.changeAddress(invalidAddress)).toThrow(throwMsg);
    });

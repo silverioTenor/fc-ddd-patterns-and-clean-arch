@@ -1,11 +1,10 @@
 import { v4 as uuid } from 'uuid';
-import validate from 'uuid-validate';
 import Address from '../value-object/address';
 import 'dotenv/config';
 import { ICustomer } from './customer.interface';
 import Entity from '@domain/@shared/entity/entity.abstract';
 import NotificationError from '@domain/@shared/notification/notification.error';
-import CUstomerValidatorFactory from '../factory/customer.validator.factory';
+import CustomerValidatorFactory from '../factory/customer.validator.factory';
 
 export default class Customer extends Entity implements ICustomer {
    private id: string;
@@ -42,7 +41,7 @@ export default class Customer extends Entity implements ICustomer {
    }
 
    validate() {
-      CUstomerValidatorFactory.create().validate(this);
+      CustomerValidatorFactory.create().validate(this);
    }
 
    changeName(name: string) {

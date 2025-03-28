@@ -1,5 +1,6 @@
 import NotificationError from '../../@shared/notification/notification.error';
 import Entity from '@domain/@shared/entity/entity.abstract';
+import AddressValidatorFactory from '../factory/address.validator.factory';
 
 export default class Address extends Entity {
    private street: string;
@@ -57,42 +58,7 @@ export default class Address extends Entity {
    }
 
    validate() {
-      if (!(!!this.street)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Street is required!',
-         });
-      }
-      if (this.number === 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Number is required!',
-         });
-      }
-      if (!(!!this.city)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'City is required!',
-         });
-      }
-      if (!(!!this.state)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'State is required!',
-         });
-      }
-      if (!(!!this.country)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Country is required!',
-         });
-      }
-      if (!(!!this.postalCode) || this.postalCode <= 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Postal code is required!',
-         });
-      }
+      AddressValidatorFactory.create().validate(this);
    }
 
    toString() {
