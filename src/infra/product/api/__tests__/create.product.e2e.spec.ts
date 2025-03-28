@@ -36,7 +36,7 @@ describe('e2e test product - CREATE', () => {
          errors: [
             {
                context: 'product',
-               message: 'Name is required',
+               message: 'Name is required!',
             }
          ]
       });
@@ -53,7 +53,7 @@ describe('e2e test product - CREATE', () => {
          errors: [
             {
                context: 'product',
-               message: 'Price must be greater than zero',
+               message: 'Price is required!',
             }
          ]
       });

@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
-import validate from 'uuid-validate';
 import 'dotenv/config';
 import IProduct from './product.interface';
 import Entity from '@domain/@shared/entity/entity.abstract';
 import NotificationError from '@domain/@shared/notification/notification.error';
+import ProductValidatorFacotry from '../factory/product.validator.factory';
 
 export default class Product extends Entity implements IProduct {
    private id: string;
@@ -35,24 +35,7 @@ export default class Product extends Entity implements IProduct {
    }
 
    validate() {
-      if (!(!!this.id) || validate.version(this.id) !== 4) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'ID is required and must be a valid UUID'
-         });
-      }
-      if (!(!!this.name)) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Name is required'
-         });
-      }
-      if (!(!!this.price) || this.price <= 0) {
-         this.notification.addError({
-            context: this.constructor.name.toLowerCase(),
-            message: 'Price must be greater than zero'
-         });
-      }
+      ProductValidatorFacotry.create().validate(this);
    }
 
    changePrice(price: number) {
