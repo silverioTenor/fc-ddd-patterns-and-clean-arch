@@ -5,6 +5,7 @@ import ListCustomerUseCase from '@usecase/customer/list/list.customer.usecase';
 import FindCustomerUseCase from '@usecase/customer/find/find.customer.usecase';
 import UpdateCustomerUseCase from '@usecase/customer/update/update.customer.usecase';
 import UpdateAddressUseCase from '@usecase/customer/update/update.address.usecase';
+import CustomerPresenter from '../presenter/customer.presenter';
 
 export default class CustomerController {
    static async create(req: Request, res: Response): Promise<Response> {
@@ -75,6 +76,10 @@ export default class CustomerController {
       const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
 
       const customers = await listCustomerUseCase.execute();
-      return res.status(200).json(customers);
+
+      return res.status(200).format({
+         json: async () => res.json(customers),
+         xml: async () => res.send(CustomerPresenter.convertToXML(customers)),
+      });
    }
 }
