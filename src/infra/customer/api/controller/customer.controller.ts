@@ -75,6 +75,6 @@ export default class CustomerController {
       const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
 
       const customers = await listCustomerUseCase.execute();
-      return res.status(200).json({ customers });
+      return res.status(200).json(customers);
    }
 }

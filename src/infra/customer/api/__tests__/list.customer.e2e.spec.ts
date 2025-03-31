@@ -44,7 +44,7 @@ describe('E2E test customer - LIST', () => {
       const responseCustomerList = await request(app).get('/customer').send();
 
       expect(responseCustomerList.body.customers.length).toBe(2);
-      expect(responseCustomerList.body.customers).toStrictEqual([customer1, customer2]);
+      expect(responseCustomerList.body).toStrictEqual({ customers: [customer1, customer2] });
    });
 
    it('should return an empty list when no found customers', async () => {

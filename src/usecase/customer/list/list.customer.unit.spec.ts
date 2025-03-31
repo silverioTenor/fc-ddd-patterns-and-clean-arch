@@ -31,13 +31,13 @@ describe('Unit test - customer list', () => {
       const customerRepository = MockRepository();
       const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
 
-      const customers = await listCustomerUseCase.execute();
+      const customerList = await listCustomerUseCase.execute();
       const customersFiltered = Mapper.convertListTo<any, any>(
          [firstCustomer, secondCustomer],
          ['notification'],
       );
 
-      expect(customers).toEqual(customersFiltered);
+      expect(customerList.customers).toEqual(customersFiltered);
    });
 
    it('should return an empty list when no found customers', async () => {
@@ -55,6 +55,6 @@ describe('Unit test - customer list', () => {
 
       const customers = await listCustomerUseCase.execute();
 
-      expect(customers).toEqual([]);
+      expect(customers).toEqual({ customers: [] });
    });
 });

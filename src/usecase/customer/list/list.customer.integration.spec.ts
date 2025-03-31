@@ -30,9 +30,9 @@ describe('Find customer useCase - integration test', () => {
       const listCustomerUseCase = new ListCustomerUseCase(customerRepository);
 
       const customerCreated = await createCustomerUseCase.execute(customerSeed);
-      const customers = await listCustomerUseCase.execute();
+      const customerList = await listCustomerUseCase.execute();
 
-      expect(customers).toEqual([customerCreated]);
+      expect(customerList).toEqual({ customers: [customerCreated] });
    });
 
    it('should return an empty list when no found customers', async () => {
@@ -41,6 +41,6 @@ describe('Find customer useCase - integration test', () => {
 
       const customers = await listCustomerUseCase.execute();
 
-      expect(customers).toEqual([]);
+      expect(customers).toEqual({ customers: [] });
    });
 });
